@@ -1,0 +1,6 @@
+alias lao="ls -laO"
+alias le@="ls -lea@"
+alias l@="ls -l@"
+alias le="ls -le"
+alias lea="ls -lea"
+alias llo="ls -lO"
