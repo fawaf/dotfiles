@@ -1,0 +1,44 @@
+# ruby
+vendor
+*.lock
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.so
+*.pyc
+*.[oa]
+
+# swap files
+*~
+*.swp
+
+# eclipse
+.classpath
+.project
+.settings/
+
+# misc
+z.*
+git.sh
+compile.sh
+
+# template files
+*.template
