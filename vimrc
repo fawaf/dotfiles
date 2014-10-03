@@ -2,7 +2,7 @@
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
 " Maintainer:        Felix Wong <felix@xilef.org>
-" Last change:       2014.09.09
+" Last change:       2014.10.02
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -157,8 +157,8 @@ if has("autocmd")
   "let g:detectindent_preferred_expandtab = 1
   "let g:detectindent_preferred_indent = 4
   "let g:detectindent_max_lines_to_analyse = 1024
-  cmap sp set paste
-  cmap sn set nopaste
+  map <leader>p :set paste
+  map <leader>n :set nopaste
   cmap cel colorscheme elflord
   cmap stw set textwidth=999999
 
