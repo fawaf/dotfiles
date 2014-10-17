@@ -1,5 +1,4 @@
 export CASE_SENSITIVE=true
-export CDPATH=.:..:~:~/.local:~/.local/src
 export EDITOR=vim
 export FPATH=$FPATH:~/.zsh/completion
 export LIBRARY_PATH=/usr/local/lib
