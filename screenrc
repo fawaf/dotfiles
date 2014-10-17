@@ -1,0 +1,34 @@
+# rc -- screen
+# useful links:
+#  - http://gentoo-wiki.com/Talk:Screen
+#  - http://aperiodic.net/phil/configs/screenrc
+#  - http://aperiodic.net/screen/
+
+# Turn off screen annoyances
+startup_message off
+vbell off
+termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'		# Don't resize xterm
+
+# Other settings
+altscreen on
+autodetach on
+defutf8 on								# Do everything in UTF-8
+defscrollback 5000							# Large scrollback
+defnonblock on								# Don't block the whole session if a window goes unresponsive
+defbce on
+#nethack on								# Be careful!  New screen tonight.
+
+# 256 color support
+attrcolor b ".I"
+#termcapinfo linux|xterm|rxvt|xterm-color ti@:te@:XT 
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#term screen-256color-bce
+
+# Tab-bar -- adapted from Gentoo Linux Wiki's Screen article, requires Zsh
+caption always '%?%F%{= Kw}%:%{=u kR}%?  %h %-025=%{+b} %c:%s %D %d %M %Y%{= db}'
+hardstatus alwayslastline '%{= kR} %-Lw%{=b Kw}%50> %n%f %t %{= kR}%+Lw %< '
+
+# Run urlview on current window
+bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen /usr/bin/env urlview $HOME/.screen-urlview"
+
+source $HOME/.screenrc-custom
