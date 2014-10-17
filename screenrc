@@ -20,7 +20,7 @@ defbce on
 
 # 256 color support
 attrcolor b ".I"
-#termcapinfo linux|xterm|rxvt|xterm-color ti@:te@:XT 
+#termcapinfo linux|xterm|rxvt|xterm-color ti@:te@:XT
 #termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 #term screen-256color-bce
 
