@@ -126,19 +126,25 @@ zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
 # Prompt {{{
 set_prompt() {
     set_host_variables
-    #export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)$PR_LIGHT_CYAN%*$PR_NO_COLOR'
-    export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
     export PS2='$PR_WHITE%#$PR_NO_COLOR($PR_LIGHT_GREEN%_$PR_NO_COLOR) '
     export RPS1BEGIN='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
     export RPS1END='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
-    PS1BEGIN='%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST'
-    PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
+    export PS1BEGIN='%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST'
+    export PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
 %(!.$PR_LIGHT_CYAN%* $PR_MAGENTA%#$PR_NO_COLOR.$PR_LIGHT_CYAN%* $PR_MAGENTA%#$PR_NO_COLOR) "
-    export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
     
-    if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]
+    if [ -f $HOME/.zsh-prompt ]
     then
-        export PS1="$PS1BEGIN$PS1END"
+        source $HOME/.zsh-prompt
+    else
+        if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]
+        then
+            export PS1="$PS1BEGIN$PS1END"
+        else
+            export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
+        fi
+        export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
+        #export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)$PR_LIGHT_CYAN%*$PR_NO_COLOR'
     fi
 }
 # }}}
@@ -207,15 +213,15 @@ rationalise-dot() {
 }
 zle -N rationalise-dot
 bindkey . rationalise-dot
+#alias date="/bin/date '+%D %r' | grep --color=auto $day"
+#export day=`/bin/date +%d`
+#export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # causes "zsh: locking failed for filename: operation not supported: reading anyway" error
 export HISTSIZE=200   # Maximum size of history list
 export SAVEHIST=100    # Save the last 100 commands
 export LISTMAX=0      # Only ask if completion listing would scroll off screen
 export REPORTTIME=60  # Give timing statistics for programs that take longer than a minute to run
-#export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # causes "zsh: locking failed for filename: operation not supported: reading anyway" error
 unset HISTFILE
 unset LS_COLORS
-#export day=`/bin/date +%d`
-#alias date="/bin/date '+%D %r' | grep --color=auto $day"
 # }}}
 
 # Sources {{{
