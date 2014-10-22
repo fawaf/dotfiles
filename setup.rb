@@ -14,3 +14,5 @@ files.each do |file|
   next if file.start_with?('README', 'LICENSE', 'setup')
   FileUtils.cp_r(file, "#{ENV['HOME']}/.#{file}", :verbose => true, :remove_destination => true)
 end
+`ln -sfv ~/.login ~/.zlogin`
+`ln -sfv ~/.logout ~/.zlogout`

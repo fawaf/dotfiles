@@ -1,0 +1,27 @@
+#!/bin/sh
+
+#if [ "$INTERNALHOSTNAME" == "FAWMBP" ] && [ "$KILL_SSH_AGENT_ON_LOGOUT" ]
+if [ "x$KILL_SSH_AGENT_ON_LOGOUT" == "xtrue" ]
+then
+#    /usr/bin/ssh-agent -k
+#elif [ "$INTERNALHOSTNAME" != "FAWMBP" ] && [ "$KILL_SSH_AGENT_ON_LOGOUT" ]
+#then
+    #PID="`ps auxwww | grep ssh-agent | grep -v bin/ssh | awk '{print $2}'`"
+    #kill $PID
+    ssh-agent -k
+fi
+
+echo yes | sudo -k
+echo yes | sudo -K
+
+rm -f ~/.bash_history
+rm -f ~/.zhistory*
+rm -f ~/.z.*
+#rm -f ~/.*_history
+
+if [ -e /usr/bin/kdestroy ]
+then
+    kdestroy
+fi
+
+clear
