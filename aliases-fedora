@@ -1,0 +1,1 @@
+alias update="echo y | sudo yum update -y"

@@ -1,0 +1,5 @@
+alias chl="tail -f /var/log/chef/client.log"
+alias i6l="sudo ip6tables -L"
+alias il="sudo iptables -L"
+alias psf="ps axjfwww"
+alias www="cd /var/www"
