@@ -2,9 +2,9 @@
 
 require 'fileutils'
 
-dotfiles_dir = "#{ENV['HOME']}/.dotfiles"
-
+dotfiles_dir = File.realpath(File.dirname(__FILE__))
 Dir.chdir(dotfiles_dir)
+
 `git submodule init`
 `git submodule sync`
 `git submodule update`
