@@ -6,7 +6,7 @@ then
 #    /usr/bin/ssh-agent -k
 #elif [ "$INTERNALHOSTNAME" != "FAWMBP" ] && [ "$KILL_SSH_AGENT_ON_LOGOUT" ]
 #then
-    #PID="`ps auxwww | grep ssh-agent | grep -v bin/ssh | awk '{print $2}'`"
+    #PID="`ps auxwww | \grep ssh-agent | \grep -v bin/ssh | awk '{print $2}'`"
     #kill $PID
     ssh-agent -k
 fi

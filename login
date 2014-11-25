@@ -2,7 +2,7 @@
 
 export LANG="en_US.UTF-8"
 
-if [ "`ps aux | grep ssh-agent | grep -v grep | wc -l`" -eq 0 ]
+if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
 then
     eval `ssh-agent`
     if [ -e ~/.ssh/id_rsa ]
@@ -32,7 +32,7 @@ unset LS_COLORS
 #	xrdb -merge ~/.Xresources
 #fi
 #if which xmodmap > /dev/null; then
-#	if [ `xmodmap -pke | grep Caps | wc -l` -eq 1 ]; then
+#	if [ `xmodmap -pke | \grep Caps | wc -l` -eq 1 ]; then
 #		command xmodmap .xmodmap
 #	fi
 #fi

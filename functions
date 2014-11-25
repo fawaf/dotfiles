@@ -89,7 +89,7 @@ settermtype() { # Set terminal type
 
 # parse IP {{{
 #ip() { # Parse only the ip address
-#  echo "$1" | /usr/bin/env grep -oE '([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})'
+#  echo "$1" | /usr/bin/env \grep -oE '([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})'
 #}
 # }}}
 
@@ -125,18 +125,18 @@ set_titlebar() {
 
 # get IP {{{
 get_configured_ip() {
-    if [ "`uname -a | grep grsec`" ]
+    if [ "`uname -a | \grep grsec`" ]
     then
       return
     fi
-    export CONFIGURED_IP="`ifconfig | grep -w inet | grep -v 127.0 | head -n 1 | awk '{print $2}'`"
+    export CONFIGURED_IP="`ifconfig | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}'`"
     if [ -z "$CONFIGURED_IP" ]
     then
         echo '[1;31mNo IP address(es) detected[0;0m'
         return
     fi
     
-    if [ "`echo $CONFIGURED_IP | grep addr | wc -l`" -eq 1 ]
+    if [ "`echo $CONFIGURED_IP | \grep addr | wc -l`" -eq 1 ]
     then
         IP="`echo $CONFIGURED_IP | cut -d : -f 2`"
     else
@@ -173,8 +173,8 @@ set_host_variables() {
       if [ "$PUBLIC_IP" =~ "^[0-9].+" ]
       then
           export EXTERNALIP="$PUBLIC_IP"
-          export EXTERNALHOST="`host $EXTERNALIP | grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
-          export INTERNALHOST="`host $IP | grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
+          export EXTERNALHOST="`host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
+          export INTERNALHOST="`host $IP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
           export EXTERNALHOSTNAME="`echo $EXTERNALHOST | cut -d'.' -f1`"
           export INTERNALHOSTNAME="`echo $INTERNALHOST | cut -d'.' -f1`"
           export EXTERNALDOMAIN="`echo $EXTERNALHOST | cut -d'.' -f2-`"
