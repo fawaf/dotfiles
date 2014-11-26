@@ -70,6 +70,7 @@ alias lra="ls -Ra"
 alias ls="ls --group-directories-first --color=auto"
 alias lss="ls -s"
 alias lsss="ls -S -s"
+alias ltr="ls -ltr"
 alias m="mutt"
 alias mc="make clean"
 alias mls="screen -ls; tmux list-sessions"
@@ -113,10 +114,10 @@ alias za="$EDITOR ~/.zshrc-custom && source ~/.zshrc"
 
 # {{{ singular aliases
 if [ `uname` == "Linux" ]; then
+    source ~/.aliases-linux
     if [ -f /etc/debian_version ]; then
         source ~/.aliases-debian
     fi
-    source ~/.aliases-linux
 elif [ `uname` == "Darwin" ]; then
     source ~/.aliases-darwin
 fi
