@@ -12,7 +12,8 @@ Dir.chdir(dotfiles_dir)
 files = Dir.glob('*')
 files.each do |file|
   next if file.start_with?('README', 'LICENSE', 'setup')
+  FileUtils.rm_rf("#{ENV['HOME']}/.#{file}", :verbose => true)
   FileUtils.cp_r(file, "#{ENV['HOME']}/.#{file}", :verbose => true, :remove_destination => true)
 end
-`ln -sfv ~/.login ~/.zlogin`
-`ln -sfv ~/.logout ~/.zlogout`
+FileUtils.ln_s("#{ENV['HOME']}/.login", "#{ENV['HOME']}/.zlogin", :force => true, :verbose => true)
+FileUtils.ln_s("#{ENV['HOME']}/.logout", "#{ENV['HOME']}/.zlogout", :force => true, :verbose => true)
