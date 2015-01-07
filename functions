@@ -161,9 +161,9 @@ set_host_variables() {
       which curl &> /dev/null
       if [ $? -eq 0 ]
       then
-          export PUBLIC_IP="`curl -4 -L -sf -m 2 http://www.fawong.com/ip.php`"
+          export PUBLIC_IP="`curl -4 -sf -m 2 https://www.fawong.com/ip.php`"
       else
-          export PUBLIC_IP="`wget -4 -q -O - -T 2 http://www.fawong.com/ip.php`"
+          export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
       fi
       if [ "$PUBLIC_IP" == "$EXTERNALIP" ]
       then
