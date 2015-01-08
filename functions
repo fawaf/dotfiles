@@ -23,40 +23,6 @@ extract() { # Handy Extract Program.
 }
 # }}}
 
-# ai {{{
-ai() { # Get current host related info.
-  echo -e "\nYou are logged in on host:"
-  hostname
-  echo -e "\nAdditional system information:"
-  uname -a
-  echo -e "\nUsers logged on:"
-  w -h
-  echo -e "\nCurrent date and time:"
-  date
-  echo -e "\nMachine uptime statistics:"
-  uptime
-  if [[ -z "$IP" && -z "$EXTERNALIP" ]]
-  then
-    echo "\nNot connected to the internet"
-    return
-  fi
-  if [ "$EXTERNALIP" == "$IP" ]
-  then
-    echo -e "\nIP Address:"
-    echo "$IP"
-  else
-    echo -e "\nExternal IP Address:"
-    echo "$EXTERNALIP"
-  fi
-  if [[ "$IP" != "$EXTERNALIP" && -z "$IP" ]]
-  then
-    echo -e "\nInternal IP Address:"
-    echo "$IP"
-  fi
-  echo ""
-}
-# }}}
-
 # set term type {{{
 settermtype() { # Set terminal type
   if type tput > /dev/null
@@ -165,7 +131,7 @@ set_host_variables() {
       else
           export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
       fi
-      if [ "$PUBLIC_IP" == "$EXTERNALIP" ]
+      if [ "$PUBLIC_IP" == "$IP" ]
       then
           return
       fi
@@ -196,5 +162,39 @@ set_host_variables() {
     else
         export REALHOST="$1"
     fi
+}
+# }}}
+
+# ai {{{
+ai() { # Get current host related info.
+  echo -e "\nYou are logged in on host:"
+  hostname
+  echo -e "\nAdditional system information:"
+  uname -a
+  echo -e "\nUsers logged on:"
+  w -h
+  echo -e "\nCurrent date and time:"
+  date
+  echo -e "\nMachine uptime statistics:"
+  uptime
+  if [[ -z "$IP" && -z "$EXTERNALIP" ]]
+  then
+    echo "\nNot connected to the internet"
+    return
+  fi
+  if [ "$EXTERNALIP" == "$IP" ]
+  then
+    echo -e "\nIP Address:"
+    echo "$IP"
+  else
+    echo -e "\nExternal IP Address:"
+    echo "$EXTERNALIP"
+  fi
+  if [[ "$IP" != "$EXTERNALIP" && -n "$IP" ]]
+  then
+    echo -e "\nInternal IP Address:"
+    echo "$IP"
+  fi
+  echo ""
 }
 # }}}
