@@ -104,9 +104,9 @@ get_configured_ip() {
     
     if [ "`echo $CONFIGURED_IP | \grep addr | wc -l`" -eq 1 ]
     then
-        IP="`echo $CONFIGURED_IP | cut -d : -f 2`"
+        HOST_IP="`echo $CONFIGURED_IP | cut -d : -f 2`"
     else
-        IP="$CONFIGURED_IP"
+        HOST_IP="$CONFIGURED_IP"
     fi
 }
 # }}}
@@ -114,7 +114,7 @@ get_configured_ip() {
 # set hostname variables {{{
 set_host_variables() {
     get_configured_ip
-    if [ -z "$IP" ]
+    if [ -z "$HOST_IP" ]
     then
         export EXTERNALIP="127.0.0.1"
         export EXTERNALHOST="`hostname -f`"
@@ -131,16 +131,12 @@ set_host_variables() {
       else
           export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
       fi
-      if [ "$PUBLIC_IP" == "$IP" ]
-      then
-          return
-      fi
       
       if [ "$PUBLIC_IP" =~ "^[0-9].+" ]
       then
           export EXTERNALIP="$PUBLIC_IP"
           export EXTERNALHOST="`host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
-          export INTERNALHOST="`host $IP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
+          export INTERNALHOST="`host $HOST_IP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
           export EXTERNALHOSTNAME="`echo $EXTERNALHOST | cut -d'.' -f1`"
           export INTERNALHOSTNAME="`echo $INTERNALHOST | cut -d'.' -f1`"
           export EXTERNALDOMAIN="`echo $EXTERNALHOST | cut -d'.' -f2-`"
@@ -177,23 +173,23 @@ ai() { # Get current host related info.
   date
   echo -e "\nMachine uptime statistics:"
   uptime
-  if [[ -z "$IP" && -z "$EXTERNALIP" ]]
+  if [[ -z "$HOST_IP" && -z "$EXTERNALIP" ]]
   then
     echo "\nNot connected to the internet"
     return
   fi
-  if [ "$EXTERNALIP" == "$IP" ]
+  if [ "$EXTERNALIP" == "$HOST_IP" ]
   then
     echo -e "\nIP Address:"
-    echo "$IP"
+    echo "$HOST_IP"
   else
     echo -e "\nExternal IP Address:"
     echo "$EXTERNALIP"
   fi
-  if [[ "$IP" != "$EXTERNALIP" && -n "$IP" ]]
+  if [[ "$HOST_IP" != "$EXTERNALIP" && -n "$HOST_IP" ]]
   then
     echo -e "\nInternal IP Address:"
-    echo "$IP"
+    echo "$HOST_IP"
   fi
   echo ""
 }
