@@ -1,3 +1,7 @@
+alias ags="sudo service httpd graceful"
+alias arl="sudo service httpd reload"
+alias ars="sudo service httpd restart"
+alias asc="sudo httpd -S"
 alias chl="tail -f /var/log/chef/client.log"
 alias i6l="sudo ip6tables -L"
 alias il="sudo iptables -L"

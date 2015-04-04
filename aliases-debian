@@ -1,5 +1,6 @@
 alias aa="tail -f /var/log/apache2/access.log"
 alias ae="tail -f /var/log/apache2/error.log"
+alias ags="sudo service apache2 graceful"
 alias arl="sudo service apache2 reload"
 alias ars="sudo service apache2 restart"
 alias asc="sudo apache2ctl -S"
