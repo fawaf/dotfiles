@@ -120,5 +120,7 @@ if [ `uname` == "Linux" ]; then
     fi
 elif [ `uname` == "Darwin" ]; then
     source ~/.aliases-darwin
+else
+    source ~/.aliases-cygwin
 fi
 # }}}

@@ -93,9 +93,13 @@ set_titlebar() {
 get_configured_ip() {
     if [ "`uname -a | \grep grsec`" ]
     then
-      return
+        return
+    elif [ "`uname -a | \grep -i cygwin`" ]
+    then
+        export CONFIGURED_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
+    else
+        export CONFIGURED_IP="`ifconfig | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}'`"
     fi
-    export CONFIGURED_IP="`ifconfig | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}'`"
     if [ -z "$CONFIGURED_IP" ]
     then
         echo '[1;31mNo IP address(es) detected[0;0m'
