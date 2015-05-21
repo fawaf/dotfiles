@@ -1,0 +1,80 @@
+set realname='Felix Wong'                                             # Set to your real name
+
+# misc settings
+set editor='vim'
+set pager_index_lines='5'                                             # Show a mini-index in pager view
+set status_on_top='yes'                                               # Put status line at top
+set menu_scroll='yes'                                                 # Scrolls mail by line instead of by page
+set move='ask-yes'                                                    # Ask before moving messages.
+set print='ask-yes'                                                   # Ask before printing.
+set delete='ask-yes'                                                  # Ask before doing a delete.
+set include='yes'                                                     # Include the message in replies.
+
+# IMAP settings
+#set imap_user=''
+#set spoolfile='+INBOX'
+#set ssl_starttls=yes # activate TLS if available on the server
+#set ssl_force_tls=yes # always use SSL when connecting to a server
+#set imap_check_subscribed
+#set imap_authenticators='plain'
+
+# POP settings
+#set pop_user=''
+#set pop_pass=''
+
+# show only certain headers
+ignore *
+unignore  Date From To Cc Bcc Reply-to Subject
+hdr_order Date From To Cc Bcc Reply-to Subject
+
+# set signature
+set signature='~/.signature'
+
+# sort mail by thread date
+set sort='reverse-threads'                                            # Sort by message sent date in index
+set sort_aux='last-date-received'                                     # Sort by date received
+#set sort_browser='reverse-date'                                      # showing list default to newest first
+
+# set mailbox locations
+set folder=`FOLDER="$HOME/thewafs"; if [ ! -d "$FOLDER" ]; then FOLDER="$HOME/mail";fi;echo "$FOLDER"`
+set spoolfile='+inbox'
+set mbox='+readmail'
+set record='+sent'
+set postponed='+drafts'
+
+# Scrolling in email
+bind pager <Up> previous-line
+bind pager <Down> next-line
+
+# colors
+source ~/.mutt/colors
+color hdrdefault white black                                          # headers white on black
+color header brightgreen black ^From:                                 # sender's name in green
+color header brightyellow black ^Subject:                             # email subject in
+color quoted cyan black                                               # quoted text in blue
+color signature red black                                             # signature in red
+
+# Keyboard shortcuts
+bind index R group-reply                                              # Reply to group
+bind index p recall-message                                           # Recall postponed message
+
+macro index N "T.*\n;W*" "Untag all messages"                         # Untag all messages
+macro index M "T.*\n;WN" "Mark all messages as read"                  # Mark all messages read
+macro index S ";s=spam\ny\$y" "Move tagged messages to spam"          # Move tagged messages to spam
+
+macro index,pager gi "<change-folder>=inbox<enter>" "Go to Inbox"
+macro index,pager gm "<change-folder>=readmail<enter>" "Go to read mail"
+macro index,pager ge "<change-folder>=sent<enter>" "Go to read mail"
+
+# HTML support
+set implicit_autoview=yes
+auto_view text/html
+alternative_order application/pgp text/plain text/html                # Prefer plain-text
+
+# title/status bar formats
+set status_format=' %r %f %l    Unread: %u  Del: %d  Msgs Shown: %M %> %V [%P] '
+set pager_format=' %a %> %[%a, %b %d  %R] '
+set index_format='%4C %Z %[%b%d] %-15.15F %s'
+set folder_format='%2C %8s %d %N %f'
+
+source `FILE=~/.muttrc-custom; if [ ! -f "$FILE" ]; then FILE=/dev/null;fi;echo "$FILE"`

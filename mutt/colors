@@ -1,0 +1,88 @@
+# Color Syntax: 
+#   color object foreground background [  regexp ]
+#   color index foreground background [  pattern ]
+#   uncolor index pattern [ pattern ... ]
+#
+# Pattern Syntax:
+#   ~A           all messages
+#   ~b EXPR      messages which contain EXPR in the message body
+#   ~B EXPR      messages which contain EXPR in the whole message
+#   ~c EXPR      messages carbon-copied to EXPR
+#   ~C EXPR      message is either to: or cc: EXPR
+#   ~D           deleted messages
+#   ~d MIN-MAX   messages with "date-sent" in a Date range
+#   ~E           expired messages
+#   ~e EXPR      message which contains EXPR in the "Sender" field
+#   ~F           flagged messages
+#   ~f EXPR      messages originating from EXPR
+#   ~g           PGP signed messages
+#   ~G           PGP encrypted messages
+#   ~H EXPR      messages with spam tags matching EXPR
+#   ~h EXPR      messages which contain EXPR in the message header
+#   ~k           message contains PGP key material
+#   ~i EXPR      message which match EXPR in the "Message-ID" field
+#   ~L EXPR      message is either originated or received by EXPR
+#   ~l           message is addressed to a known mailing list
+#   ~m MIN-MAX   message in the range MIN to MAX
+#   ~n MIN-MAX   messages with a score in the range MIN to MAX
+#   ~N           new messages
+#   ~O           old messages
+#   ~p           message is addressed to you (consults $alternates)
+#   ~P           message is from you (consults $alternates)
+#   ~Q           messages which have been replied to
+#   ~R           read messages
+#   ~r MIN-MAX   messages with "date-received" in a Date range
+#   ~S           superseded messages
+#   ~s EXPR      messages having EXPR in the "Subject" field.
+#   ~T           tagged messages
+#   ~t EXPR      messages addressed to EXPR
+#   ~U           unread messages
+#   ~v           message is part of a collapsed thread.
+#   ~x EXPR      messages which contain EXPR in the "References" field
+#   ~z MIN-MAX   messages with a size in the range MIN to MAX
+#   ~=           duplicated messages (see $duplicate_threads)
+#   ~$           unreferenced message (requries threaded view)
+##
+
+color normal        white black             # When no other coloring is found
+color attachment    magenta black           # Attachment banners
+color hdrdefault    cyan black              # Default header colors
+color indicator     black cyan             # Selector
+color quoted        cyan black              # Level1 Quoted Text
+color quoted1       yellow black            # Level2   "      "
+color quoted2       magenta black           # Level3   "      "
+color quoted3       green black             # Level4   "      "
+color quoted4       red black               # Level5   "      "
+color signature     yellow black            # After the --
+color status        brightblue white        # Status bars
+color tree          red black               # Tree indicator for threads
+
+##
+# Index Color Coding
+##
+
+color index yellow black           "~t rcc-staff | ~c rcc-staff"
+color index green black             "~t misc@rescomp | ~c misc@rescomp"
+
+#color index green black         "~A ~N | ~O"  # All unread messages
+color index brightblack yellow  "~F"          # Flagged
+color index brightwhite blue    "~T"          # Tagged
+color index brightwhite red     "~D"          # Marked for deletion
+#color index black cyan          "~="          # Duplicates
+
+# PGP messages
+color body white           black   "^gpg: "
+color body brightgreen     black   "^gpg: Good signature .*"
+color body brightyellow    black   "^gpg: WARNING.*"
+color body brightred       black   "^gpg: BAD signature from.*"
+
+# 16 Colors Available:
+# white
+# black
+# red
+# blue
+# yellow
+# green
+# cyan
+# magenta
+# (bright counterparts)
