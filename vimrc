@@ -2,7 +2,7 @@
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
 " Maintainer:        Felix Wong <felix@xilef.org>
-" Last change:       2014.10.02
+" Last change:       2015.06.10
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc

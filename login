@@ -2,23 +2,14 @@
 
 export LANG="en_US.UTF-8"
 
-if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
-then
-    eval `ssh-agent`
-    if [ -e ~/.ssh/id_rsa ]
-    then
-        ssh-add
-    fi
-    export KILL_SSH_AGENT_ON_LOGOUT="true"
-fi
-
 rm -f ~/Downloads/*.part
 rm -f ~/Desktop/*.part
 
 if [ -f /etc/motd ]
 then
-    uname -a | diff -q - <(cat /etc/motd | \grep $(uname -r))
+    uname -a | diff -q - <(cat /etc/motd | \grep "`uname -a`")
 fi
+
 uptime
 
 if [ -e /usr/bin/klist ]
@@ -42,7 +33,22 @@ unset LS_COLORS
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+ENABLE_SSH_AGENT="false"
+
 if [ -f ~/.login-custom ]
 then
     source ~/.login-custom
+fi
+
+if [ "x$ENABLE_SSH_AGENT" == "xtrue" ]
+then
+    if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
+    then
+        eval `ssh-agent`
+        if [ -e ~/.ssh/id_rsa ]
+        then
+            ssh-add
+        fi
+        export KILL_SSH_AGENT_ON_LOGOUT="true"
+    fi
 fi
