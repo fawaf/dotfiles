@@ -10,3 +10,6 @@
 [submodule "vim/buftabs"]
 	path = vim/buftabs
 	url = https://github.com/vim-scripts/buftabs.git
+[submodule "zsh/zsh-syntax-highlighting"]
+	path = zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

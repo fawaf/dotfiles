@@ -225,6 +225,7 @@ unset LS_COLORS
 # }}}
 
 # Sources {{{
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f $HOME/.zshrc-custom ]
 then
     source $HOME/.zshrc-custom
