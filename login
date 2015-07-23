@@ -10,7 +10,11 @@ then
     uname -a | diff -q - <(cat /etc/motd | \grep "`uname -a`")
 fi
 
-uptime
+type uptime > /dev/null
+if [ $? -eq 0 ]
+then
+    uptime
+fi
 
 if [ -e /usr/bin/klist ]
 then

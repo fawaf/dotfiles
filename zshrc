@@ -202,7 +202,12 @@ compinit -d $HOME/.zsh/zcompdump.$EXTERNALHOST
 # }}}
 
 # Miscellaneous {{{
-mesg n
+type mesg > /dev/null
+if [ $? -eq 0 ]
+then
+    mesg n
+fi
+
 rationalise-dot() {
     if [[ "$LBUFFER" == *.. ]]
     then
