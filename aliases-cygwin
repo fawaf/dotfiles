@@ -1,1 +1,2 @@
 alias ifconfig="/cygdrive/c/Windows/System32/ipconfig.exe /all"
+alias ls="ls --group-directories-first --color=auto"
