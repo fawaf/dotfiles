@@ -140,12 +140,7 @@ if has("autocmd")
   cnoremap WQ w !sudo tee % > /dev/null
   set number
   set ic
-  set expandtab
-  set smartindent
-  set cursorline
   set encoding=utf-8
-  set tabstop=2
-  set shiftwidth=2
   set foldmethod=marker
   set foldenable
   set ls=2
@@ -171,13 +166,15 @@ if has("autocmd")
 else
 
   set autoindent                " always set autoindenting on
-  set expandtab
-  set smartindent
-  set tabstop=2
-  set shiftwidth=2
-  set cursorline
 
 endif " has("autocmd")
+
+set expandtab
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set cursorline
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
