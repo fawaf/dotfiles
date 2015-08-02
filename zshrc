@@ -218,14 +218,16 @@ rationalise-dot() {
 }
 zle -N rationalise-dot
 bindkey . rationalise-dot
+
 #alias date="/bin/date '+%D %r' | grep --color=auto $day"
 #export day=`/bin/date +%d`
-#export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # causes "zsh: locking failed for filename: operation not supported: reading anyway" error
-export HISTSIZE=200   # Maximum size of history list
-export SAVEHIST=100    # Save the last 100 commands
+
+export HISTSIZE=2000  # Maximum size of history list
+export SAVEHIST=1000  # Save the last 1000 commands
 export LISTMAX=0      # Only ask if completion listing would scroll off screen
 export REPORTTIME=60  # Give timing statistics for programs that take longer than a minute to run
-unset HISTFILE
+export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # used to cause "zsh: locking failed for filename: operation not supported: reading anyway" error
+#unset HISTFILE
 unset LS_COLORS
 # }}}
 

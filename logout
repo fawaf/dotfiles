@@ -15,8 +15,8 @@ echo yes | sudo -k
 echo yes | sudo -K
 
 rm -f ~/.bash_history
-rm -f ~/.zhistory*
-rm -f ~/.z.*
+#rm -f ~/.zhistory*
+#rm -f ~/.z.*
 #rm -f ~/.*_history
 
 if [ -e /usr/bin/kdestroy ]
