@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-dotfiles_dir = File.realpath(File.dirname(__FILE__))
+dotfiles_dir = File.expand_path(File.dirname(__FILE__))
 Dir.chdir(dotfiles_dir)
 
 `git submodule init`
