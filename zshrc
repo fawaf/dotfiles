@@ -50,6 +50,7 @@ setopt NO_BEEP              # "I refer to this informally as the OPEN_PLAN_OFFIC
 setopt AUTO_PUSHD           # cd uses directory stack
 setopt PUSHD_SILENT         # make pushd quiet
 setopt INTERACTIVE_COMMENTS # allow comments in interactive shells
+setopt hist_verify          # perform history substitution and reload the line into the editing buffer
 # }}}
 
 # compinit/tab-completion {{{
