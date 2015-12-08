@@ -5,10 +5,17 @@ require 'fileutils'
 dotfiles_dir = File.expand_path(File.dirname(__FILE__))
 Dir.chdir(dotfiles_dir)
 
-`git pull`
-`git submodule init`
-`git submodule sync`
-`git submodule update`
+puts "updating repo"
+puts `git pull`
+
+puts "submodule init"
+puts `git submodule init`
+
+puts "submodule sync"
+puts `git submodule sync`
+
+puts "submodule update"
+puts `git submodule update`
 
 files = Dir.glob('*')
 files.each do |file|
