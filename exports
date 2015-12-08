@@ -1,3 +1,4 @@
+export CDPATH=~:.:..
 export CASE_SENSITIVE=true
 export EDITOR=vim
 export FPATH=$FPATH:~/.zsh/completion
