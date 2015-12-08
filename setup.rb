@@ -5,6 +5,7 @@ require 'fileutils'
 dotfiles_dir = File.expand_path(File.dirname(__FILE__))
 Dir.chdir(dotfiles_dir)
 
+`git pull`
 `git submodule init`
 `git submodule sync`
 `git submodule update`
