@@ -123,7 +123,7 @@ if [ "$KERNEL_NAME" == "Linux" ]; then
     fi
 elif [ "$KERNEL_NAME" == "Darwin" ]; then
     source ~/.aliases-darwin
-elif [ "$KERNEL_NAME" == "CYGWIN_NT-6.1" ]; then
+elif [ "$KERNEL_NAME" =~ "CYGWIN_NT" ]; then
     source ~/.aliases-cygwin
 fi
 # }}}
