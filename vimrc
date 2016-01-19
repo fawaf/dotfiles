@@ -91,7 +91,7 @@ set wildmode=longest,list,full
 set wildmenu
 
 set switchbuf=useopen
-set winwidth=80
+set winwidth=90
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -108,7 +108,7 @@ if has("autocmd")
 
     " For all text files set 'textwidth' to 79 characters.
     autocmd FileType text setlocal textwidth=79
-    set textwidth=79
+    set textwidth=89
     if exists('+colorcolumn')
       set colorcolumn=+1        " highlight column after 'textwidth'
     else
