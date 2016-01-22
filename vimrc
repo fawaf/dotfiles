@@ -2,7 +2,7 @@
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
 " Maintainer:        Felix Wong <felix@xilef.org>
-" Last change:       2015.06.10
+" Last change:       2016.01.22
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -190,5 +190,14 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 call pathogen#infect()
