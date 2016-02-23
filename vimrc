@@ -194,6 +194,7 @@ inoremap <s-tab> <c-n>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+set statusline+=%<%f%m\ \[%{&ff}:%{&fenc}:%Y]\ %{getcwd()}\ %=\ \[%{strftime('%Y/%b/%d\ %a\ %I:%M\ %p')}\]\ \ Line:%l\/%L\ Column:%c%V\ %P
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
