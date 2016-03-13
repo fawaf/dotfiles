@@ -7,15 +7,19 @@ Dir.chdir(dotfiles_dir)
 
 puts "updating repo"
 puts `git pull`
+puts ""
 
 puts "submodule init"
 puts `git submodule init`
+puts ""
 
 puts "submodule sync"
 puts `git submodule sync`
+puts ""
 
 puts "submodule update"
 puts `git submodule update`
+puts ""
 
 files = Dir.glob('*')
 files.each do |file|
@@ -23,5 +27,6 @@ files.each do |file|
   FileUtils.rm_rf("#{ENV['HOME']}/.#{file}", :verbose => true)
   FileUtils.cp_r(file, "#{ENV['HOME']}/.#{file}", :verbose => true, :remove_destination => true)
 end
+
 FileUtils.ln_s("#{ENV['HOME']}/.login", "#{ENV['HOME']}/.zlogin", :force => true, :verbose => true)
 FileUtils.ln_s("#{ENV['HOME']}/.logout", "#{ENV['HOME']}/.zlogout", :force => true, :verbose => true)
