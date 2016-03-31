@@ -1,4 +1,5 @@
 alias aa="tail -f /var/log/apache2/access.log"
+alias ack="ack-grep"
 alias ae="tail -f /var/log/apache2/error.log"
 alias ags="sudo service apache2 graceful"
 alias arl="sudo service apache2 reload"
