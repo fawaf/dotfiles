@@ -2,24 +2,28 @@
 
 require 'fileutils'
 
+def divider
+  puts "=" * 85
+end
+
 dotfiles_dir = File.expand_path(File.dirname(__FILE__))
 Dir.chdir(dotfiles_dir)
 
 puts "updating repo"
 puts `git pull`
-puts ""
+divider
 
 puts "submodule init"
 puts `git submodule init`
-puts ""
+divider
 
 puts "submodule sync"
 puts `git submodule sync`
-puts ""
+divider
 
 puts "submodule update"
 puts `git submodule update`
-puts ""
+divider
 
 files = Dir.glob('*')
 files.each do |file|
@@ -33,7 +37,7 @@ FileUtils.ln_s("#{ENV['HOME']}/.logout", "#{ENV['HOME']}/.zlogout", :force => tr
 
 custom_setup_script = 'setup-custom.rb'
 if File.exist?(custom_setup_script)
-  puts "=" * 88
+  divider
   puts "running addition custom setup script #{custom_setup_script}"
   puts ""
 
