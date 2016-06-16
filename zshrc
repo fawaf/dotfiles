@@ -49,6 +49,8 @@ setopt AUTO_CD              # Skip `cd' when changing to a directory
 setopt NO_BEEP              # "I refer to this informally as the OPEN_PLAN_OFFICE_NO_VIGILANTE_ATTACKS option."
 setopt AUTO_PUSHD           # cd uses directory stack
 setopt PUSHD_SILENT         # make pushd quiet
+setopt PUSHD_TO_HOME        # Have pushd with no arguments act like 'pushd $HOME'
+setopt PUSHD_IGNORE_DUPS    # Don't push multiple copies of the same directory onto the directory stack
 setopt INTERACTIVE_COMMENTS # allow comments in interactive shells
 setopt hist_verify          # perform history substitution and reload the line into the editing buffer
 # }}}
@@ -223,10 +225,11 @@ bindkey . rationalise-dot
 #alias date="/bin/date '+%D %r' | grep --color=auto $day"
 #export day=`/bin/date +%d`
 
-export HISTSIZE=2000  # Maximum size of history list
-export SAVEHIST=1000  # Save the last 1000 commands
-export LISTMAX=0      # Only ask if completion listing would scroll off screen
-export REPORTTIME=60  # Give timing statistics for programs that take longer than a minute to run
+export DIRSTACKSIZE=2000  # maximum size of directory stack
+export HISTSIZE=2000      # Maximum size of history list
+export SAVEHIST=1500      # Save the last 1000 commands
+export LISTMAX=0          # Only ask if completion listing would scroll off screen
+export REPORTTIME=60      # Give timing statistics for programs that take longer than a minute to run
 export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # used to cause "zsh: locking failed for filename: operation not supported: reading anyway" error
 #unset HISTFILE
 unset LS_COLORS

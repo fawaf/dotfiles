@@ -30,3 +30,12 @@ end
 
 FileUtils.ln_s("#{ENV['HOME']}/.login", "#{ENV['HOME']}/.zlogin", :force => true, :verbose => true)
 FileUtils.ln_s("#{ENV['HOME']}/.logout", "#{ENV['HOME']}/.zlogout", :force => true, :verbose => true)
+
+custom_setup_script = 'setup-custom.rb'
+if File.exist?(custom_setup_script)
+  puts "=" * 88
+  puts "running addition custom setup script #{custom_setup_script}"
+  puts ""
+
+  exec(custom_setup_script)
+end
