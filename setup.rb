@@ -28,12 +28,14 @@ divider
 files = Dir.glob('*')
 files.each do |file|
   next if file.start_with?('README', 'LICENSE', 'setup')
-  FileUtils.rm_rf("#{ENV['HOME']}/.#{file}", :verbose => true)
-  FileUtils.cp_r(file, "#{ENV['HOME']}/.#{file}", :verbose => true, :remove_destination => true)
-end
 
-FileUtils.ln_s("#{ENV['HOME']}/.login", "#{ENV['HOME']}/.zlogin", :force => true, :verbose => true)
-FileUtils.ln_s("#{ENV['HOME']}/.logout", "#{ENV['HOME']}/.zlogout", :force => true, :verbose => true)
+  dest = "#{ENV['HOME']}/.#{file}"
+
+  FileUtils.rm_rf(dest, :verbose => true)
+
+  puts "copying entry #{file} to #{dest}"
+  FileUtils.copy_entry(file, dest)
+end
 
 custom_setup_script = 'setup-custom.rb'
 if File.exist?(custom_setup_script)
