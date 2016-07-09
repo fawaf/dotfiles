@@ -11,8 +11,11 @@ then
     ssh-agent -k
 fi
 
-echo yes | sudo -k
-echo yes | sudo -K
+if ! type sudo
+then
+  echo yes | sudo -k
+  echo yes | sudo -K
+fi
 
 rm -f ~/.bash_history
 #rm -f ~/.zhistory*
