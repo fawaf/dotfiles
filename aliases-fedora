@@ -1,1 +1,2 @@
+alias sudo="sudo -E"
 alias update="echo y | sudo yum update --assumeyes"
