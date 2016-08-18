@@ -130,6 +130,9 @@ if [[ "$KERNEL_NAME" == "Linux" ]]; then
     if [[ -f /etc/SuSE-release ]]; then
         source ~/.aliases-suse
     fi
+    if [[ -f /etc/redhat-release ]]; then
+        source ~/.aliases-fedora
+    fi
 elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
     source ~/.aliases-darwin
 elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
