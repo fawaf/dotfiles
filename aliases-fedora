@@ -1,3 +1,8 @@
+alias faa="sudo tail -f /var/log/httpd/access_log"
+alias fae="sudo tail -f /var/log/httpd/error_log"
+alias fsa="sudo tail -f /var/log/httpd/ssl_access_log"
+alias fse="sudo tail -f /var/log/httpd/ssl_error_log"
+alias fsr="sudo tail -f /var/log/httpd/ssl_request_log"
 alias llc="lsl"
 alias lsl="ls --lcontext"
 alias sudo="sudo -E"
