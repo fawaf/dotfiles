@@ -96,21 +96,21 @@ get_configured_ip() {
         return
     elif [ "`uname -a | \grep -i cygwin`" ]
     then
-        export CONFIGURED_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
+        export HOST_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
     else
-        export CONFIGURED_IP="`ifconfig | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}'`"
+        export HOST_IP="`ifconfig eth0 | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}'`"
     fi
-    if [ -z "$CONFIGURED_IP" ]
+    if [ -z "$HOST_IP" ]
     then
         echo '[1;31mNo IP address(es) detected[0;0m'
         return
     fi
     
-    if [ "`echo $CONFIGURED_IP | \grep addr | wc -l`" -eq 1 ]
+    if [ "`echo $HOST_IP | \grep addr | wc -l`" -eq 1 ]
     then
-        HOST_IP="`echo $CONFIGURED_IP | cut -d : -f 2`"
+        CONFIGURED_IP="`echo $HOST_IP | cut -d : -f 2`"
     else
-        HOST_IP="$CONFIGURED_IP"
+        CONFIGURED_IP="$HOST_IP"
     fi
 }
 # }}}
@@ -118,9 +118,10 @@ get_configured_ip() {
 # set hostname variables {{{
 set_host_variables() {
     get_configured_ip
-    if [ -z "$HOST_IP" ]
+    if [ -z "$CONFIGURED_IP" ]
     then
-        export EXTERNALIP="127.0.0.1"
+        export INTERNALIP="NONE"
+        export EXTERNALIP="NONE"
         export EXTERNALHOST="`hostname -f`"
         export INTERNALHOST="`hostname -f`"
         export EXTERNALHOSTNAME="`hostname -s`"
@@ -128,27 +129,36 @@ set_host_variables() {
         export EXTERNALDOMAIN="`hostname -f`"
         export INTERNALDOMAIN="`hostname -f`"
     else
-      which curl &> /dev/null
-      if [ $? -eq 0 ]
-      then
-          export PUBLIC_IP="`curl -4 -sf -m 2 https://www.fawong.com/ip.php`"
-      else
-          export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
-      fi
-      
-      if [ "$PUBLIC_IP" =~ "^[0-9].+" ]
-      then
-          export EXTERNALIP="$PUBLIC_IP"
-          export EXTERNALHOST="`host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
-          export INTERNALHOST="`host $HOST_IP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
-          export EXTERNALHOSTNAME="`echo $EXTERNALHOST | cut -d'.' -f1`"
-          export INTERNALHOSTNAME="`echo $INTERNALHOST | cut -d'.' -f1`"
-          export EXTERNALDOMAIN="`echo $EXTERNALHOST | cut -d'.' -f2-`"
-          export INTERNALDOMAIN="`echo $INTERNALHOST | cut -d'.' -f2-`"
-      fi
+        if which curl &> /dev/null
+        then
+            export PUBLIC_IP="`curl -4 -sf -m 2 https://www.fawong.com/ip.php`"
+        else
+            export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
+        fi
+
+        if [ "$PUBLIC_IP" =~ "^[0-9].+" ]
+        then
+            export EXTERNALIP="$PUBLIC_IP"
+            export EXTERNALHOST="`host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
+            export EXTERNALHOSTNAME="`echo $EXTERNALHOST | cut -d'.' -f1`"
+            export EXTERNALDOMAIN="`echo $EXTERNALHOST | cut -d'.' -f2-`"
+
+            export INTERNALIP="$CONFIGURED_IP"
+            if [ "$EXTERNALIP" == "$INTERNALIP" ]
+            then
+                export INTERNALHOST="$EXTERNALHOST"
+                export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
+                export INTERNALDOMAIN="$EXTERNALDOMAIN"
+            else
+                export INTERNALHOST="`host $INTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
+                export INTERNALHOSTNAME="`echo $INTERNALHOST | cut -d'.' -f1`"
+                export INTERNALDOMAIN="`echo $INTERNALHOST | cut -d'.' -f2-`"
+            fi
+        fi
     fi
 
-    if [ x"$1" == x"" ]
+    HOST="$1"
+    if [ x"$HOST" == x"" ]
     then
         if [ x"$EXTERNALHOST" != x"" ]
         then
@@ -160,7 +170,7 @@ set_host_variables() {
             export REALHOST="`hostname -f`"
         fi
     else
-        export REALHOST="$1"
+        export REALHOST="$HOST"
     fi
 }
 # }}}

@@ -153,7 +153,7 @@ $PR_LIGHT_CYAN%D{%Y-%m-%d} %* $PR_MAGENTA%#$PR_NO_COLOR "
 # }}}
 
 # Set variables {{{
-set_host_variables
+#set_host_variables
 # use current user@host as the prefix of the current tab title
 export TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
 # when at the shell prompt, show a truncated version of the current path (with
