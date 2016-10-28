@@ -134,7 +134,7 @@ set_prompt() {
     export RPS1END='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
     export PS1BEGIN='%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST'
     export PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
-$PR_LIGHT_CYAN%D{%Y-%m-%d} %* $PR_MAGENTA%#$PR_NO_COLOR "
+$PR_LIGHT_CYAN%D{%Y-%m-%d} (%D{%Y.%V}) %* $PR_MAGENTA%#$PR_NO_COLOR "
     
     if [ -f $HOME/.zsh-prompt ]
     then
@@ -148,6 +148,9 @@ $PR_LIGHT_CYAN%D{%Y-%m-%d} %* $PR_MAGENTA%#$PR_NO_COLOR "
         fi
         export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
         #export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)$PR_LIGHT_CYAN%*$PR_NO_COLOR'
+
+        export PROMPT="$PS1"
+        export RPROMPT="$RPS1"
     fi
 }
 # }}}
