@@ -106,9 +106,9 @@ if has("autocmd")
   augroup vimrcEx
     au!
 
-    " For all text files set 'textwidth' to 79 characters.
-    autocmd FileType text setlocal textwidth=79
-    set textwidth=89
+    " For all text files set 'textwidth' to 99 characters.
+    autocmd FileType text setlocal textwidth=99
+    set textwidth=99
     if exists('+colorcolumn')
       set colorcolumn=+1        " highlight column after 'textwidth'
     else
