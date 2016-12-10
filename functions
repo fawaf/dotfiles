@@ -113,7 +113,7 @@ get_configured_ip() {
         NIC="en0"
     elif [ "$(uname -a | \grep -i linux)" ]
     then
-        NIC=$(ip addr | \grep -v lo | \grep '<' | \grep -v NO-CARRIER | head -1 | cut -d: -f2 | cut -d' ' -f2)
+        NIC=$(ip addr | \grep -v lo | \grep '<' | \grep -v NO-CARRIER | \grep -v -w DOWN | head -1 | cut -d: -f2 | cut -d' ' -f2)
     else
         echo "Unsupported OS while determining host ip"
     fi
