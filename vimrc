@@ -148,9 +148,9 @@ if has("autocmd")
   "  au BufReadPre * setlocal foldmethod=indent
   "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
   "augroup END
-  "let g:detectindent_preferred_expandtab = 1
-  "let g:detectindent_preferred_indent = 4
-  "let g:detectindent_max_lines_to_analyse = 1024
+  let g:detectindent_preferred_expandtab = 1
+  let g:detectindent_preferred_indent = 4
+  let g:detectindent_max_lines_to_analyse = 1024
   map <leader>p :set paste
   map <leader>n :set nopaste
   cmap cel colorscheme elflord
