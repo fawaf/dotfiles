@@ -39,6 +39,7 @@ setopt EXTENDED_GLOB
 setopt PROMPT_SUBST         # Required for the prompt
 setopt SHARE_HISTORY        # Share history between multiple instances of zsh
 setopt EXTENDED_HISTORY     # Put beginning and ending timestamps in the history file
+setopt INC_APPEND_HISTORY   # save every command before it is executed
 setopt AUTO_LIST            # Show possible matches if completion can't figure out what to do
 setopt AUTO_RESUME          # Commands without arguments will first try to resume suspended programs of the same name
 setopt HIST_IGNORE_DUPS     # Sequential duplicate commands only get one history entry
