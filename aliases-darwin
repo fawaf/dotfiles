@@ -1,5 +1,6 @@
 alias brewupdate="brew update && brew update && brew upgrade && brew upgrade"
 alias cdd="cd ~/Desktop"
+alias cp="cp -i -v"
 alias chmod="chmod -v"
 alias gi="rm -rfv .git/hooks && git init"
 alias l@="ls -l -@"
