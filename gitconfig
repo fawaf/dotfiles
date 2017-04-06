@@ -1,8 +1,3 @@
-[user]
-  name = Felix Wong
-  email = felixcom
-  signingkey = 5EC898AE
-
 [core]
   excludesfile = ~/.gitignore_global
 
@@ -47,11 +42,14 @@
   rebase = true
 
 [init]
-  templatedir = /home/waf/.git_templates
+  templatedir = ~/.git_templates
 
 [log]
   decorate = short
 
 [commit]
-  template = /home/waf/.git_commit_message
+  template = ~/.git_commit_message
   gpgsign = true
+
+[include]
+  path = ~/.gitconfig-custom
