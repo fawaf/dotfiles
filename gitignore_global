@@ -35,6 +35,7 @@ Thumbs.db
 .settings/
 
 # misc
+z
 z.*
 git.sh
 compile.sh
