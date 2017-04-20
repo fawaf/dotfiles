@@ -13,7 +13,7 @@ termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'    # Don't resize xterm
 altscreen on
 autodetach on
 defutf8 on          # Do everything in UTF-8
-defscrollback 15000 # Large scrollback
+defscrollback 55000 # Large scrollback
 defnonblock on      # Don't block the whole session if a window goes unresponsive
 defbce on
 #nethack on         # Be careful!  New screen tonight.
