@@ -37,25 +37,34 @@ end
 
 Dir.chdir(dotfiles_dir)
 
-puts "updating repo"
-puts `git pull`
-divider
+print "updating repo... "
+pull = `git pull`
+puts "done."
+puts pull if verbose
+divider if verbose
 
-puts "submodule init"
-puts `git submodule init`
-divider
+print "submodule init... "
+init = `git submodule init`
+puts "done."
+puts init if verbose
+divider if verbose
 
-puts "submodule sync"
-puts `git submodule sync`
-divider
+print "submodule sync... "
+sync = `git submodule sync`
+puts "done."
+puts sync if verbose
+divider if verbose
 
-puts "submodule update"
-puts `git submodule update`
-divider
+print "submodule update... "
+update = `git submodule update`
+puts "done."
+puts update if verbose
+divider if verbose
 
 config = JSON.parse(File.read(config_file))
 puts config if verbose
 
+print "copying dotfiles... "
 entries = Dir.glob('*')
 entries.each do |entry|
   next if entry.start_with?('README', 'LICENSE', 'setup', 'config', 'Makefile')
@@ -75,6 +84,7 @@ entries.each do |entry|
     FileUtils.copy_entry(entry, dest)
   end
 end
+puts "done."
 
 custom_setup_script = 'setup-custom.rb'
 if File.exist?(custom_setup_script)
