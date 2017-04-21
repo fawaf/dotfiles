@@ -1,5 +1,13 @@
 all: setup
 
+verb: verbose
+
+verbose:
+	./setup.rb --verbose
+
+dev:
+	./setup.rb --dev
+
 setup:
 	./setup.rb
 
