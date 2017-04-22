@@ -64,7 +64,7 @@ divider if verbose
 config = JSON.parse(File.read(config_file))
 puts config if verbose
 
-print "copying dotfiles... "
+print "setting up dotfiles... "
 entries = Dir.glob('*')
 entries.each do |entry|
   next if entry.start_with?('README', 'LICENSE', 'setup', 'config', 'Makefile')

@@ -9,6 +9,17 @@ Requirements
 * fileutils
 * json
 
+Config
+------
+```json
+{
+  "append": [
+    "gnupg"
+  ]
+}
+```
+* "append" - directories to not overwrite and append to
+
 Contributors
 ------------
 [csivanich](https://github.com/csivanich/dotfiles) for tmux configs
