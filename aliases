@@ -118,6 +118,7 @@ alias vimotd="sudo $EDITOR /etc/motd"
 alias vi="vim"
 alias vm="mv"
 alias watch="watch --interval 0"
+alias wget="wget --content-disposition"
 alias whcih="which"
 alias za="$EDITOR ~/.zshrc-custom && source ~/.zshrc"
 # }}}
