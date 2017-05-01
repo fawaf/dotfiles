@@ -23,3 +23,4 @@ Config
 Contributors
 ------------
 [csivanich](https://github.com/csivanich/dotfiles) for tmux configs
+[csivanich](https://github.com/csivanich/dotfiles) for i3 configs

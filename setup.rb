@@ -31,8 +31,10 @@ else
   home_dir = ENV['HOME']
 end
 
-def divider
-  puts "=" * 85
+def divider(index = 0)
+  if index > 0
+    puts "=" * 85
+  end
 end
 
 Dir.chdir(dotfiles_dir)
@@ -66,12 +68,13 @@ puts config if verbose
 
 print "setting up dotfiles... "
 entries = Dir.glob('*')
-entries.each do |entry|
+entries.each_with_index do |entry,index|
   next if entry.start_with?('README', 'LICENSE', 'setup', 'config', 'Makefile')
 
   dest = "#{home_dir}/.#{entry}"
   puts "dest is #{dest}" if verbose
 
+  puts "entry is #{entry}" if verbose
   if config["append"].include?(entry)
     Dir.glob("#{entry}/*").each do |e|
       FileUtils.copy(e, dest, :verbose => verbose)
@@ -83,6 +86,7 @@ entries.each do |entry|
     puts "copying entry #{entry} to #{dest}" if verbose
     FileUtils.copy_entry(entry, dest)
   end
+  divider(index) if verbose
 end
 puts "done."
 
