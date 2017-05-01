@@ -28,17 +28,22 @@ workspace_auto_back_and_forth yes
 for_window [class="Xfce4-notifyd"] floating enable
 for_window [class="jetbrains-idea-ce"] floading disable
 
-exec --no-startup-id which gpaste-client && gpaste-client applet
-exec --no-startup-id which compton && compton -b
-exec --no-startup-id which connman-notify && connman-notify &
-exec --no-startup-id which dunst && dunst &
-exec --no-startup-id which nitrogen && nitrogen --restore
-exec --no-startup-id which synsei && synsei load default
-exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
-exec --no-startup-id which xbindkeys && xbindkeys
-exec --no-startup-id which redshift-gtk && redshift-gtk
+#exec --no-startup-id which gpaste-client && gpaste-client applet
+#exec --no-startup-id which compton && compton -b
+#exec --no-startup-id which connman-notify && connman-notify &
+#exec --no-startup-id which dunst && dunst &
+#exec --no-startup-id which nitrogen && nitrogen --restore
+#exec --no-startup-id which synsei && synsei load default
+#exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
+#exec --no-startup-id which xbindkeys && xbindkeys
+#exec --no-startup-id which redshift-gtk && redshift-gtk
+#exec --no-startup-id which nm-applet && nm-applet &
+
+exec --no-startup-id xrandr --output HDMI1 --auto --left-of DP1
+exec --no-startup-id xmodmap -e "remove lock = Caps_Lock"
+exec --no-startup-id xmodmap -e "keycode 66 = Control_L" # 66 is caps lock key
+exec --no-startup-id xmodmap -e "add control = Control_L"
 exec --no-startup-id which xscreensaver && xscreensaver &
-exec --no-startup-id which nm-applet && nm-applet &
 
 # Move the current workspace to other outputs
 bindsym $mod+Up move workspace to output up
@@ -106,38 +111,28 @@ bindsym $mod+a focus parent
 bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1: Terminal
-bindsym $mod+2 workspace 2: Mosh
-bindsym $mod+3 workspace 3:
-bindsym $mod+4 workspace 4: Okta
-bindsym $mod+5 workspace 5: VNC
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8: Steam
-bindsym $mod+9 workspace 9: Firefox
-bindsym $mod+0 workspace 10: Chromium
-bindsym $mod+m workspace M: Music
-bindsym $mod+c workspace Calendar
-bindsym $mod+t workspace Trello
-bindsym $mod+i workspace Inbox
-bindsym $mod+v workspace VM
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1: Terminal
-bindsym $mod+Shift+2 move container to workspace 2: Mosh
-bindsym $mod+Shift+3 move container to workspace 3:
-bindsym $mod+Shift+4 move container to workspace 4: Okta
-bindsym $mod+Shift+5 move container to workspace 5: VNC
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8: Steam
-bindsym $mod+Shift+9 move container to workspace 9: Firefox
-bindsym $mod+Shift+0 move container to workspace 10: Chromium
-bindsym $mod+Shift+m move container to workspace M: Music
-bindsym $mod+Shift+c move container to workspace Calendar
-bindsym $mod+Shift+t move container to workspace Trello
-bindsym $mod+Shift+i move container to workspace Inbox
-bindsym $mod+Shift+v move container to workspace VM
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+r reload

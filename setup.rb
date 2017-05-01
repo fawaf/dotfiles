@@ -65,9 +65,9 @@ config = JSON.parse(File.read(config_file))
 puts config if verbose
 
 print "setting up dotfiles... "
-entries = Dir.glob('*')
+entries = Dir.glob('*').sort
 entries.each_with_index do |entry,index|
-  next if entry.start_with?('README', 'LICENSE', 'setup', 'config', 'Makefile')
+  next if entry.start_with?('README', 'LICENSE', 'setup', 'config.json', 'Makefile')
   divider(index) if verbose
 
   dest = "#{home_dir}/.#{entry}"
@@ -76,7 +76,8 @@ entries.each_with_index do |entry,index|
   puts "entry is #{entry}" if verbose
   if config["append"].include?(entry)
     Dir.glob("#{entry}/*").each do |e|
-      FileUtils.copy(e, dest, :verbose => verbose)
+      puts "copying entry #{e} to #{dest}" if verbose
+      FileUtils.cp_r(e, dest, :verbose => verbose)
     end
   else
     puts "removing #{dest}" if verbose
