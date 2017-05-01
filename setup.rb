@@ -31,10 +31,8 @@ else
   home_dir = ENV['HOME']
 end
 
-def divider(index = 0)
-  if index > 0
-    puts "=" * 85
-  end
+def divider(index = 1, times = 85)
+  puts "=" * times if index > 0
 end
 
 Dir.chdir(dotfiles_dir)
@@ -70,6 +68,7 @@ print "setting up dotfiles... "
 entries = Dir.glob('*')
 entries.each_with_index do |entry,index|
   next if entry.start_with?('README', 'LICENSE', 'setup', 'config', 'Makefile')
+  divider(index) if verbose
 
   dest = "#{home_dir}/.#{entry}"
   puts "dest is #{dest}" if verbose
@@ -86,7 +85,6 @@ entries.each_with_index do |entry,index|
     puts "copying entry #{entry} to #{dest}" if verbose
     FileUtils.copy_entry(entry, dest)
   end
-  divider(index) if verbose
 end
 puts "done."
 
