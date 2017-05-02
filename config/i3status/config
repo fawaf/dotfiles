@@ -13,6 +13,7 @@ general {
 
 order += "ipv6"
 order += "disk /"
+order += "disk /home"
 order += "run_watch DHCP"
 order += "run_watch VPN"
 order += "wireless _first_"
@@ -20,6 +21,7 @@ order += "ethernet _first_"
 order += "battery 0"
 order += "load"
 order += "tztime local"
+order += "tztime UTC"
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
@@ -41,17 +43,30 @@ run_watch DHCP {
 }
 
 run_watch VPN {
-        pidfile = "/var/run/vpnc/pid"
+        pidfile = "/var/run/openvpn/client.pid"
+}
+
+tztime UTC {
+        format = "UTC: %Y-%m-%d %H:%M:%S"
+        timezone = "UTC"
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format = "local: %Y-%m-%d %H:%M:%S"
 }
 
 load {
-        format = "%1min"
+        format = "%1min %5min %15min"
 }
 
 disk "/" {
-        format = "%avail"
+        format = "%used/%total (%avail) %free"
+        low_threshold = "5"
+        threshold_type = "percentage_free"
+}
+
+disk "/home" {
+        format = "%used/%total (%avail) %free"
+        low_threshold = 5
+        threshold_type = percentage_free
 }
