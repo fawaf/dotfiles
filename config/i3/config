@@ -39,9 +39,8 @@ for_window [class="jetbrains-idea-ce"] floading disable
 #exec --no-startup-id which nm-applet && nm-applet &
 
 exec --no-startup-id xrandr --output HDMI1 --auto --left-of DP1
-exec --no-startup-id xmodmap -e "remove lock = Caps_Lock"
-exec --no-startup-id xmodmap -e "keycode 66 = Control_L" # 66 is caps lock key
-exec --no-startup-id xmodmap -e "add control = Control_L"
+# 66 is cap lock key
+exec --no-startup-id xmodmap -e "remove lock = Caps_Lock" && xmodmap -e "keycode 66 = Control_L" && xmodmap -e "add control = Control_L"
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which xscreensaver && xscreensaver &
 
