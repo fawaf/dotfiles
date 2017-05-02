@@ -67,7 +67,7 @@ puts config if verbose
 print "setting up dotfiles... "
 entries = Dir.glob('*').sort
 entries.each_with_index do |entry,index|
-  next if entry.start_with?('README', 'LICENSE', 'setup', 'config.json', 'Makefile')
+  next if entry.start_with?('README', 'LICENSE', 'setup', 'config.json', 'Makefile', 'update-')
   divider(index) if verbose
 
   dest = "#{home_dir}/.#{entry}"
