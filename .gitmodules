@@ -8,7 +8,7 @@
 	path = vim/bundle/detectindent
 	url = https://github.com/ciaranm/detectindent.git
 [submodule "vim/buftabs"]
-	path = vim/buftabs
+	path = vim/bundle/buftabs
 	url = https://github.com/vim-scripts/buftabs.git
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
@@ -25,3 +25,6 @@
 [submodule "vim/bundle/vim-terraform"]
 	path = vim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
+[submodule "vim/bundle/i3-vim-syntax"]
+	path = vim/bundle/i3-vim-syntax
+	url = https://github.com/PotatoesMaster/i3-vim-syntax.git
