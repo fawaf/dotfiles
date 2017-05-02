@@ -9,12 +9,18 @@ Requirements
 * fileutils
 * json
 
-Config
-------
+Install
+-------
+1. clone the repo (`git clone https://github.com/gnowxilef/dotfiles.git PATH_TO_DOTFILES`)
+2. execute `PATH_TO_DOTFILES/setup.rb`
+
+### Config
 ```json
 {
   "append": [
-    "gnupg"
+    "gnupg",
+    "config",
+    "other_dir"
   ]
 }
 ```

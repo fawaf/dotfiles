@@ -1,0 +1,6 @@
+{
+  "append": [
+    "gnupg",
+    "config"
+  ]
+}
