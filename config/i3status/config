@@ -8,20 +8,26 @@
 
 general {
         colors = true
-        interval = 5
+        interval = 3
 }
 
-order += "ipv6"
+order += "volume master"
 order += "disk /"
 order += "disk /home"
 order += "run_watch DHCP"
 order += "run_watch VPN"
-order += "wireless _first_"
 order += "ethernet _first_"
-order += "battery 0"
+order += "wireless _first_"
 order += "load"
+order += "battery 0"
+#order += "ipv6"
 order += "tztime local"
 order += "tztime UTC"
+
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+}
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
@@ -52,7 +58,7 @@ tztime UTC {
 }
 
 tztime local {
-        format = "local: %Y-%m-%d %H:%M:%S"
+        format = "%Y-%m-%d %H:%M:%S"
 }
 
 load {
@@ -60,13 +66,13 @@ load {
 }
 
 disk "/" {
-        format = "%used/%total (%avail) %free"
+        format = "/: %used/%total (%avail) %free"
         low_threshold = "5"
         threshold_type = "percentage_free"
 }
 
 disk "/home" {
-        format = "%used/%total (%avail) %free"
+        format = "/home: %used/%total (%avail) %free"
         low_threshold = 5
         threshold_type = percentage_free
 }
