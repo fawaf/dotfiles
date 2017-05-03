@@ -9,6 +9,10 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# Mod1 is alt key
+# Mod4 is super/windows key
+# keycode 66 is cap lock key
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -31,15 +35,14 @@ for_window [class="jetbrains-idea-ce"] floading disable
 #exec --no-startup-id which gpaste-client && gpaste-client applet
 #exec --no-startup-id which compton && compton -b
 #exec --no-startup-id which connman-notify && connman-notify &
-#exec --no-startup-id which dunst && dunst &
 #exec --no-startup-id which synsei && synsei load default
 #exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
 #exec --no-startup-id which xbindkeys && xbindkeys
 #exec --no-startup-id which redshift-gtk && redshift-gtk
 #exec --no-startup-id which nm-applet && nm-applet &
 
+exec --no-startup-id which dunst && dunst &
 exec --no-startup-id xrandr --output HDMI1 --auto --left-of DP1
-# 66 is cap lock key
 exec --no-startup-id xmodmap -e "remove lock = Caps_Lock" && xmodmap -e "keycode 66 = Control_L" && xmodmap -e "add control = Control_L"
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which xscreensaver && xscreensaver &
@@ -75,6 +78,9 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+
+bindsym $mod+bracketleft focus left
+bindsym $mod+bracketright focus right
 
 # Move windows with VIM-style keybindings
 bindsym $mod+Shift+h move left
