@@ -38,7 +38,7 @@ end
 Dir.chdir(dotfiles_dir)
 
 print "updating repo... "
-pull = `git pull`
+pull = `git pull &> /dev/stdout`
 puts "done."
 puts pull if verbose
 divider if verbose
