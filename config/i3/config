@@ -47,6 +47,7 @@ exec --no-startup-id which dunst && dunst &
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which xscreensaver && xscreensaver &
 exec --no-startup-id which parcellite && parcellite &
+exec --no-startup-id which fluxgui && fluxgui &
 
 # Move the current workspace to other outputs
 bindsym $mod+Up move workspace to output up
