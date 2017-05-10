@@ -76,18 +76,18 @@ bindsym $mod+q kill
 bindsym $mod+space exec --no-startup-id "$HOME/bin/dmenu-wrapper"
 
 # Change window focus with VIM-style keybindings
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+h focus output left
+bindsym $mod+j focus output down
+bindsym $mod+k focus output up
+bindsym $mod+l focus output right
 
 bindsym $mod+bracketleft focus left
 bindsym $mod+bracketright focus right
 
-bindsym $mod+Shift+Left focus output left
-bindsym $mod+Shift+Down focus output down
-bindsym $mod+Shift+Up focus output up
-bindsym $mod+Shift+Right focus output right
+bindsym $mod+Shift+Left focus left
+bindsym $mod+Shift+Down focus down
+bindsym $mod+Shift+Up focus up
+bindsym $mod+Shift+Right focus right
 
 # Move windows with VIM-style keybindings
 bindsym $mod+Shift+h move left
