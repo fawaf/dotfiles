@@ -50,10 +50,10 @@ exec --no-startup-id which parcellite && parcellite &
 exec --no-startup-id which fluxgui && fluxgui &
 
 # Move the current workspace to other outputs
-bindsym $mod+Up move workspace to output up
-bindsym $mod+Down move workspace to output down
-bindsym $mod+Left move workspace to output left
-bindsym $mod+Right move workspace to output right
+bindsym Control+$mod+Shift+Up move workspace to output up
+bindsym Control+$mod+Shift+Down move workspace to output down
+bindsym Control+$mod+Shift+Left move workspace to output left
+bindsym Control+$mod+Shift+Right move workspace to output right
 
 # Layout a grid (g)
 bindsym $mod+g split h, focus down, move up, focus down
@@ -83,6 +83,11 @@ bindsym $mod+l focus right
 
 bindsym $mod+bracketleft focus left
 bindsym $mod+bracketright focus right
+
+bindsym $mod+Shift+Left focus output left
+bindsym $mod+Shift+Down focus output down
+bindsym $mod+Shift+Up focus output up
+bindsym $mod+Shift+Right focus output right
 
 # Move windows with VIM-style keybindings
 bindsym $mod+Shift+h move left
@@ -130,6 +135,10 @@ bindsym Control+Mod1+Shift+2 move container to workspace 2
 bindsym Control+Mod1+Shift+3 move container to workspace 3
 bindsym Control+Mod1+Shift+4 move container to workspace 4
 bindsym Control+Mod1+Shift+5 move container to workspace 5
+
+# focus workspace
+bindsym $mod+Left workspace prev_on_output
+bindsym $mod+Right workspace next_on_output
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
