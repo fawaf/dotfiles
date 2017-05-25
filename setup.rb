@@ -92,7 +92,7 @@ puts "done."
 custom_setup_script = 'setup-custom.rb'
 if File.exist?(custom_setup_script)
   divider
-  puts "running addition custom setup script #{custom_setup_script}"
+  puts "running custom setup script #{custom_setup_script}"
   puts ""
 
   exec(custom_setup_script)
