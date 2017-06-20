@@ -53,7 +53,7 @@ run_watch VPN {
 }
 
 tztime UTC {
-        format = "UTC: %A %Y-%m-%d (%Y.%V) %H:%M:%S"
+        format = "UTC: %Y-%m-%d %H:%M:%S"
         timezone = "UTC"
 }
 
