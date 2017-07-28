@@ -28,3 +28,6 @@
 [submodule "vim/bundle/i3-vim-syntax"]
 	path = vim/bundle/i3-vim-syntax
 	url = https://github.com/PotatoesMaster/i3-vim-syntax.git
+[submodule "vim/bundle/vim-chef"]
+	path = vim/bundle/vim-chef
+	url = https://github.com/vadv/vim-chef.git
