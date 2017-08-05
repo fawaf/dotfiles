@@ -2,13 +2,15 @@
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
 " Maintainer:        Felix Wong <felix@xilef.org>
-" Last change:       2016.01.22
+" Last change:       2017.08.05
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
 "           for OpenVMS:  sys$login:.vimrc
 "     for *nix and OS/2:  ~/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
+
+setglobal modeline
 
 if &term=="xterm" || &term=="xterm-color" || &term=="xterm-256color"
   set t_Co=8
