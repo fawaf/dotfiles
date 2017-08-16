@@ -142,6 +142,10 @@ if has("autocmd")
           \ | wincmd p | diffthis
   endif
 
+  "augroup vimrc
+  "  au BufReadPre * setlocal foldmethod=indent
+  "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+  "augroup END
 else
 
   set autoindent                " always set autoindenting on
@@ -168,10 +172,7 @@ set encoding=utf-8
 set foldmethod=marker
 set foldenable
 set ls=2
-"augroup vimrc
-"  au BufReadPre * setlocal foldmethod=indent
-"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-"augroup END
+
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 let g:detectindent_max_lines_to_analyse = 1024
@@ -200,9 +201,9 @@ set cursorline
 function! InsertTabWrapper()
   let col = col('.') - 1
   if !col || getline('.')[col - 1] !~ '\k'
-      return "\<tab>"
+    return "\<tab>"
   else
-      return "\<c-p>"
+    return "\<c-p>"
   endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
