@@ -128,7 +128,7 @@ if has("autocmd")
           \   exe "normal! g`\"" |
           \ endif
 
-    autocmd FileType ruby,eruby set filetype=ruby.eruby.chef
+    autocmd FileType ruby,eruby set filetype=ruby.eruby
   augroup END
 
   " Convenient command to see the difference between the current buffer and the
