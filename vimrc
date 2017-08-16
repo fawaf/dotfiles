@@ -1,8 +1,11 @@
 " A vimrc file.
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
+" Contributors:      https://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
+"
 " Maintainer:        Felix Wong <felix@xilef.org>
-" Last change:       2017.08.05
+"
+" Last change:       2017.08.15
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -139,38 +142,50 @@ if has("autocmd")
           \ | wincmd p | diffthis
   endif
 
-  " Alias :WQ to save with sudo
-  cnoremap WQ w !sudo tee % > /dev/null
-  set number
-  set ic
-  set encoding=utf-8
-  set foldmethod=marker
-  set foldenable
-  set ls=2
-  "augroup vimrc
-  "  au BufReadPre * setlocal foldmethod=indent
-  "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-  "augroup END
-  let g:detectindent_preferred_expandtab = 1
-  let g:detectindent_preferred_indent = 4
-  let g:detectindent_max_lines_to_analyse = 1024
-  map <leader>p :set paste
-  map <leader>n :set nopaste
-  cmap cel colorscheme elflord
-  cmap stw set textwidth=999999
-
-  " Instead of failing a command because of unsaved changes, instead raise a
-  " dialogue asking if you wish to save changed files.
-  set confirm
-
-  " Remove byte order mark
-  set nobomb
-
 else
 
   set autoindent                " always set autoindenting on
 
 endif " has("autocmd")
+
+" Alias :WQ to save with sudo
+cnoremap WQ w !sudo tee % > /dev/null
+
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set norelativenumber
+    set number
+  else
+    set nonumber
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <C-n> :call NumberToggle()<cr>
+
+set ic
+set encoding=utf-8
+set foldmethod=marker
+set foldenable
+set ls=2
+"augroup vimrc
+"  au BufReadPre * setlocal foldmethod=indent
+"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+"augroup END
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+let g:detectindent_max_lines_to_analyse = 1024
+map <leader>p :set paste
+map <leader>n :set nopaste
+cmap cel colorscheme elflord
+cmap stw set textwidth=999999
+
+" Instead of failing a command because of unsaved changes, instead raise a
+" dialogue asking if you wish to save changed files.
+set confirm
+
+" Remove byte order mark
+set nobomb
 
 set expandtab
 set smartindent
@@ -178,18 +193,17 @@ set tabstop=2
 set shiftwidth=2
 set cursorline
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+      return "\<tab>"
+  else
+      return "\<c-p>"
+  endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
