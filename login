@@ -2,9 +2,11 @@
 
 export LANG="en_US.UTF-8"
 
+
 rm -f ~/Downloads/*.part
 rm -f ~/Desktop/*.part
 
+# {{{ sanity checks
 if [ -f /etc/motd ]
 then
     uname -a | diff -q - <(cat /etc/motd | \grep "`uname -a`")
@@ -16,10 +18,12 @@ then
     uptime
 fi
 
-if [ -e /usr/bin/klist ]
+type klist > /dev/null
+if [ $? -eq 0 ]
 then
     klist
 fi
+# }}}
 
 unset LS_COLORS
 
@@ -37,12 +41,15 @@ unset LS_COLORS
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-ENABLE_SSH_AGENT="false"
-
+# custom login {{{
 if [ -f ~/.login-custom ]
 then
     source ~/.login-custom
 fi
+# }}}
+
+# ssh agent {{{
+ENABLE_SSH_AGENT="false"
 
 if [ "x$ENABLE_SSH_AGENT" == "xtrue" ]
 then
@@ -56,3 +63,4 @@ then
         export KILL_SSH_AGENT_ON_LOGOUT="true"
     fi
 fi
+# }}}
