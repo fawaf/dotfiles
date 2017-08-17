@@ -1,4 +1,3 @@
-#export TERM=xterm-color
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # MacPorts Installer addition on 2014-10-05_at_22:33:48: adding an appropriate PATH variable for use with MacPorts.

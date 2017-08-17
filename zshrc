@@ -13,10 +13,6 @@
 
 cd ~
 
-# global source {{{
-source $HOME/.functions
-# }}}
-
 # set term type {{{
 # If ncurses is installed, use tput to gracefully degrade termtypes.
 settermtype
@@ -241,6 +237,7 @@ unset LS_COLORS
 
 # Sources {{{
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 if [ -f $HOME/.zshrc-custom ]
 then
     source $HOME/.zshrc-custom

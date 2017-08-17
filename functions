@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # echo with color {{{
 echo_color() {
@@ -13,7 +13,8 @@ echo_color() {
 
 # extract {{{
 extract() { # Handy Extract Program.
-  if [ -f "$1" ] ; then
+  if [[ -f "$1" ]]
+  then
     case "$1" in
       *.tar.bz2)   tar xvjf "$1"     ;;
       *.tar.gz)    tar xvzf "$1"     ;;
@@ -104,34 +105,34 @@ set_titlebar() {
 get_configured_ip() {
     NIC=""
 
-    if [ "$(uname -a | \grep grsec)" ]
+    if [[ "$(uname -a | \grep grsec)" ]]
     then
         return
-    elif [ "$(uname -a | \grep -i cygwin)" ]
+    elif [[ "$(uname -a | \grep -i cygwin)" ]]
     then
         export HOST_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
-    elif [ "$(uname -a | \grep -i darwin)" ]
+    elif [[ "$(uname -a | \grep -i darwin)" ]]
     then
         NIC="en0"
-    elif [ "$(uname -a | \grep -i linux)" ]
+    elif [[ "$(uname -a | \grep -i linux)" ]]
     then
         NIC=$(ip addr | \grep -v lo | \grep '<' | \grep -v NO-CARRIER | \grep -v -w DOWN | head -1 | cut -d: -f2 | cut -d' ' -f2)
     else
         echo "Unsupported OS while determining host ip"
     fi
 
-    if [ -n "${NIC}" ]
+    if [[ -n "${NIC}" ]]
     then
         export HOST_IP="$(ifconfig ${NIC} | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}')"
     fi
 
-    if [ -z "$HOST_IP" ]
+    if [[ -z "$HOST_IP" ]]
     then
         echo_color red 'No IP address(es) detected'
         return
     fi
     
-    if [ "`echo $HOST_IP | \grep addr | wc -l`" -eq 1 ]
+    if [[ "`echo $HOST_IP | \grep addr | wc -l`" -eq 1 ]]
     then
         CONFIGURED_IP="`echo $HOST_IP | cut -d : -f 2`"
     else
@@ -154,11 +155,11 @@ set_local_host_variables() {
 
 set_host_variables() {
     get_configured_ip
-    if [ -z "$CONFIGURED_IP" ]
+    if [[ -z "$CONFIGURED_IP" ]]
     then
         set_local_host_variables
     else
-        if [ -z "$DISABLE_PUBLIC_IP_CHECK" ]
+        if [[ -z "$DISABLE_PUBLIC_IP_CHECK" ]]
         then
             if which curl &> /dev/null
             then
@@ -167,7 +168,7 @@ set_host_variables() {
                 export PUBLIC_IP="`wget -4 -q -O - -T 2 https://www.fawong.com/ip.php`"
             fi
 
-            if [ "$PUBLIC_IP" =~ "^[0-9].+" ]
+            if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
             then
                 export EXTERNALIP="$PUBLIC_IP"
                 export EXTERNALHOST="`host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//'`"
@@ -175,7 +176,7 @@ set_host_variables() {
                 export EXTERNALDOMAIN="`echo $EXTERNALHOST | cut -d'.' -f2-`"
 
                 export INTERNALIP="$CONFIGURED_IP"
-                if [ "$EXTERNALIP" == "$INTERNALIP" ]
+                if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
                 then
                     export INTERNALHOST="$EXTERNALHOST"
                     export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
@@ -192,12 +193,12 @@ set_host_variables() {
     fi
 
     HOST="$1"
-    if [ x"$HOST" == x"" ]
+    if [[ x"$HOST" == x"" ]]
     then
-        if [ x"$EXTERNALHOST" != x"" ]
+        if [[ x"$EXTERNALHOST" != x"" ]]
         then
             export REALHOST="$EXTERNALHOST"
-        elif [ x"$INTERNALHOST" != x"" ]
+        elif [[ x"$INTERNALHOST" != x"" ]]
         then
             export REALHOST="$INTERNALHOST"
         else
@@ -206,6 +207,9 @@ set_host_variables() {
     else
         export REALHOST="$HOST"
     fi
+
+    export HOSTNAME="$(hostname)"
+    export FULL_HOSTNAME="$(hostname -f)"
 }
 # }}}
 
@@ -226,7 +230,7 @@ ai() { # Get current host related info.
     echo "\nNot connected to the internet"
     return
   fi
-  if [ "$EXTERNALIP" == "$HOST_IP" ]
+  if [[ "$EXTERNALIP" == "$HOST_IP" ]]
   then
     echo -e "\nIP Address:"
     echo "$HOST_IP"
