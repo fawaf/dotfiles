@@ -5,6 +5,7 @@ require 'slop'
 require 'fileutils'
 
 options = Slop.parse do |o|
+  o.bool '-f', '--force', 'do not force commands'
   o.bool '-v', '--verbose', 'verbose mode'
   o.bool '-e', '--dev', 'dev mode'
   o.string '-c', '--config', 'config file'
@@ -18,6 +19,7 @@ dotfiles_dir = File.expand_path(File.dirname(__FILE__))
 
 dev = options.dev?
 verbose = options.verbose?
+force = options.force?
 
 config_file = if options.config?
                 options[:config]
@@ -95,5 +97,5 @@ if File.exist?(custom_setup_script)
   puts "running custom setup script #{custom_setup_script}"
   puts ""
 
-  exec(custom_setup_script)
+  exec(custom_setup_script, verbose.to_s, force.to_s)
 end
