@@ -31,3 +31,15 @@
 [submodule "vim/bundle/vim-chef"]
 	path = vim/bundle/vim-chef
 	url = https://github.com/vadv/vim-chef.git
+[submodule "vim/bundle/indentLine"]
+	path = vim/bundle/indentLine
+	url = https://github.com/Yggdroot/indentLine.git
+[submodule "vim/bundle/vim-git"]
+	path = vim/bundle/vim-git
+	url = https://github.com/tpope/vim-git.git
+[submodule "vim/bundle/vim-sensible"]
+	path = vim/bundle/vim-sensible
+	url = https://github.com/tpope/vim-sensible.git
+[submodule "vim/bundle/vim-ruby"]
+	path = vim/bundle/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
