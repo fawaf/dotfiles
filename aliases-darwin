@@ -1,4 +1,4 @@
-alias brewupdate="brew update && brew update && brew upgrade && brew upgrade"
+alias brewupdate="brew update && brew upgrade && brew update && brew upgrade"
 alias cdd="cd ~/Desktop"
 alias cp="cp -i -v"
 alias chmod="chmod -v"
