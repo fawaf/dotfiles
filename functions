@@ -105,16 +105,16 @@ set_titlebar() {
 get_configured_ip() {
     NIC=""
 
-    if uname -a | \grep grsec
+    if uname -a | \grep grsec &> /dev/null
     then
         return
-    elif uname -a | \grep -i cygwin
+    elif uname -a | \grep -i cygwin &> /dev/null
     then
         export HOST_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
-    elif uname -a | \grep -i darwin
+    elif uname -a | \grep -i darwin &> /dev/null
     then
         NIC="en0"
-    elif uname -a | \grep -i linux
+    elif uname -a | \grep -i linux &> /dev/null
     then
         NIC=$(ip addr | \grep -v lo | \grep '<' | \grep -v NO-CARRIER | \grep -v -w DOWN | head -1 | cut -d: -f2 | cut -d' ' -f2)
     else
