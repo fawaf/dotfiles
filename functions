@@ -105,12 +105,17 @@ set_titlebar() {
 get_configured_ip() {
     NIC=""
 
+    if ! type ifconfig &> /dev/null
+    then
+      return
+    fi
+
     if uname -a | \grep grsec &> /dev/null
     then
         return
     elif uname -a | \grep -i cygwin &> /dev/null
     then
-        export HOST_IP="`ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2`"
+        export HOST_IP="$(ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2)"
     elif uname -a | \grep -i darwin &> /dev/null
     then
         NIC="en0"
@@ -155,6 +160,7 @@ set_local_host_variables() {
 
 set_host_variables() {
     get_configured_ip
+
     if [[ -z "$CONFIGURED_IP" ]]
     then
         set_local_host_variables

@@ -1,7 +1,10 @@
 # global source {{{
-source $HOME/.functions
+if [[ -f $HOME/.functions ]]
+then
+  source $HOME/.functions
 
-set_host_variables
+  set_host_variables
+fi
 # }}}
 
 source ~/.exports
