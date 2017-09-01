@@ -5,7 +5,7 @@
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2017.08.15
+" Last change:       2017.09.01
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -223,5 +223,9 @@ let g:indentLine_noConcealCursor = "nc"
 let g:vim_json_syntax_conceal = 0
 autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
 autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=inc
+
+autocmd CursorHold,CursorHoldI,FocusGained,BufEnter * checktime
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 call pathogen#infect()
