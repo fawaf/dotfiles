@@ -219,4 +219,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:indentLine_noConcealCursor = "nc"
+let g:vim_json_syntax_conceal = 0
+autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
+autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=inc
+
 call pathogen#infect()
