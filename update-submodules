@@ -3,6 +3,8 @@
 set -e
 set -x
 
+git pull
+
 git submodule foreach git pull origin master
 
 git commit --all --message "update submodules"
