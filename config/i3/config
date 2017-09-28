@@ -219,3 +219,6 @@ client.focused          #222222 #6272a4 #ffffff #ffffff
 client.focused_inactive #333333 #222222 #ffffff #888888
 client.unfocused        #333333 #222222 #888888 #888888
 client.urgent           #222222 #ffc123 #ffffff #ffc123
+
+# window title
+for_window [title=".*"] title_format %title | %instance | %class
