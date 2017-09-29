@@ -243,7 +243,6 @@ then
     source $HOME/.zshrc-custom
 fi
 
-source $HOME/.aliases
 if [ -f ~/.aliases-custom ]
 then
     source ~/.aliases-custom
