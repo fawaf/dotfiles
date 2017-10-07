@@ -5,7 +5,7 @@
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2017.09.01
+" Last change:       2017.10.06
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -156,12 +156,12 @@ endif " has("autocmd")
 cnoremap WQ w !sudo tee % > /dev/null
 
 function! NumberToggle()
-  if(&relativenumber == 1)
-    set norelativenumber
-    set number
-  else
+  if(&number == 1)
     set nonumber
     set relativenumber
+  else
+    set number
+    set norelativenumber
   endif
 endfunc
 
