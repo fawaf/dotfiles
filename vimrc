@@ -176,10 +176,10 @@ set ls=2
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 let g:detectindent_max_lines_to_analyse = 1024
-map <leader>p :set paste
-map <leader>n :set nopaste
-cmap cel colorscheme elflord
-cmap stw set textwidth=999999
+map <leader>p :set paste<cr>
+map <leader>n :set nopaste<cr>
+map <leader>el :colorscheme elflord<cr>
+map <leader>tw :set textwidth=999999<cr>
 
 " Instead of failing a command because of unsaved changes, instead raise a
 " dialogue asking if you wish to save changed files.
