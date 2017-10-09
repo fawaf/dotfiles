@@ -188,13 +188,29 @@ function preexec() {
     set_titlebar $tab_title $tab_hardstatus
 }
 
+function rp() {
+    if [[ -z "$RP" ]]
+    then
+      RP=1
+    else
+      unset RP
+    fi
+    clear
+}
+
 # Called by zsh before showing the prompt:
 function precmd() {
-    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
-    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
-    set_titlebar $tab_title $tab_hardstatus
+#    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
+#    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
+#    set_titlebar $tab_title $tab_hardstatus
     vcs_info
-    set_prompt $REALHOST
+    if [[ -z "$RP" ]]
+    then
+      set_prompt $REALHOST
+    else
+      PS1="%# "
+      RPS1=""
+    fi
 }
 # }}}
 
