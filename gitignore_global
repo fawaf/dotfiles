@@ -7,7 +7,6 @@ vendor
 
 # Logs and databases
 *.log
-*.sql
 *.sqlite
 
 # Apple generated files
@@ -43,8 +42,8 @@ z.*
 git.sh
 compile.sh
 
-# template files
-*.template
-
 # notes
 notes.*
+
+# maven java
+target/
