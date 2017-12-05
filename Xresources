@@ -21,14 +21,14 @@ xterm*scrollTtyOutput:    true
 ! xterm*toolBar:            false
 
 *fadeColor:                 darkGray
-*pointerColorBackground:    white
-*pointerColorForeground:    black
+*pointerColorForeground:    white
+*pointerColorBackground:    black
 
 ! Color-scheme : Dracula/Xresources
 ! Source       : https://github.com/dracula/xresources
 
-*background: #282a36
-*foreground: #f8f8f2
+*foreground: #282a36
+*background: #f8f8f2
 
 ! Alternate foreground
 !*foreground: #AB9C71
@@ -54,7 +54,7 @@ xterm*scrollTtyOutput:    true
 *color5:  #bd93f9
 *color13: #ff92d0
 !DarkCyan + Cyan (both not tango)
-*color6:  #8be9fd
+*color6:  #03a5c9
 *color14: #46a4ff
 ! LightGrey + White
 *color7:  #cccccc
