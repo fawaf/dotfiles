@@ -1,3 +1,5 @@
+alias cmail="sudo cat /var/log/maillog"
+alias cs="sudo cat /var/log/messages"
 alias faa="sudo tail --follow /var/log/httpd/access_log"
 alias fae="sudo tail --follow /var/log/httpd/error_log"
 alias fsa="sudo tail --follow /var/log/httpd/ssl_access_log"
