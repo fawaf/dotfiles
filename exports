@@ -10,6 +10,7 @@ export PAGER="$(alias less | tr -d "'" | cut -d = -f2-)"
 export PATH=$ARCHDIR:~/bin:~/.local/bin:/usr/local/Cellar/openssl/1.0.1e/bin:/opt/local/bin:/opt/local/sbin:/sw/bin:/sw/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/git/bin:/usr/texbin:/usr/X11/bin:/var/lib/gems/1.9/bin:/usr/local/mysql/bin:gtk-prefix/bin:/gtk-prefix/bin:~/.local/android/tools:~/.local/android/platform-tools:/opt/X11/bin:/opt/aws/bin:~/.rvm/bin:$PATH:~/.cargo/bin
 export SVN_EDITOR=vim
 export TERM=xterm-256color
+export TERMINAL=xterm
 export WWW_HOME=https://www.google.com
 export VISUAL=vim
 export XDG_CONFIG_HOME=~/.config
