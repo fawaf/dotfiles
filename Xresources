@@ -1,0 +1,62 @@
+! xterm ----------------------------------------------------------------------
+!
+xterm*VT100.geometry:     80x25
+!xterm*faceName:              Terminess Powerline:style=Regular
+!xterm*faceName:           Sauce Code Powerline:style=Regular
+xterm*faceName:           Inconsolata for Powerline
+xterm*faceSize:           16
+xterm*termName:           xterm-256color
+! xterm*font:              -*-dina-medium-r-*-*-16-*-*-*-*-*-*-*
+xterm*dynamicColors:      true
+xterm*utf8:               2
+xterm*locale:             true
+xterm*eightBitInput:      true
+xterm*saveLines:          4096
+! xterm*scrollKey:          true
+xterm*scrollTtyOutput:    true
+! xterm*scrollBar:          true
+! xterm*rightScrollBar:     true
+! xterm*jumpScroll:         true
+! xterm*multiScroll:        true
+! xterm*toolBar:            false
+
+*fadeColor:                 darkGray
+*pointerColorBackground:    white
+*pointerColorForeground:    black
+
+! Color-scheme : Dracula/Xresources
+! Source       : https://github.com/dracula/xresources
+
+*background: #282a36
+*foreground: #f8f8f2
+
+! Alternate foreground
+!*foreground: #AB9C71
+
+*cursorColor: #44475a
+
+! Black + DarkGrey
+*color0:  #282a36
+*color8:  #555753
+! DarkRed + Red
+*color1:  #ff5555
+*color9:  #ff8d8d
+! DarkGreen + Green
+*color2:  #50fa7b
+*color10: #43b560
+! DarkYellow + Yellow
+*color3:  #ffc123
+*color11: #f1fa8c
+! DarkBlue + Blue
+*color4:  #6272a4
+*color12: #3465a4
+! DarkMagenta + Magenta
+*color5:  #bd93f9
+*color13: #ff92d0
+!DarkCyan + Cyan (both not tango)
+*color6:  #8be9fd
+*color14: #46a4ff
+! LightGrey + White
+*color7:  #cccccc
+*color15: #f8f8f2
+! vim: ft=xdefaults
