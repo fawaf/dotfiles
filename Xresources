@@ -42,7 +42,7 @@ xterm*scrollTtyOutput:    true
 *color1:  #ff5555
 *color9:  #ff8d8d
 ! DarkGreen + Green
-*color2:  #50fa7b
+*color2:  #3CBB5C
 *color10: #43b560
 ! DarkYellow + Yellow
 *color3:  #ffc123
