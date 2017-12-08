@@ -45,5 +45,6 @@ compile.sh
 # notes
 notes.*
 
-# maven java
+# java
 target/
+.idea/
