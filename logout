@@ -17,10 +17,10 @@ then
   echo yes | sudo -K
 fi
 
-rm -f ~/.bash_history
-#rm -f ~/.zhistory*
-#rm -f ~/.z.*
-#rm -f ~/.*_history
+rm -f $HOME/.bash_history
+#rm -f $HOME/.zhistory*
+#rm -f $HOME/.z.*
+#rm -f $HOME/.*_history
 
 if [ -e /usr/bin/kdestroy ]
 then

@@ -1,18 +1,18 @@
-export CDPATH=~:.:..
+export CDPATH=$HOME:.:..
 export CASE_SENSITIVE=true
 export EDITOR=vim
-export FPATH=$FPATH:~/.zsh/completion
+export FPATH=$FPATH:$HOME/.zsh/completion
 export LIBRARY_PATH=/usr/local/lib
-export LYNX_CFG=~/.lynxrc
-export LYNX_CFG_FILE=~/.lynxrc
-export MANPATH=/usr/local/share/man:/usr/share/man:/sw/share/man:/opt/local/share/man:/usr/X11R6/man:~/.local/share/man:/opt/X11/share/man:/usr/X11/share/man:~/.rvm/man
-export PATH=$ARCHDIR:~/bin:~/.local/bin:/usr/local/Cellar/openssl/1.0.1e/bin:/opt/local/bin:/opt/local/sbin:/sw/bin:/sw/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/git/bin:/usr/texbin:/usr/X11/bin:/var/lib/gems/1.9/bin:/usr/local/mysql/bin:gtk-prefix/bin:/gtk-prefix/bin:~/.local/android/tools:~/.local/android/platform-tools:/opt/X11/bin:/opt/aws/bin:~/.rvm/bin:$PATH:~/.cargo/bin
+export LYNX_CFG=$HOME/.lynxrc
+export LYNX_CFG_FILE=$HOME/.lynxrc
+export MANPATH=/usr/local/share/man:/usr/share/man:/sw/share/man:/opt/local/share/man:/usr/X11R6/man:$HOME/.local/share/man:/opt/X11/share/man:/usr/X11/share/man:$HOME/.rvm/man
+export PATH=$ARCHDIR:$HOME/bin:$HOME/.local/bin:/usr/local/Cellar/openssl/1.0.1e/bin:/opt/local/bin:/opt/local/sbin:/sw/bin:/sw/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/git/bin:/usr/texbin:/usr/X11/bin:/var/lib/gems/1.9/bin:/usr/local/mysql/bin:gtk-prefix/bin:/gtk-prefix/bin:$HOME/.local/android/tools:$HOME/.local/android/platform-tools:/opt/X11/bin:/opt/aws/bin:$HOME/.rvm/bin:$PATH:$HOME/.cargo/bin
 export SVN_EDITOR=vim
 export TERM=xterm-256color
 export TERMINAL=xterm
 export WWW_HOME=https://www.google.com
 export VISUAL=vim
-export XDG_CONFIG_HOME=~/.config
+export XDG_CONFIG_HOME=$HOME/.config
 
 # Less Colors for Man Pages
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
@@ -23,7 +23,7 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
-#export ARCHDIR=~/.local/mips
+#export ARCHDIR=$HOME/.local/mips
 # Replace instances of \W with \w in prompt functions below to get display of full path name.
 # export PS1="\[[\e[1;34m\]\u\[\e[m\]@\[\e[\e[1;32m\h\[\e[m\]:\[\e[\e[1;31m\w\[\e[m\]]\n\e[1;35m\]%\[\e[m\] ";
 if [ -f $HOME/.exports-custom ]

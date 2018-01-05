@@ -1,6 +1,6 @@
 # common aliases {{{
 alias a="alias"
-alias ba="$EDITOR ~/.aliases-custom && source ~/.aliases && source ~/.aliases-custom"
+alias ba="$EDITOR $HOME/.aliases-custom && source $HOME/.aliases && source $HOME/.aliases-custom"
 alias catn="cat --number"
 alias c="clear"
 alias cd..="cd .."
@@ -13,9 +13,9 @@ alias dh="df --human-readable"
 alias diff="diff --unified"
 alias dir="ls"
 alias eb="exec bash"
-alias ee="$EDITOR ~/.exports-custom && source ~/.exports-custom"
+alias ee="$EDITOR $HOME/.exports-custom && source $HOME/.exports-custom"
 alias e="exit"
-alias esc="$EDITOR ~/.ssh/config"
+alias esc="$EDITOR $HOME/.ssh/config"
 alias ez="exec zsh"
 alias fiel="file"
 alias fna="find . -not -path '*.svn/*' -not -path '*.git/*'"
@@ -121,7 +121,7 @@ alias tls="tmux list-sessions"
 alias ua="uname --all"
 alias untar="tar xvf"
 alias un="unalias"
-alias update-dotfiles="~/.dotfiles/setup.rb"
+alias update-dotfiles="$HOME/.dotfiles/setup.rb"
 alias up="ut"
 alias ut="uptime"
 alias u="users"
@@ -131,25 +131,25 @@ alias vm="mv"
 alias watch="watch --interval 0"
 alias wget="wget --content-disposition"
 alias whcih="which"
-alias za="$EDITOR ~/.zshrc-custom && source ~/.zshrc"
+alias za="$EDITOR $HOME/.zshrc-custom && source $HOME/.zshrc"
 # }}}
 
 # {{{ singular aliases
 KERNEL_NAME="`uname`"
 if [[ "$KERNEL_NAME" == "Linux" ]]; then
-    source ~/.aliases-linux
+    source $HOME/.aliases-linux
     if [[ -f /etc/debian_version ]]; then
-        source ~/.aliases-debian
+        source $HOME/.aliases-debian
     fi
     if [[ -f /etc/SuSE-release ]]; then
-        source ~/.aliases-suse
+        source $HOME/.aliases-suse
     fi
     if [[ -f /etc/redhat-release ]]; then
-        source ~/.aliases-fedora
+        source $HOME/.aliases-fedora
     fi
 elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
-    source ~/.aliases-darwin
+    source $HOME/.aliases-darwin
 elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
-    source ~/.aliases-cygwin
+    source $HOME/.aliases-cygwin
 fi
 # }}}

@@ -1,6 +1,6 @@
 alias brewupdate="brew update && brew upgrade && brew update && brew upgrade"
 alias catn="cat -n"
-alias cdd="cd ~/Desktop"
+alias cdd="cd $HOME/Desktop"
 alias cp="cp -i -v"
 alias chmod="chmod -v"
 alias l@="ls -l -@"

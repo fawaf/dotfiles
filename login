@@ -3,8 +3,8 @@
 export LANG="en_US.UTF-8"
 
 
-rm -f ~/Downloads/*.part
-rm -f ~/Desktop/*.part
+rm -f $HOME/Downloads/*.part
+rm -f $HOME/Desktop/*.part
 
 # {{{ sanity checks
 if [ -f /etc/motd ]
@@ -28,7 +28,7 @@ fi
 unset LS_COLORS
 
 #if which xrdb > /dev/null; then
-#	xrdb -merge ~/.Xresources
+#	xrdb -merge $HOME/.Xresources
 #fi
 #if which xmodmap > /dev/null; then
 #	if [ `xmodmap -pke | \grep Caps | wc -l` -eq 1 ]; then
@@ -36,15 +36,15 @@ unset LS_COLORS
 #	fi
 #fi
 #if which pcmanfm > /dev/null; then
-#	pcmanfm --set-wallpaper ~/stuff/angel_beats-038.png --wallpaper-mode=stretch
+#	pcmanfm --set-wallpaper $HOME/stuff/angel_beats-038.png --wallpaper-mode=stretch
 #fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # custom login {{{
-if [ -f ~/.login-custom ]
+if [ -f $HOME/.login-custom ]
 then
-    source ~/.login-custom
+    source $HOME/.login-custom
 fi
 # }}}
 
@@ -56,7 +56,7 @@ then
     if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
     then
         eval `ssh-agent`
-        if [ -e ~/.ssh/id_rsa ]
+        if [ -e $HOME/.ssh/id_rsa ]
         then
             ssh-add
         fi

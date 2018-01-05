@@ -7,7 +7,7 @@ fi
 
 if [[ -f $HOME/.exports ]]
 then
-  source ~/.exports
+  source $HOME/.exports
 fi
 
 if [[ -f $HOME/.aliases ]]

@@ -28,7 +28,7 @@ unignore  Date From To Cc Bcc Reply-to Subject
 hdr_order Date From To Cc Bcc Reply-to Subject
 
 # set signature
-set signature='~/.signature'
+set signature='$HOME/.signature'
 
 # sort mail by thread date
 set sort='reverse-threads'                                            # Sort by message sent date in index
@@ -47,7 +47,7 @@ bind pager <Up> previous-line
 bind pager <Down> next-line
 
 # colors
-source ~/.mutt/colors
+source $HOME/.mutt/colors
 color hdrdefault white black                                          # headers white on black
 color header brightgreen black ^From:                                 # sender's name in green
 color header brightyellow black ^Subject:                             # email subject in
@@ -77,4 +77,4 @@ set pager_format=' %a %> %[%a, %b %d  %R] '
 set index_format='%4C %Z %[%b%d] %-15.15F %s'
 set folder_format='%2C %8s %d %N %f'
 
-source `FILE=~/.muttrc-custom; if [ ! -f "$FILE" ]; then FILE=/dev/null;fi;echo "$FILE"`
+source `FILE=$HOME/.muttrc-custom; if [ ! -f "$FILE" ]; then FILE=/dev/null;fi;echo "$FILE"`

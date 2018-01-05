@@ -10,7 +10,7 @@
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
 "           for OpenVMS:  sys$login:.vimrc
-"     for *nix and OS/2:  ~/.vimrc
+"     for *nix and OS/2:  $HOME/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
 
 setglobal modeline
