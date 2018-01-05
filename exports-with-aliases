@@ -1,0 +1,1 @@
+export PAGER="$(alias less | tr -d "'" | cut -d = -f2-)"

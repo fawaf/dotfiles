@@ -5,12 +5,15 @@ then
   set_host_variables
 fi
 
+if [[ -f $HOME/.exports ]]
+then
+  source ~/.exports
+fi
+
 if [[ -f $HOME/.aliases ]]
 then
   source $HOME/.aliases
 fi
 
-if [[ -f $HOME/.exports ]]
-then
-  source ~/.exports
-fi
+source $HOME/.exports-with-aliases
+source $HOME/.aliases-with-exports
