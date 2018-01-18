@@ -216,7 +216,7 @@ function precmd() {
 
 # Environment {{{
 autoload -Uz compinit
-compinit -d $HOME/.zsh/zcompdump.$EXTERNALHOST
+compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
 #umask 077   # Deny group/world rwx by default (multiuser systems)
 # }}}
 
@@ -246,8 +246,7 @@ export HISTSIZE=5000      # Maximum size of history list
 export SAVEHIST=2500      # Save the last x commands
 export LISTMAX=0          # Only ask if completion listing would scroll off screen
 export REPORTTIME=60      # Give timing statistics for programs that take longer than a minute to run
-export HISTFILE="$HOME/.zhistory_$EXTERNALHOST" # used to cause "zsh: locking failed for filename: operation not supported: reading anyway" error
-#unset HISTFILE
+export HISTFILE="$HOME/.zhistory_$HOSTNAME"
 unset LS_COLORS
 # }}}
 
