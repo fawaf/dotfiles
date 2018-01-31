@@ -107,6 +107,7 @@ alias publicip="curl --ipv4 --location --silent --fail --max-time 2 http://www.f
 alias q="e"
 alias quit="exit"
 alias rdm="rails db:migrate"
+alias rdr="rails db:reset"
 alias rds="rails db:seed"
 alias rmdir="rmdir --verbose"
 alias rmf="rm --recursive --force --verbose"
