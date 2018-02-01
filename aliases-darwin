@@ -18,3 +18,5 @@ alias sudo="sudo --preserve-env"
 alias t="top -o -cpu -s 1"
 alias ua="uname -a"
 alias unlink="unlink -iv"
+
+unalias rmdir
