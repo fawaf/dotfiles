@@ -185,9 +185,9 @@ map <leader>tw :set textwidth=999999<cr>
 " dialogue asking if you wish to save changed files.
 set confirm
 
-" Remove byte order mark
-set nobomb
-
+set nobomb " Remove byte order mark
+set list
+set listchars=eol:¬,tab:>-,trail:•,extends:>,precedes:<
 set expandtab
 set smartindent
 set tabstop=2
