@@ -31,17 +31,23 @@ fi
 # }}}
 
 # Options {{{
+unsetopt HIST_BEEP
+
 setopt EXTENDED_GLOB
 setopt PROMPT_SUBST         # Required for the prompt
 setopt SHARE_HISTORY        # Share history between multiple instances of zsh
 setopt EXTENDED_HISTORY     # Put beginning and ending timestamps in the history file
 setopt INC_APPEND_HISTORY   # save every command before it is executed
-setopt AUTO_LIST            # Show possible matches if completion can't figure out what to do
-setopt AUTO_RESUME          # Commands without arguments will first try to resume suspended programs of the same name
+setopt HIST_VERIFY          # perform history substitution and reload the line into the editing buffer
 setopt HIST_IGNORE_DUPS     # Sequential duplicate commands only get one history entry
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS    # Don't show duplicate commands when searching the history
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
 setopt MAGIC_EQUAL_SUBST    # Do completion on <value> in foo=<value>
 setopt NONOMATCH            # Don't error if globbing fails; just leave the globbing chars in
+setopt AUTO_LIST            # Show possible matches if completion can't figure out what to do
+setopt AUTO_RESUME          # Commands without arguments will first try to resume suspended programs of the same name
 setopt AUTO_CD              # Skip `cd' when changing to a directory
 setopt NO_BEEP              # "I refer to this informally as the OPEN_PLAN_OFFICE_NO_VIGILANTE_ATTACKS option."
 setopt AUTO_PUSHD           # cd uses directory stack
@@ -49,7 +55,6 @@ setopt PUSHD_SILENT         # make pushd quiet
 setopt PUSHD_TO_HOME        # Have pushd with no arguments act like 'pushd $HOME'
 setopt PUSHD_IGNORE_DUPS    # Don't push multiple copies of the same directory onto the directory stack
 setopt INTERACTIVE_COMMENTS # allow comments in interactive shells
-setopt hist_verify          # perform history substitution and reload the line into the editing buffer
 # }}}
 
 # compinit/tab-completion {{{
