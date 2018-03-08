@@ -32,3 +32,4 @@ Contributors
 [csivanich](https://github.com/csivanich/dotfiles) for i3 configs
 [csivanich](https://github.com/csivanich/dotfiles) for compton configs
 [csivanich](https://github.com/csivanich/dotfiles) for X configs
+[csivanich](https://github.com/csivanich/dotfiles) for dunst configs
