@@ -77,7 +77,7 @@ entries.each_with_index do |entry,index|
 
   puts "entry is #{entry}" if verbose
   if config["append"].include?(entry)
-    FileUtils.mkdir_p(entry) unless Dir.exists?(entry)
+    FileUtils.mkdir_p(dest, :verbose => verbose) unless Dir.exists?(entry)
     Dir.glob("#{entry}/*").each do |e|
       puts "copying entry #{e} to #{dest}" if verbose
       FileUtils.cp_r(e, dest, :verbose => verbose)
