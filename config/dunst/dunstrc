@@ -25,9 +25,9 @@
     color = "#000000"
 
 [shortcuts]
-    close = ctrl+space
+    close = ctrl+shift+space
     close_all = ctrl+shift+period
-    history = ctrl+grave
+    history = ctrl+shift+grave
     context = ctrl+shift+space
 
 [urgency_low]
