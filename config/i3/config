@@ -40,10 +40,10 @@ for_window [instance="zoom"] floating enable
 
 #exec --no-startup-id which fluxgui && fluxgui &
 #exec --no-startup-id which gpaste-client && gpaste-client applet
-#exec --no-startup-id which synsei && synsei load default
-#exec --no-startup-id which xbindkeys && xbindkeys
-#exec --no-startup-id which nm-applet && nm-applet &
 
+exec --no-startup-id which synsei && synsei load default
+exec --no-startup-id which xbindkeys && xbindkeys
+exec --no-startup-id which nm-applet && nm-applet &
 exec --no-startup-id which redshift-gtk && redshift-gtk
 exec --no-startup-id which connman-notify && connman-notify &
 exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
