@@ -115,6 +115,7 @@ alias rmf="rm --recursive --force --verbose"
 alias rm="rm --interactive --verbose"
 alias rs="rails server"
 alias rsync="rsync --iconv=utf8,utf8 --archive --verbose --compress --hard-links --progress --timeout=5 --rsh=ssh"
+alias scp='echo "use rsync!\n\nrsync"'
 alias scpi="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias screen="screen -t `hostname`"
 alias sl="ls"
