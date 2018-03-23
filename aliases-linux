@@ -1,6 +1,6 @@
 alias ags="sudo service httpd graceful"
 alias arl="sudo service httpd reload"
-alias ars="sudo service httpd restart"
+alias ars="ags"
 alias asc="sudo httpd -S"
 alias chl="tail --follow /var/log/chef/client.log"
 alias chmod="chmod --verbose"
