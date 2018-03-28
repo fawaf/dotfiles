@@ -37,6 +37,7 @@ for_window [title="^Google Hangouts"] floating enable
 for_window [class="Xfce4-notifyd"] floating enable
 for_window [class="jetbrains-idea-ce"] floading disable
 for_window [instance="zoom"] floating enable
+for_window [instance="TeamViewer"] floating enable
 
 #exec --no-startup-id which fluxgui && fluxgui &
 #exec --no-startup-id which gpaste-client && gpaste-client applet
