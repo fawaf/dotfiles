@@ -8,7 +8,7 @@
 
 general {
         colors = true
-        interval = 3
+        interval = 2
 }
 
 order += "volume master"
