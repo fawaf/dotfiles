@@ -98,5 +98,5 @@ if File.exist?(custom_setup_script)
   puts "running custom setup script #{custom_setup_script}"
   puts ""
 
-  exec(custom_setup_script, verbose.to_s, force.to_s)
+  exec(custom_setup_script, verbose ? "-vvvvvv" : "", force ? "-ffffff" : "")
 end
