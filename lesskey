@@ -1,0 +1,11 @@
+#env
+LESS = --RAW-CONTROL-CHARS --LONG-PROMPT --IGNORE-CASE
+
+# Less Colors for Man Pages
+LESS_TERMCAP_mb=$'\E[01;31m'   # begin blinking
+LESS_TERMCAP_md=$'\E[01;38;5;74m'   # begin bold
+LESS_TERMCAP_me=$'\E[0m'   # end mode
+LESS_TERMCAP_se=$'\E[0m'        # end standout-mode
+LESS_TERMCAP_so=$'\E[38;5;246m'     # begin standout-mode - info box
+LESS_TERMCAP_ue=$'\E[0m'    # end underline
+LESS_TERMCAP_us=$'\E[04;38;5;146m'  # begin underline
