@@ -92,6 +92,12 @@ entries.each_with_index do |entry,index|
 end
 puts "done."
 
+print "running setup commands... "
+lesskey_cmd = "lesskey"
+puts lesskey_cmd if verbose
+`#{lesskey_cmd}`
+puts "done."
+
 custom_setup_script = 'setup-custom.rb'
 if File.exist?(custom_setup_script)
   divider
