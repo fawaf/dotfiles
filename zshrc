@@ -211,7 +211,7 @@ function precmd() {
     vcs_info
     if [[ -z "$RP" ]]
     then
-      set_prompt $REALHOST
+      set_prompt
     else
       PS1="%# "
       RPS1=""
