@@ -115,25 +115,25 @@ get_configured_ip() {
         return
     elif uname -a | \grep -i cygwin &> /dev/null
     then
-        export HOST_IP="$(ifconfig | \grep -i 'ipv4 address'| head -1 | cut -d: -f2 | cut -d'(' -f1 | cut -d' ' -f2)"
+        export HOST_IP="$(ifconfig | \grep -i "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
     elif uname -a | \grep -i darwin &> /dev/null
     then
         NIC="en0"
     elif uname -a | \grep -i linux &> /dev/null
     then
-        NIC=$(ip addr | awk '/inet.*brd/{print $NF}' | head -1)
+        NIC="$(ip addr | \egrep "\<.*,?UP,?.*\>" | head -1 | cut -d" " -f2 | cut -d":" -f1)"
     else
         echo "Unsupported OS while determining host ip"
     fi
 
     if [[ -n "${NIC}" ]]
     then
-        export HOST_IP="$(ifconfig ${NIC} | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}')"
+        export HOST_IP="$(ifconfig ${NIC} | \grep -w inet | \grep -v 127.0 | head -n 1 | awk "{print $2}")"
     fi
 
     if [[ -z "$HOST_IP" ]]
     then
-        echo_color red 'No IP address(es) detected'
+        echo_color red "No IP address(es) detected"
         return
     fi
     
@@ -177,9 +177,9 @@ set_host_variables() {
             if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
             then
                 export EXTERNALIP="$PUBLIC_IP"
-                export EXTERNALHOST="$(host $EXTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//')"
-                export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d'.' -f1)"
-                export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d'.' -f2-)"
+                export EXTERNALHOST="$(host $EXTERNALIP | \grep pointer | cut -d" " -f5 | sed "s/.$//")"
+                export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d"." -f1)"
+                export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d"." -f2-)"
 
                 export INTERNALIP="$CONFIGURED_IP"
                 if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
@@ -188,9 +188,9 @@ set_host_variables() {
                     export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
                     export INTERNALDOMAIN="$EXTERNALDOMAIN"
                 else
-                    export INTERNALHOST="$(host $INTERNALIP | \grep pointer | cut -d' ' -f5 | sed 's/.$//')"
-                    export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d'.' -f1)"
-                    export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d'.' -f2-)"
+                    export INTERNALHOST="$(host $INTERNALIP | \grep pointer | cut -d" " -f5 | sed "s/.$//")"
+                    export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
+                    export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
                 fi
             fi
         else
