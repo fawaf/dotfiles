@@ -57,6 +57,10 @@ exec --no-startup-id which xscreensaver && xscreensaver &
 exec --no-startup-id which parcellite && parcellite &
 exec --no-startup-id which caffeine-indicator && caffeine-indicator &
 
+# exec programs
+bindsym $ctrl+$shift+$alt+s exec slack
+bindsym $ctrl+$shift+$alt+f exec firefox
+
 # session commands
 bindsym $ctrl+$alt+l exec xscreensaver-command -lock
 bindsym $ctrl+$alt+$shift+l exec i3lock
