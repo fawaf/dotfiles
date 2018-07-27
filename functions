@@ -177,7 +177,7 @@ set_host_variables() {
             if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
             then
                 export EXTERNALIP="$PUBLIC_IP"
-                export EXTERNALHOST="$(host $EXTERNALIP | \grep pointer | cut -d" " -f5 | sed "s/.$//")"
+                export EXTERNALHOST="$(host $EXTERNALIP | \grep pointer | head -1 | cut -d" " -f5 | sed "s/.$//")"
                 export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d"." -f1)"
                 export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d"." -f2-)"
 
@@ -188,7 +188,7 @@ set_host_variables() {
                     export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
                     export INTERNALDOMAIN="$EXTERNALDOMAIN"
                 else
-                    export INTERNALHOST="$(host $INTERNALIP | \grep pointer | cut -d" " -f5 | sed "s/.$//")"
+                    export INTERNALHOST="$(host $INTERNALIP | \grep pointer | head -1 | cut -d" " -f5 | sed "s/.$//")"
                     export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
                     export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
                 fi
