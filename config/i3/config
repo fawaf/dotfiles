@@ -60,6 +60,7 @@ exec --no-startup-id which caffeine-indicator && caffeine-indicator &
 # exec programs
 bindsym $ctrl+$shift+$alt+s exec slack
 bindsym $ctrl+$shift+$alt+f exec firefox
+bindsym $ctrl+$shift+$alt+c exec google-chrome
 
 # session commands
 bindsym $ctrl+$alt+l exec xscreensaver-command -lock
