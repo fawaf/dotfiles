@@ -155,13 +155,12 @@ endif " has("autocmd")
 " Alias :WQ to save with sudo
 cnoremap WQ w !sudo tee % > /dev/null
 
+set number
 function! NumberToggle()
-  if(&number == 1)
-    set nonumber
-    set relativenumber
-  else
-    set number
+  if(&relativenumber == 1)
     set norelativenumber
+  else
+    set relativenumber
   endif
 endfunc
 
