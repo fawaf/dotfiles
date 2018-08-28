@@ -5,7 +5,7 @@
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2017.10.06
+" Last change:       2018.08.28
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -165,6 +165,10 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+nnoremap <silent> <Leader>= :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>_ :exe "resize " . (winheight(0) * 2/3)<CR>
 
 set ic
 set encoding=utf-8
