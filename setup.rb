@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 
-require 'json'
-require 'slop'
-require 'fileutils'
+require "json"
+require "slop"
+require "fileutils"
 
 options = Slop.parse do |o|
-  o.bool '-f', '--force', 'do not force commands'
-  o.bool '-v', '--verbose', 'verbose mode'
-  o.bool '-e', '--dev', 'dev mode'
-  o.string '-c', '--config', 'config file'
-  o.on '-h', '--help', 'halp please' do
+  o.bool "-f", "--force", "do not force commands"
+  o.bool "-v", "--verbose", "verbose mode"
+  o.bool "-e", "--dev", "dev mode"
+  o.string "-c", "--config", "config file"
+  o.on "-h", "--help", "halp please" do
     puts o
     exit 0
   end
@@ -30,7 +30,7 @@ config_file = if options.config?
 if dev
   home_dir = "/tmp"
 else
-  home_dir = ENV['HOME']
+  home_dir = ENV["HOME"]
 end
 
 def divider(index = 1, times = 85)
@@ -67,9 +67,9 @@ config = JSON.parse(File.read(config_file))
 puts config if verbose
 
 print "setting up dotfiles... "
-entries = Dir.glob('*').sort
+entries = Dir.glob("*").sort
 entries.each_with_index do |entry,index|
-  next if entry.start_with?('README', 'LICENSE', 'setup', 'config.json', 'Makefile', 'update-')
+  next if entry.start_with?("README", "LICENSE", "setup", "config.json", "Makefile", "update-")
   divider(index) if verbose
 
   dest = "#{home_dir}/.#{entry}"
@@ -94,11 +94,17 @@ puts "done."
 
 print "running setup commands... "
 lesskey_cmd = "lesskey"
-puts lesskey_cmd if verbose
-`#{lesskey_cmd}`
+print "testing for #{lesskey_cmd}... " if verbose
+`command -v lesskey`
+puts "done." if verbose
+if $?.exitstatus == 0
+  print "running command #{lesskey_cmd}... "
+  `#{lesskey_cmd}`
+  puts "done."
+end
 puts "done."
 
-custom_setup_script = 'setup-custom.rb'
+custom_setup_script = "setup-custom.rb"
 if File.exist?(custom_setup_script)
   divider
   puts "running custom setup script #{custom_setup_script}"
