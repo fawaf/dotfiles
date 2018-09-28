@@ -95,12 +95,12 @@ puts "done."
 print "running setup commands... "
 lesskey_cmd = "lesskey"
 print "testing for #{lesskey_cmd}... " if verbose
-`command -v lesskey`
+`SHELL=/bin/zsh command -v lesskey`
 puts "done." if verbose
 if $?.exitstatus == 0
-  print "running command #{lesskey_cmd}... "
+  print "running command #{lesskey_cmd}... " if verbose
   `#{lesskey_cmd}`
-  puts "done."
+  puts "done." if verbose
 end
 puts "done."
 
