@@ -60,6 +60,7 @@ exec --no-startup-id which dunst && dunst &
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which parcellite && parcellite &
 exec --no-startup-id which caffeine-indicator && caffeine-indicator &
+exec --no-startup-id which xautolock && xautolock -time 1 -locker i3lock &
 
 # exec programs
 bindsym $ctrl+$shift+$alt+s exec slack
