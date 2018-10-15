@@ -46,6 +46,7 @@ for_window [title="TeamViewer Panel"] floating enable, move absolute position 90
 for_window [title="TeamViewer"] floating enable, move absolute position 0 px 0 px
 
 #exec --no-startup-id which fluxgui && fluxgui &
+#exec --no-startup-id which xscreensaver && xscreensaver &
 #exec --no-startup-id which gpaste-client && gpaste-client applet
 
 exec --no-startup-id which synsei && synsei load default
@@ -57,7 +58,6 @@ exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
 exec --no-startup-id which compton && compton -b
 exec --no-startup-id which dunst && dunst &
 exec --no-startup-id which nitrogen && nitrogen --restore
-exec --no-startup-id which xscreensaver && xscreensaver &
 exec --no-startup-id which parcellite && parcellite &
 exec --no-startup-id which caffeine-indicator && caffeine-indicator &
 
@@ -65,10 +65,10 @@ exec --no-startup-id which caffeine-indicator && caffeine-indicator &
 bindsym $ctrl+$shift+$alt+s exec slack
 bindsym $ctrl+$shift+$alt+f exec firefox
 bindsym $ctrl+$shift+$alt+c exec google-chrome
+bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh"
 
 # session commands
-bindsym $ctrl+$alt+l exec xscreensaver-command -lock
-bindsym $ctrl+$alt+$shift+l exec i3lock
+bindsym $ctrl+$alt+l exec i3lock
 
 # Move the current workspace to other outputs
 bindsym $ctrl+$mod+$shift+Up move workspace to output up
