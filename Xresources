@@ -33,6 +33,7 @@ xterm*scrollTtyOutput:    true
 ! Alternate foreground
 !*foreground: #AB9C71
 
+Xcursor.size: 16
 *cursorColor: #44475a
 
 ! Black + DarkGrey
