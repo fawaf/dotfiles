@@ -66,7 +66,9 @@ exec --no-startup-id which xautolock && xautolock -time 1 -locker i3lock &
 bindsym $ctrl+$shift+$alt+s exec slack
 bindsym $ctrl+$shift+$alt+f exec firefox
 bindsym $ctrl+$shift+$alt+c exec google-chrome
-bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh"
+bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh -l"
+bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r"
+bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
 
 # session commands
 bindsym $ctrl+$alt+l exec i3lock
