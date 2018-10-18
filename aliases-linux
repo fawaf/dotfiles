@@ -1,4 +1,5 @@
 alias ags="sudo service httpd graceful"
+alias am="alsamixer"
 alias arl="sudo service httpd reload"
 alias ars="ags"
 alias asc="sudo httpd -S"
