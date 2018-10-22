@@ -196,8 +196,11 @@ bindsym XF86AudioLowerVolume exec amixer -q set Master 3dB- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+# THUPER BROKEN
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec echo $(($(cat /sys/class/backlight/$(ls /sys/class/backlight)/brightness) + 20)) | sudo tee /sys/class/backlight/$(ls /sys/class/backlight)/brightness
+bindsym XF86MonBrightnessDown exec echo $(($(cat /sys/class/backlight/$(ls /sys/class/backlight)/brightness) - 20)) | sudo tee /sys/class/backlight/$(ls /sys/class/backlight)/brightness
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
