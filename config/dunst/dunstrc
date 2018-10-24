@@ -45,7 +45,6 @@
     foreground = "#000000"
     timeout = 0
 
-
 [libpurple_signed]
     appname = libpurple
     summary = *igned*
@@ -117,3 +116,10 @@
 [test]
     summary = "*test*"
     background="#22dd22"
+
+[fullscreen_delay_everything]
+    fullscreen = delay
+
+[fullscreen_show_critical]
+    msg_urgency = critical
+    fullscreen = show
