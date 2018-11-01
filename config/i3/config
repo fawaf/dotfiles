@@ -17,6 +17,8 @@ set $alt Mod1
 set $ctrl Control
 set $shift Shift
 
+set $lock xsecurelock
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -60,7 +62,7 @@ exec --no-startup-id which dunst && dunst &
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which parcellite && parcellite &
 exec --no-startup-id which caffeine-indicator && caffeine-indicator &
-exec --no-startup-id which xautolock && xautolock -time 1 -locker i3lock &
+exec --no-startup-id which xautolock && xautolock -time 1 -locker $lock &
 
 # exec programs
 bindsym $ctrl+$shift+$alt+s exec slack
@@ -71,7 +73,7 @@ bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r"
 bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
 
 # session commands
-bindsym $ctrl+$alt+l exec i3lock
+bindsym $ctrl+$alt+l exec $lock
 
 # Move the current workspace to other outputs
 bindsym $ctrl+$mod+$shift+Up move workspace to output up
