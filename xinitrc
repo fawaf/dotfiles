@@ -47,3 +47,5 @@ then
 else
     exec i3
 fi
+
+xset s 60 5
