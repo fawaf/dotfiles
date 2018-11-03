@@ -2,9 +2,10 @@
 
 export LANG="en_US.UTF-8"
 
-
+# {{{ remove part files
 rm -f $HOME/Downloads/*.part
 rm -f $HOME/Desktop/*.part
+# }}}
 
 # {{{ sanity checks
 if [ -f /etc/motd ]
@@ -49,18 +50,20 @@ fi
 # }}}
 
 # ssh agent {{{
-ENABLE_SSH_AGENT="false"
-
-if [ "x$ENABLE_SSH_AGENT" == "xtrue" ]
-then
-    if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
-    then
-        eval `ssh-agent`
-        if [ -e $HOME/.ssh/id_rsa ]
-        then
-            ssh-add
-        fi
-        export KILL_SSH_AGENT_ON_LOGOUT="true"
-    fi
-fi
+#ENABLE_SSH_AGENT="false"
+#
+#if [ "x$ENABLE_SSH_AGENT" == "xtrue" ]
+#then
+#    if [ "`ps aux | \grep ssh-agent | \grep -v \grep | wc -l`" -eq 0 ]
+#    then
+#        eval `ssh-agent`
+#        if [ -e $HOME/.ssh/id_rsa ]
+#        then
+#            ssh-add
+#        fi
+#        export KILL_SSH_AGENT_ON_LOGOUT="true"
+#    fi
+#fi
 # }}}
+
+xset s 60 5
