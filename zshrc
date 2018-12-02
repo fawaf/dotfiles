@@ -224,7 +224,7 @@ function precmd() {
     then
       set_prompt
     else
-      PS1="%n@$(hostname -f):%~%# "
+      PS1="%n@$(hostname -s):%~%# "
       RPS1=""
     fi
 }
