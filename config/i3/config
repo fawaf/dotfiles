@@ -71,6 +71,7 @@ bindsym $ctrl+$shift+$alt+c exec google-chrome
 bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh -l"
 bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r"
 bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
+bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/nuc.sh"
 
 # session commands
 bindsym $ctrl+$alt+l exec "xset s activate"
