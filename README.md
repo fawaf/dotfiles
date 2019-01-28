@@ -24,12 +24,16 @@ Install
   ]
 }
 ```
-* "append" - directories to not overwrite and append to
+* "append" - directories to not overwrite, but append to
 
 Contributors
 ------------
 [csivanich](https://github.com/csivanich/dotfiles) for tmux configs
+
 [csivanich](https://github.com/csivanich/dotfiles) for i3 configs
+
 [csivanich](https://github.com/csivanich/dotfiles) for compton configs
+
 [csivanich](https://github.com/csivanich/dotfiles) for X configs
+
 [csivanich](https://github.com/csivanich/dotfiles) for dunst configs
