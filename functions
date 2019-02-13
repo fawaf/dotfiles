@@ -179,10 +179,11 @@ set_host_variables() {
                 export PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.fawong.com/ip)"
             fi
 
+            LOCAL_NAMESERVER="$(cat /etc/resolv.conf | \grep nameserver | tail -1 | awk '{print $NF}')"
             if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
             then
                 export EXTERNALIP="$PUBLIC_IP"
-                export EXTERNALHOST="$(host $EXTERNALIP | \grep pointer | head -1 | cut -d" " -f5 | sed "s/.$//")"
+                export EXTERNALHOST="$(dig +short -x $CONFIGURED_IP @$LOCAL_NAMESERVER | sed 's/\.$//')"
                 export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d"." -f1)"
                 export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d"." -f2-)"
 
@@ -193,7 +194,7 @@ set_host_variables() {
                     export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
                     export INTERNALDOMAIN="$EXTERNALDOMAIN"
                 else
-                    export INTERNALHOST="$(host $INTERNALIP | \grep pointer | head -1 | cut -d" " -f5 | sed "s/.$//")"
+                    export INTERNALHOST="$(dig +short -x $INTERNALIP @$LOCAL_NAMESERVER | sed "s/\.$//")"
                     export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
                     export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
                 fi
