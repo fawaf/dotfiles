@@ -11,8 +11,6 @@
 #  - http://zshwiki.org/home/examples/compquickstart
 # }}}
 
-cd ~
-
 # set term type {{{
 # If ncurses is installed, use tput to gracefully degrade termtypes.
 settermtype
@@ -147,8 +145,8 @@ set_prompt() {
     export RPS1END='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
     export PS1BEGIN='%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST'
     export PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
-$PR_LIGHT_CYAN%D{%Y-%m-%d} (%D{%Y.%V}) %D{%H:%M:%S} $PR_MAGENTA%#$PR_NO_COLOR "
-    
+$PR_MAGENTA%#$PR_NO_COLOR "
+
     if [ -f $HOME/.zsh-prompt ]
     then
         source $HOME/.zsh-prompt
@@ -159,8 +157,7 @@ $PR_LIGHT_CYAN%D{%Y-%m-%d} (%D{%Y.%V}) %D{%H:%M:%S} $PR_MAGENTA%#$PR_NO_COLOR "
         else
             export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
         fi
-        export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)'
-        #export RPS1='%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)$PR_LIGHT_CYAN%*$PR_NO_COLOR'
+        export RPS1="%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.) $PR_LIGHT_CYAN%D{%Y-%m-%d} (%D{%Y.%V}) %D{%H:%M:%S}$PR_NO_COLOR"
 
         export PROMPT="$PS1"
         export RPROMPT="$RPS1"
@@ -254,9 +251,6 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-#alias date="/bin/date '+%D %r' | grep --color=auto $day"
-#export day=`/bin/date +%d`
-
 export DIRSTACKSIZE=2000  # maximum size of directory stack
 export HISTSIZE=5000      # Maximum size of history list
 export SAVEHIST=2500      # Save the last x commands
@@ -279,3 +273,5 @@ then
     source $HOME/.aliases-custom
 fi
 # }}}
+
+cd ~

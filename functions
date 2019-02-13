@@ -78,7 +78,7 @@ settermtype() { # Set terminal type
 # }}}
 
 # Titlebars for GNU Screen and Xterm {{{
-set_titlebar() {  
+set_titlebar() {
     # Set either xterm's titlebar or screen's hardstatus.
     # Usage:    set_titlebar short-title descriptive-title
     # eg.,      set_titlebar "user@host:~" "[~] vim"
