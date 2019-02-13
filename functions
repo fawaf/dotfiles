@@ -174,9 +174,9 @@ set_host_variables() {
         then
             if which curl &> /dev/null
             then
-                export PUBLIC_IP="$(curl -4 -sf -m 2 https://www.fawong.com/ip)"
+                export PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 https://www.fawong.com/ip)"
             else
-                export PUBLIC_IP="$(wget -4 -q -O - -T 2 https://www.fawong.com/ip)"
+                export PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.fawong.com/ip)"
             fi
 
             if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
