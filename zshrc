@@ -251,11 +251,11 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-export DIRSTACKSIZE=2000  # maximum size of directory stack
-export HISTSIZE=5000      # Maximum size of history list
-export SAVEHIST=2500      # Save the last x commands
-export LISTMAX=0          # Only ask if completion listing would scroll off screen
-export REPORTTIME=60      # Give timing statistics for programs that take longer than a minute to run
+export DIRSTACKSIZE=2000 # maximum size of directory stack
+export HISTSIZE=5000     # Maximum size of history list
+export SAVEHIST=7000     # Save the last x commands
+export LISTMAX=0         # Only ask if completion listing would scroll off screen
+export REPORTTIME=60     # Give timing statistics for programs that take longer than a minute to run
 export HISTFILE="$HOME/.zhistory_$HOSTNAME"
 unset LS_COLORS
 # }}}
