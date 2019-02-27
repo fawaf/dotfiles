@@ -147,20 +147,20 @@ set_prompt() {
     export PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
 $PR_MAGENTA%#$PR_NO_COLOR "
 
+    if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]
+    then
+        export PS1="$PS1BEGIN$PS1END"
+    else
+        export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
+    fi
+    export RPS1="$RPS1BEGIN$RPS1END"
+
+    export PROMPT="$PS1"
+    export RPROMPT="$RPS1"
+
     if [ -f $HOME/.zsh-prompt ]
     then
         source $HOME/.zsh-prompt
-    else
-        if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]
-        then
-            export PS1="$PS1BEGIN$PS1END"
-        else
-            export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
-        fi
-        export RPS1="$RPS1BEGIN$RPS1END"
-
-        export PROMPT="$PS1"
-        export RPROMPT="$RPS1"
     fi
 }
 # }}}
