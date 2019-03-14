@@ -166,6 +166,7 @@ alias wlk="mosh wlk"
 alias ws="waf -t screen -r"
 alias xs="ssh sexi -t screen -r"
 alias za="$EDITOR $HOME/.zshrc-custom && source $HOME/.zshrc"
+alias zp="$EDITOR $HOME/.zsh-prompt"
 # }}}
 
 # {{{ singular aliases
