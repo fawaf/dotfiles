@@ -16,18 +16,45 @@ extract() { # Handy Extract Program.
   if [[ -f "$1" ]]
   then
     case "$1" in
-      *.tar.bz2)   tar xvjf "$1"     ;;
-      *.tar.gz)    tar xvzf "$1"     ;;
-      *.bz2)       bunzip2 "$1"      ;;
-      *.rar)       unrar x "$1"      ;;
-      *.gz)        gunzip "$1"       ;;
-      *.tar)       tar xvf "$1"      ;;
-      *.tbz2)      tar xvjf "$1"     ;;
-      *.tgz)       tar xvzf "$1"     ;;
-      *.zip)       unzip "$1"        ;;
-      *.Z)         uncompress "$1"   ;;
-      *.7z)        7z x "$1"         ;;
-      *)           echo "'$1' cannot be extracted via >extract<" ;;
+      *.7z)
+        7z x "$1"
+      ;;
+      *.bz2)
+        bunzip2 "$1"
+      ;;
+      *.gz)
+        gunzip "$1"
+      ;;
+      *.rar)
+        unrar x "$1"
+      ;;
+      *.tar.bz2)
+        tar xvjf "$1"
+      ;;
+      *.tar.gz)
+        tar xvzf "$1"
+      ;;
+      *.tar)
+        tar xvf "$1"
+      ;;
+      *.tbz2)
+        tar xvjf "$1"
+      ;;
+      *.tgz)
+        tar xvzf "$1"
+      ;;
+      *.xz)
+        tar xvf "$1"
+      ;;
+      *.zip)
+        unzip "$1"
+      ;;
+      *.Z)
+        uncompress "$1"
+      ;;
+      *)
+        echo "'$1' cannot be extracted via >extract<"
+      ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -44,17 +71,17 @@ settermtype() { # Set terminal type
     screen xterm-256color xterm-color xtermc xterm vt100 dumb
 
     # find $TERM in $terminal_types
-    while [[ -z $terminal_types[1] && $terminal_types[1] != $TERM ]]
+    while [[ -z ${terminal_types[1]} && ${terminal_types[1]} != "$TERM" ]]
     do
       shift terminal_types
     done
 
     # as soon as we find a terminal type ncurses recognizes, choose it
-    if [[ -z $terminal_types[1] ]]
+    if [[ -z ${terminal_types[1]} ]]
     then
       for TERMTYPE in $terminal_types
       do
-        if tput -T $TERMTYPE longname > /dev/null 2> /dev/null
+        if tput -T "$TERMTYPE" longname > /dev/null 2> /dev/null
         then 
           export TERM=$TERMTYPE
           break
@@ -119,13 +146,14 @@ get_configured_ip() {
             return
         elif uname -a | \grep -i cygwin &> /dev/null
         then
-            export HOST_IP="$(ifconfig | \grep -i "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
+            HOST_IP="$(ifconfig | \grep -i "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
+            export HOST_IP
         elif uname -a | \grep -i darwin &> /dev/null
         then
             NIC="en0"
         elif uname -a | \grep -i linux &> /dev/null
         then
-            NIC="$(ip addr | \grep -v NO-CARRIER | \egrep "\<.*,?UP,?.*\>" | \grep -v lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
+            NIC="$(ip addr | \grep -v NO-CARRIER | \grep -E "\<.*,?UP,?.*\>" | \grep -v lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
         else
             echo "Unsupported OS while determining host ip"
         fi
