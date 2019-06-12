@@ -180,15 +180,18 @@ get_configured_ip() {
 # }}}
 
 # set hostname variables {{{
-set_local_host_variables() {
+set_local_internal_host_variables() {
     export INTERNALIP="NONE"
+    export INTERNALHOST="$(hostname -f)"
+    export INTERNALDOMAIN="$(hostname -f)"
+    export INTERNALHOSTNAME="$(hostname -s)"
+}
+
+set_local_external_host_variables() {
     export EXTERNALIP="NONE"
     export EXTERNALHOST="$(hostname -f)"
-    export INTERNALHOST="$(hostname -f)"
-    export EXTERNALHOSTNAME="$(hostname -s)"
-    export INTERNALHOSTNAME="$(hostname -s)"
     export EXTERNALDOMAIN="$(hostname -f)"
-    export INTERNALDOMAIN="$(hostname -f)"
+    export EXTERNALHOSTNAME="$(hostname -s)"
 }
 
 set_host_variables() {
@@ -215,20 +218,25 @@ set_host_variables() {
                 export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d"." -f1)"
                 export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d"." -f2-)"
 
-                export INTERNALIP="$CONFIGURED_IP"
-                if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
+                if [[ -z "$DISABLE_PRIVATE_IP_CHECK" ]]
                 then
-                    export INTERNALHOST="$EXTERNALHOST"
-                    export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
-                    export INTERNALDOMAIN="$EXTERNALDOMAIN"
+                    export INTERNALIP="$CONFIGURED_IP"
+                    if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
+                    then
+                        export INTERNALHOST="$EXTERNALHOST"
+                        export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
+                        export INTERNALDOMAIN="$EXTERNALDOMAIN"
+                    else
+                        export INTERNALHOST="$(/usr/bin/dig +short -x $INTERNALIP @$LOCAL_NAMESERVER | head -1 | sed "s/\.$//")"
+                        export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
+                        export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
+                    fi
                 else
-                    export INTERNALHOST="$(/usr/bin/dig +short -x $INTERNALIP @$LOCAL_NAMESERVER | head -1 | sed "s/\.$//")"
-                    export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
-                    export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
+                    set_local_internal_host_variables
                 fi
             fi
         else
-            set_local_host_variables
+            set_local_external_host_variables
         fi
     fi
 
