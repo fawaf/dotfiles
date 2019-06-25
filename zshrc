@@ -11,6 +11,11 @@
 #  - http://zshwiki.org/home/examples/compquickstart
 # }}}
 
+for file in $HOME/.zsh.d/*
+do
+  test -r "$file" && source "$file"
+done
+
 # set term type {{{
 # If ncurses is installed, use tput to gracefully degrade termtypes.
 settermtype
