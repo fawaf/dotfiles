@@ -48,3 +48,6 @@ notes.*
 # java
 target/
 .idea/
+
+# core dump
+core
