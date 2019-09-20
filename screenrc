@@ -16,7 +16,8 @@ defutf8 on          # Do everything in UTF-8
 defscrollback 55000 # Large scrollback
 defnonblock on      # Don't block the whole session if a window goes unresponsive
 defbce on
-#nethack on         # Be careful!  New screen tonight.
+nethack on         # Be careful!  New screen tonight.
+hardcopydir $HOME/
 
 # 256 color support
 attrcolor b ".I"
@@ -30,5 +31,6 @@ hardstatus alwayslastline '%{= kR} %-Lw%{=b Kw}%50> %n%f %t %{= kR}%+Lw %< '
 
 # Run urlview on current window
 bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen /usr/bin/env urlview $HOME/.screen-urlview"
+bind ^S eval "$HOME/bin/screen-save"
 
 source $HOME/.screenrc-custom
