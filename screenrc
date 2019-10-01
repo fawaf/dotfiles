@@ -31,6 +31,5 @@ hardstatus alwayslastline '%{= kR} %-Lw%{=b Kw}%50> %n%f %t %{= kR}%+Lw %< '
 
 # Run urlview on current window
 bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen /usr/bin/env urlview $HOME/.screen-urlview"
-bind ^S eval "hardcopy -h" "exec $HOME/bin/screen-save $HOME/hardcopy.0"
 
 source $HOME/.screenrc-custom
