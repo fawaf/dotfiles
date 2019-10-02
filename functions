@@ -206,7 +206,7 @@ set_host_variables() {
     then
         set_local_host_variables
     else
-        if [[ -z "$DISABLE_PUBLIC_IP_CHECK" ]]
+        if [[ -n "$DISABLE_PUBLIC_IP_CHECK" ]]
         then
             if which curl &> /dev/null
             then
