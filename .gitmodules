@@ -55,3 +55,6 @@
 [submodule "vim/bundle/vim-swap"]
 	path = vim/bundle/vim-swap
 	url = git@github.com:machakann/vim-swap.git
+[submodule "zsh/zsh-autosuggestions"]
+	path = zsh/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
