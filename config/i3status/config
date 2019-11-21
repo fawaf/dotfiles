@@ -21,9 +21,9 @@ order += "ethernet _first_"
 order += "wireless _first_"
 order += "load"
 order += "battery 0"
-#order += "ipv6"
 order += "tztime local"
-order += "tztime UTC"
+order += "tztime london"
+order += "tztime sydney"
 
 volume master {
         format = "♪: %volume"
@@ -53,9 +53,14 @@ run_watch VPN {
         pidfile = "/var/run/openvpn/client.pid"
 }
 
-tztime UTC {
-        format = "UTC: %Y-%m-%d %H:%M:%S"
-        timezone = "UTC"
+tztime london {
+        format = "London: %Y-%m-%d %H:%M:%S"
+        timezone = "Europe/London"
+}
+
+tztime sydney {
+        format = "Sydney: %Y-%m-%d %H:%M:%S"
+        timezone = "Australia/Sydney"
 }
 
 tztime local {
