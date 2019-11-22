@@ -89,6 +89,11 @@ bindkey -v                  # vi keybindings
 bindkey ' ' magic-space     # Do history expansion on space
 bindkey '^_' undo           # Ctrl-/ usually inserts Ctrl-_
 bindkey '^r' history-incremental-search-backward
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+bindkey "^[l" forward-word
+bindkey "^[h" backward-word
+
 ## start typing + [Up-Arrow] - fuzzy find history forward
 if [[ "${terminfo[kcuu1]}" != "" ]]; then
   autoload -U up-line-or-beginning-search
