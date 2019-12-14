@@ -104,11 +104,12 @@ if $?.exitstatus == 0
 end
 puts "done."
 
+puts Dir.pwd
 custom_setup_script = "setup-custom.rb"
 if File.exist?(custom_setup_script)
   divider
   puts "running custom setup script #{custom_setup_script}"
   puts ""
 
-  exec(custom_setup_script, verbose ? "-vvvvvv" : "", force ? "-ffffff" : "")
+  exec("./#{custom_setup_script}", verbose ? "-vvvvvv" : "", force ? "-ffffff" : "")
 end
