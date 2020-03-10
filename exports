@@ -1,4 +1,4 @@
-export BAT_THEME="Monokai Extended Light"
+export BAT_THEME="GitHub"
 export CDPATH="$HOME:.:.."
 export CASE_SENSITIVE="true"
 export EDITOR="vim"
