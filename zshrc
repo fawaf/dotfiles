@@ -237,7 +237,7 @@ function precmd() {
 # Environment {{{
 autoload -Uz compinit
 compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
-#umask 077   # Deny group/world rwx by default (multiuser systems)
+umask 022   # Deny group/world rwx by default (multiuser systems)
 # }}}
 
 # Miscellaneous {{{
