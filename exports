@@ -1,13 +1,20 @@
+#export ARCHDIR="$HOME/.local/mips"
+
 export BAT_THEME="GitHub"
-export CDPATH="$HOME:.:.."
 export CASE_SENSITIVE="true"
+export CDPATH="$HOME:.:.."
 export EDITOR="vim"
 export FPATH="$FPATH:$HOME/.zsh/completion"
+export FZF_ALT_C_COMMAND='fd . $(git rev-parse --show-toplevel) --type d --exclude .git --color=never'
+export FZF_ALT_C_OPTS="--preview 'cd {} && basename {} && tree -C .' --delimiter $OKTA_HOME/ --with-nth 2"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
+export FZF_DEFAULT_COMMAND='fd --type f --color=never'
 export GOPATH="$HOME/go"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 export LIBRARY_PATH="/usr/local/lib"
-export LYNX_CFG="$HOME/.lynxrc"
 export LYNX_CFG_FILE="$HOME/.lynxrc"
+export LYNX_CFG="$HOME/.lynxrc"
 export MANPATH="/usr/local/share/man:/usr/share/man:/sw/share/man:/opt/local/share/man:/usr/X11R6/man:$HOME/.local/share/man:/opt/X11/share/man:/usr/X11/share/man:$HOME/.rvm/man:/home/linuxbrew/.linuxbrew/share/man:$HOME/.linuxbrew/share/man"
 export MYSQL_PS1="\u@\h using database \d \n(\c) > "
 export OPENSSL_CONF="$XDG_CONFIG_HOME/openssl.cnf"
@@ -15,11 +22,10 @@ export PAGER="less"
 export PATH="$ARCHDIR:$HOME/bin:$HOME/.local/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:/usr/local/Cellar/openssl/1.0.1e/bin:/opt/local/bin:/opt/local/sbin:/sw/bin:/sw/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/git/bin:/usr/texbin:/usr/X11/bin:/var/lib/gems/1.9/bin:/usr/local/mysql/bin:gtk-prefix/bin:/gtk-prefix/bin:$HOME/.local/android/tools:$HOME/.local/android/platform-tools:/opt/X11/bin:/opt/aws/bin:$HOME/.rvm/bin:$HOME/.cargo/bin:$GOPATH/bin:$JAVA_HOME/bin:$PATH"
 export SVN_EDITOR="vim"
 export TERMINAL="mate-terminal"
-export WWW_HOME="https://www.google.com"
 export VISUAL="vim"
+export WWW_HOME="https://www.google.com"
 export XDG_CONFIG_HOME="$HOME/.config"
 
-#export ARCHDIR="$HOME/.local/mips"
 # Replace instances of \W with \w in prompt functions below to get display of full path name.
 # export PS1="\[[\e[1;34m\]\u\[\e[m\]@\[\e[\e[1;32m\h\[\e[m\]:\[\e[\e[1;31m\w\[\e[m\]]\n\e[1;35m\]%\[\e[m\] "
 if [ -f "$HOME/.exports-custom" ]
