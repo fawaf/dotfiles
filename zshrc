@@ -84,7 +84,7 @@ bindkey -M menuselect k up-line-or-history
 bindkey -M menuselect l forward-char
 # }}}
 
-# Bindings {{{
+# key bindings {{{
 bindkey -v                  # vi keybindings
 bindkey ' ' magic-space     # Do history expansion on space
 bindkey '^_' undo           # Ctrl-/ usually inserts Ctrl-_
@@ -270,8 +270,10 @@ unset LS_COLORS
 # Sources {{{
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+bindkey '^o' fzf-file-widget
 
 if [ -f $HOME/.zshrc-custom ]
 then
