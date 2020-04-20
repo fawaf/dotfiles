@@ -272,9 +272,6 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
-bindkey '^o' fzf-file-widget
-
 if [ -f $HOME/.zshrc-custom ]
 then
     source $HOME/.zshrc-custom

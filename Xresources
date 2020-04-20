@@ -60,4 +60,6 @@ Xcursor.size: 16
 ! LightGrey + White
 *color7:  #cccccc
 *color15: #f8f8f2
+
+URxvt*font:    xft:Hack Nerd Font:style=Regular:size=11
 ! vim: ft=xdefaults
