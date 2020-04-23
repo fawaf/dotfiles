@@ -1,6 +1,7 @@
 {
   "append": [
+    "config",
     "gnupg",
-    "config"
+    "ipython"
   ]
 }
