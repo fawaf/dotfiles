@@ -46,32 +46,32 @@ for_window [class="TeamViewer.exe"] floating enable
 for_window [title="^TeamViewer Panel" instance="(?i)(?!google-chrome)$"] floating enable, move absolute position 900 px 0 px
 for_window [title="TeamViewer" instance="^(?i)(?!google-chrome)$"] floating enable, move absolute position 0 px 0 px
 
-exec --no-startup-id which fluxgui && fluxgui &
 #exec --no-startup-id which xscreensaver && xscreensaver &
 #exec --no-startup-id which gpaste-client && gpaste-client applet
+#exec --no-startup-id which nm-applet && nm-applet &
+#exec --no-startup-id which xautolock && xautolock -time 1 -locker $lock &
 
-exec --no-startup-id which synsei && synsei load default
-exec --no-startup-id which xbindkeys && xbindkeys
-exec --no-startup-id which nm-applet && nm-applet &
-exec --no-startup-id which redshift-gtk && redshift-gtk
-exec --no-startup-id which connman-notify && connman-notify &
-exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
+exec --no-startup-id which caffeine-indicator && caffeine-indicator &
 exec --no-startup-id which compton && compton -b
+exec --no-startup-id which connman-notify && connman-notify &
 exec --no-startup-id which dunst && dunst &
+exec --no-startup-id which fluxgui && fluxgui &
 exec --no-startup-id which nitrogen && nitrogen --restore
 exec --no-startup-id which parcellite && parcellite &
-exec --no-startup-id which caffeine-indicator && caffeine-indicator &
-#exec --no-startup-id which xautolock && xautolock -time 1 -locker $lock &
+exec --no-startup-id which redshift-gtk && redshift-gtk
+exec --no-startup-id which synsei && synsei load default
+exec --no-startup-id which unclutter && unclutter -jitter 10 -idle 1 &
+exec --no-startup-id which xbindkeys && xbindkeys
 exec --no-startup-id which xss-lock && xss-lock --notifier=/usr/local/libexec/xsecurelock/dimmer --transfer-sleep-lock -- $lock &
 
 # exec programs
-bindsym $ctrl+$shift+$alt+s exec slack
 bindsym $ctrl+$shift+$alt+f exec firefox
 bindsym $ctrl+$shift+$alt+c exec google-chrome
+bindsym $ctrl+$shift+$alt+s exec slack
 
+bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
 bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh -l"
 bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r"
-bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
 bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/nuc.sh"
 
 set $apps launch with apps
