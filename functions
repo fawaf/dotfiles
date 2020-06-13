@@ -215,9 +215,9 @@ set_host_variables() {
         then
             if which curl &> /dev/null
             then
-                export PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 https://www.fawong.com/ip)"
+                export PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 https://www.waf.hk/ip)"
             else
-                export PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.fawong.com/ip)"
+                export PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.waf.hk/ip)"
             fi
 
             LOCAL_NAMESERVER="$(cat /etc/resolv.conf | \grep nameserver | tail -1 | awk '{print $NF}')"
