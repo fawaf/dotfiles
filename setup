@@ -1,0 +1,147 @@
+#!/usr/bin/env python
+
+import os
+import argparse
+import pathlib
+import shutil
+import tempfile
+
+import waflibs
+
+DOTFILES_DIR = pathlib.Path(__file__).absolute().parent
+
+parser = argparse.ArgumentParser()
+waflibs.arg_parse.enable_verbose_logging(parser)
+waflibs.arg_parse.enable_dry_run(parser)
+parser.add_argument(
+    "-f", "--force", action="store_true", help="do not force commands"
+)
+parser.add_argument("-e", "--dev", action="store_true", help="dev mode")
+parser.add_argument(
+    "-c",
+    "--config",
+    type=str,
+    default="{}/config.json".format(DOTFILES_DIR),
+    help="config file",
+)
+args = parser.parse_args()
+
+logger = waflibs.log.create_logger(args)
+
+dev = args.dev
+verbose = args.verbose
+force = args.force
+config_file = args.config
+
+if dev:
+    temp_dir = tempfile.TemporaryDirectory()
+    home_dir = pathlib.Path(temp_dir.name).absolute()
+    verbose = True
+else:
+    home_dir = pathlib.Path(os.environ["HOME"]).absolute()
+logger.debug("using home dir: {}".format(home_dir))
+
+os.chdir(DOTFILES_DIR)
+
+print("updating repo... ", end="")
+pull_stdout, pull_stderr = waflibs.utils.shell_command(
+    "git pull".split(" "), cwd=DOTFILES_DIR
+)
+print("done.")
+logger.debug("pull stdout: {}".format(pull_stdout))
+logger.debug("pull stderr: {}".format(pull_stderr))
+
+print("submodule init... ", end="")
+init_stdout, init_stderr = waflibs.utils.shell_command(
+    "git submodule init".split(" "), cwd=DOTFILES_DIR
+)
+print("done.")
+logger.debug("init stdout: {}".format(init_stdout))
+logger.debug("init stderr: {}".format(init_stderr))
+
+print("submodule sync... ", end="")
+sync_stdout, sync_stderr = waflibs.utils.shell_command(
+    "git submodule sync".split(" "), cwd=DOTFILES_DIR
+)
+print("done.")
+logger.debug("sync stdout: {}".format(sync_stdout))
+logger.debug("sync stderr: {}".format(sync_stderr))
+
+print("submodule update... ", end="")
+update_stdout, update_stderr = waflibs.utils.shell_command(
+    "git submodule update".split(" "), cwd=DOTFILES_DIR
+)
+print("done.")
+logger.debug("update stdout: {}".format(update_stdout))
+logger.debug("update stderr: {}".format(update_stderr))
+
+config = waflibs.config.parse_json_file(config_file)
+logger.debug("config: {}".format(config))
+
+print("setting up dotfiles... ", end="")
+for entry in DOTFILES_DIR.glob("*"):
+    logger.debug("entry is {}".format(entry))
+    if entry.name.startswith(
+        (
+            "README",
+            "LICENSE",
+            "setup",
+            "config.json",
+            "Makefile",
+            "update-",
+            ".git",
+        )
+    ):
+        logger.debug("ignoring entry {}".format(entry))
+
+        continue
+
+    dest = pathlib.Path(home_dir, ".{}".format(entry.name))
+    logger.debug("dest is {}".format(dest))
+
+    if entry.name in config["append"]:
+        logger.debug("appending to directory {}".format(dest))
+
+        if not dest.is_dir():
+            logger.debug("{} is not a directory, creating...".format(dest))
+
+            dest.mkdir()
+
+        for e in entry.glob("*"):
+            logger.debug("copying entry {} to dest {}".format(e, dest))
+
+            if e.is_dir():
+                shutil.copytree(str(e), str(dest), dirs_exist_ok=True)
+            else:
+                shutil.copy2(str(e), str(dest))
+    else:
+        logger.debug("removing {}".format(dest))
+        if dest.is_dir():
+            shutil.rmtree(dest)
+        else:
+            dest.unlink(missing_ok=True)
+
+        logger.debug("copying entry {} to dest {}".format(entry, dest))
+        if entry.is_dir():
+            shutil.copytree(str(entry), str(dest), dirs_exist_ok=True)
+        else:
+            shutil.copy2(str(entry), str(dest), follow_symlinks=False)
+print("done.")
+
+custom_setup_script = pathlib.Path("setup-custom")
+if custom_setup_script.is_file():
+    waflibs.utils.divider()
+    print(
+        "running custom setup script {}...".format(custom_setup_script), end=""
+    )
+    print("")
+
+    waflibs.utils.shell_command(
+        [
+            "./{}".format(custom_setup_script),
+            "-vvvvvv" if verbose else "",
+            "-ffffff" if force else "",
+        ]
+    )
+
+    print("done.")
