@@ -28,6 +28,8 @@ args = parser.parse_args()
 
 logger = waflibs.log.create_logger(args)
 
+logger.debug("args: {}".format(args))
+
 dev = args.dev
 verbose = args.verbose
 force = args.force
@@ -131,17 +133,19 @@ print("done.")
 custom_setup_script = pathlib.Path("setup-custom")
 if custom_setup_script.is_file():
     waflibs.utils.divider()
-    print(
-        "running custom setup script {}...".format(custom_setup_script), end=""
-    )
-    print("")
 
-    waflibs.utils.shell_command(
+    print(
+        "running custom setup script {}... ".format(custom_setup_script), end=""
+    )
+
+    custom_stdout, custom_stderr = waflibs.utils.shell_command(
         [
             "./{}".format(custom_setup_script),
             "-vvvvvv" if verbose else "",
             "-ffffff" if force else "",
         ]
     )
+    logger.debug("custom stdout: {}".format(custom_stdout))
+    logger.debug("custom stderr: {}".format(custom_stderr))
 
     print("done.")
