@@ -151,7 +151,7 @@ set_prompt() {
     export RPS1END="$PR_LIGHT_CYAN%D{%Y-%m-%d %H:%M:%S %Z} (%D{%Y.%V})$PR_NO_COLOR"
 
     export PS1BEGIN="%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST"
-    export PS1END="$PR_NO_COLOR:$PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
+    export PS1END="$PR_NO_COLOR in dir $PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
 $PR_MAGENTA%#$PR_NO_COLOR "
 
     if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]

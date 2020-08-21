@@ -35,3 +35,6 @@ Contributors
 * X configs
 * dunst configs
 * zsh configs
+
+### [helmuthdu](https://github.com/helmuthdu/dotfiles) ###
+* shell functions
