@@ -1,0 +1,5 @@
+% setkey function-name key-sequence
+% unsetkey "^F"
+
+% color OBJECT-NAME FOREGROUND-COLOR BACKGROUND-COLOR
+color underline blue white
