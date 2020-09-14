@@ -6,7 +6,7 @@
 %       color <object-name> <fg> <bg>
 %
 % <key-name> must be enclosed in double quotes.
-$       '^' represents Ctrl.
+%       '^' represents Ctrl.
 %       The function name is not in double quotes.
 %
 %
