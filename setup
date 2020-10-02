@@ -46,32 +46,40 @@ logger.debug("using home dir: {}".format(home_dir))
 os.chdir(DOTFILES_DIR)
 
 print("updating repo... ", end="")
-pull_stdout, pull_stderr = waflibs.utils.shell_command(
-    "git pull".split(" "), cwd=DOTFILES_DIR
+cmd = "git pull"
+logger.debug("command to run: {}".format(cmd))
+pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
+    cmd.split(" "), cwd=DOTFILES_DIR
 )
 print("done.")
 logger.debug("pull stdout: {}".format(pull_stdout))
 logger.debug("pull stderr: {}".format(pull_stderr))
 
 print("submodule init... ", end="")
-init_stdout, init_stderr = waflibs.utils.shell_command(
-    "git submodule init".split(" "), cwd=DOTFILES_DIR
+cmd = "git submodule init"
+logger.debug("command to run: {}".format(cmd))
+init_stdout, init_stderr, _ = waflibs.utils.shell_command(
+    cmd.split(" "), cwd=DOTFILES_DIR
 )
 print("done.")
 logger.debug("init stdout: {}".format(init_stdout))
 logger.debug("init stderr: {}".format(init_stderr))
 
 print("submodule sync... ", end="")
-sync_stdout, sync_stderr = waflibs.utils.shell_command(
-    "git submodule sync".split(" "), cwd=DOTFILES_DIR
+cmd = "git submodule sync"
+logger.debug("command to run: {}".format(cmd))
+sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
+    cmd.split(" "), cwd=DOTFILES_DIR
 )
 print("done.")
 logger.debug("sync stdout: {}".format(sync_stdout))
 logger.debug("sync stderr: {}".format(sync_stderr))
 
 print("submodule update... ", end="")
-update_stdout, update_stderr = waflibs.utils.shell_command(
-    "git submodule update".split(" "), cwd=DOTFILES_DIR
+cmd = "git submodule update"
+logger.debug("command to run: {}".format(cmd))
+update_stdout, update_stderr, _ = waflibs.utils.shell_command(
+    cmd.split(" "), cwd=DOTFILES_DIR
 )
 print("done.")
 logger.debug("update stdout: {}".format(update_stdout))
@@ -135,16 +143,17 @@ if custom_setup_script.is_file():
     waflibs.utils.divider()
 
     print(
-        "running custom setup script {}... ".format(custom_setup_script), end=""
+        "running custom setup script {}... ".format(custom_setup_script),
+        end="",
     )
 
-    custom_stdout, custom_stderr = waflibs.utils.shell_command(
-        [
-            "./{}".format(custom_setup_script),
-            "-vvvvvv" if verbose else "",
-            "-ffffff" if force else "",
-        ]
-    )
+    cmd = [
+        "./{}".format(custom_setup_script),
+        "-vvvvvv" if verbose else "",
+        "-ffffff" if force else "",
+    ]
+    logger.debug("command to run: {}".format(cmd))
+    custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(cmd)
     logger.debug("custom stdout: {}".format(custom_stdout))
     logger.debug("custom stderr: {}".format(custom_stderr))
 
