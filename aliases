@@ -1,6 +1,7 @@
 # common aliases {{{
 alias a="alias"
 alias ba="$EDITOR $HOME/.aliases-custom && source $HOME/.aliases && source $HOME/.aliases-custom"
+alias brewupdate="brew update && brew upgrade"
 alias cat="bat --pager=less"
 alias catn="cat --number"
 alias c="clear"
