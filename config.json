@@ -1,7 +1,15 @@
 {
-  "append": [
-    "config",
-    "gnupg",
-    "ipython"
-  ]
+  "append": {
+    "root": [
+      "gnupg",
+      "ipython"
+    ],
+    "config": [
+      "dunst",
+      "i3",
+      "i3status",
+      "powerline",
+      "systemd"
+    ]
+  }
 }

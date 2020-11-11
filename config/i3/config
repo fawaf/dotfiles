@@ -51,7 +51,7 @@ for_window [title="TeamViewer" instance="^(?i)(?!google-chrome)$"] floating enab
 #exec --no-startup-id which xautolock && xautolock -time 1 -locker $lock &
 
 exec --no-startup-id which caffeine-indicator && caffeine-indicator &
-exec --no-startup-id which compton && compton -b
+exec --no-startup-id which compton && compton --daemon
 exec --no-startup-id which connman-notify && connman-notify &
 exec --no-startup-id which dunst && dunst &
 exec --no-startup-id which fluxgui && fluxgui &

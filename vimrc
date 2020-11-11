@@ -146,6 +146,11 @@ if has("autocmd")
   "  au BufReadPre * setlocal foldmethod=indent
   "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
   "augroup END
+
+  augroup filetypedetect
+    au BufRead,BufNewFile *.py.erb set filetype=python
+    au BufRead,BufNewFile *.rb.erb set filetype=ruby
+  augroup END
 else
 
   set autoindent                " always set autoindenting on
