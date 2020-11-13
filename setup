@@ -135,13 +135,15 @@ for entry in DOTFILES_DIR.glob("*"):
         if type(config["append"][entry_name]) == list:
             logger.debug("append entry is array: {}".format(entry_name))
 
-            for ent in e.glob("*"):
-                print('3'*88)
-                print(ent)
-                print('3'*88)
+            for ent in pathlib.Path(entry_name).glob("*"):
                 logger.debug("copying entry {} to dest {}".format(ent, dest))
 
-                shutil.copy2(str(ent), str(dest))
+                real_ent = pathlib.Path(ent)
+
+                if real_ent.is_dir():
+                    shutil.copytree(str(real_ent), str(dest), dirs_exist_ok=True)
+                else:
+                    shutil.copy2(str(ent), str(dest))
     else:
         logger.debug("backing up and removing {}".format(dest))
         dest_bak = pathlib.Path("{}.bak".format(dest))

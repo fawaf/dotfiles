@@ -1,6 +1,6 @@
 if [[ -z "$DISABLE_DUX" ]]
 then
-  if [[ ! "$TERM" =~ screen  ]]
+  if [[ ! "$TERM" =~ screen  ]] && [[ ! "$(tty)" =~ "tty" ]]
   then
       ~/bin/dux || echo "Failed to run Dux (returned with $?)"
       echo -n "Exiting in 3 "
