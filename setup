@@ -5,8 +5,28 @@ import argparse
 import pathlib
 import shutil
 import tempfile
+import base64
 
 import waflibs
+
+
+def backup_and_remove(dest):
+    logger.debug("backing up and removing {}".format(dest))
+    dest_bak = pathlib.Path("{}.bak".format(dest))
+    logger.debug("back up entry {}".format(dest_bak))
+
+    if dest.is_dir():
+        if dest_bak.is_dir():
+            shutil.rmtree(dest_bak)
+            shutil.copytree(dest, dest_bak)
+        shutil.rmtree(dest)
+    else:
+        try:
+            shutil.copy2(dest, dest_bak)
+            dest.unlink(missing_ok=True)
+        except FileNotFoundError as e:
+            logger.debug("ignoring error: {}".format(e))
+
 
 DOTFILES_DIR = pathlib.Path(__file__).absolute().parent
 
@@ -25,6 +45,7 @@ parser.add_argument(
     help="config file",
 )
 parser.add_argument("-i", "--dir", "--directory", help="directory to use")
+parser.add_argument("-t", "--test", action="store_true", help="run test")
 args = parser.parse_args()
 
 logger = waflibs.log.create_logger(args)
@@ -36,6 +57,7 @@ verbose = args.verbose
 force = args.force
 config_file = args.config
 directory = args.dir
+test = args.test
 
 if dev:
     temp_dir = tempfile.TemporaryDirectory()
@@ -90,7 +112,21 @@ logger.debug("update stdout: {}".format(update_stdout))
 logger.debug("update stderr: {}".format(update_stderr))
 
 config = waflibs.config.parse_json_file(config_file)
+
+if test:
+    DOTFILES_DIR = pathlib.Path(DOTFILES_DIR, "test")
+    config = {"append": {"root": ["rootdir"], "rootsubdir": ["subdir"]}}
+
+    random = base64.b64encode(os.urandom(22))
+
+    for root, dirs, files in os.walk(DOTFILES_DIR):
+        for fl in files:
+            f = open(pathlib.Path(root, fl), "w")
+            f.write(str(random))
+            f.close()
+
 logger.debug("config: {}".format(config))
+logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
 
 print("setting up dotfiles... ", end="")
 for entry in DOTFILES_DIR.glob("*"):
@@ -117,7 +153,7 @@ for entry in DOTFILES_DIR.glob("*"):
     logger.debug("dest is {}".format(dest))
 
     if entry_name in config["append"]["root"]:
-        logger.debug("appending to directory {}".format(dest))
+        logger.debug("appending to root directory {}".format(dest))
 
         if not dest.is_dir():
             logger.debug("{} is not a directory, creating...".format(dest))
@@ -125,41 +161,34 @@ for entry in DOTFILES_DIR.glob("*"):
             dest.mkdir()
 
         for e in entry.glob("*"):
-            logger.debug("copying entry {} to dest {}".format(e, dest))
+            logger.debug("copying root entry {} to dest {}".format(e, dest))
 
             if e.is_dir():
                 shutil.copytree(str(e), str(dest), dirs_exist_ok=True)
             else:
                 shutil.copy2(str(e), str(dest))
-    elif entry_name in config["append"]:
-        if type(config["append"][entry_name]) == list:
-            logger.debug("append entry is array: {}".format(entry_name))
+    elif (
+        entry_name in config["append"]
+        and type(config["append"][entry_name]) == list
+    ):
+        logger.debug("append entry is array: {}".format(entry_name))
 
-            for ent in pathlib.Path(entry_name).glob("*"):
-                logger.debug("copying entry {} to dest {}".format(ent, dest))
+        for ent in pathlib.Path(entry_name).glob("*"):
+            real_ent = pathlib.Path(ent)
+            real_dest = pathlib.Path(str(dest), str(real_ent.name))
 
-                real_ent = pathlib.Path(ent)
+            logger.debug(
+                "copying entry {} to dest {}".format(real_ent, real_dest)
+            )
 
-                if real_ent.is_dir():
-                    shutil.copytree(str(real_ent), str(dest), dirs_exist_ok=True)
-                else:
-                    shutil.copy2(str(ent), str(dest))
+            backup_and_remove(real_dest)
+
+            if real_ent.is_dir():
+                shutil.copytree(str(real_ent), str(real_dest))
+            else:
+                shutil.copy2(str(real_ent), str(real_dest))
     else:
-        logger.debug("backing up and removing {}".format(dest))
-        dest_bak = pathlib.Path("{}.bak".format(dest))
-        logger.debug("back up entry {}".format(dest_bak))
-
-        if dest.is_dir():
-            if dest_bak.is_dir():
-                shutil.rmtree(dest_bak)
-                shutil.copytree(dest, dest_bak)
-            shutil.rmtree(dest)
-        else:
-            try:
-                shutil.copy2(dest, dest_bak)
-                dest.unlink(missing_ok=True)
-            except FileNotFoundError as e:
-                logger.debug("ignoring error: {}".format(e))
+        backup_and_remove(dest)
 
         logger.debug("copying entry {} to dest {}".format(entry, dest))
         if entry.is_dir():
@@ -173,7 +202,7 @@ print("done.")
 
 custom_setup_script = pathlib.Path("setup-custom")
 if custom_setup_script.is_file():
-    waflibs.utils.divider()
+    waflibs.utils.divider(char="*", times=77)
 
     print(
         "running custom setup script {}... ".format(custom_setup_script),
