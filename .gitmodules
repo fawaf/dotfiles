@@ -58,3 +58,6 @@
 [submodule "zsh/zsh-autosuggestions"]
 	path = zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "vim/bundle/vim-github-colorscheme"]
+	path = vim/bundle/vim-github-colorscheme
+	url = https://github.com/endel/vim-github-colorscheme.git

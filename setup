@@ -27,7 +27,6 @@ def backup_and_remove(dest):
         except FileNotFoundError as e:
             logger.debug("ignoring error: {}".format(e))
 
-
 DOTFILES_DIR = pathlib.Path(__file__).absolute().parent
 
 parser = argparse.ArgumentParser()
@@ -147,6 +146,9 @@ for entry in DOTFILES_DIR.glob("*"):
     ):
         logger.debug("ignoring entry {}".format(entry))
 
+        continue
+    elif entry_name.startswith("test") and not test:
+        logger.debug("ignoring entry {} as testing is not in progress".format(entry))
         continue
 
     dest = pathlib.Path(home_dir, ".{}".format(entry_name))
