@@ -14,6 +14,7 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 
 export BAT_THEME="GitHub"
 export CASE_SENSITIVE="true"
+export CC="gcc"
 export CDPATH="$HOME:.:.."
 export EDITOR="vim"
 export FPATH="$FPATH:$HOME/.zsh/completion"
