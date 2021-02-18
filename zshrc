@@ -93,6 +93,7 @@ bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 bindkey "^[l" forward-word
 bindkey "^[h" backward-word
+bindkey '^Q' push-line
 
 ## start typing + [Up-Arrow] - fuzzy find history forward
 if [[ "${terminfo[kcuu1]}" != "" ]]; then
@@ -282,6 +283,8 @@ then
     source $HOME/.aliases-custom
 fi
 # }}}
+
+autoload zcalc
 
 cd ~
 

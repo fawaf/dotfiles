@@ -41,6 +41,8 @@ Contributors
 ### [helmuthdu](https://github.com/helmuthdu/dotfiles) ###
 * shell functions
 
+### [oh my zsh](https://github.com/ohmyzsh/ohmyzsh) ###
+* various functions
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles?ref=badge_large)
