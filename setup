@@ -186,7 +186,7 @@ for entry in DOTFILES_DIR.glob("*"):
             backup_and_remove(real_dest)
 
             if real_ent.is_dir():
-                shutil.copytree(str(real_ent), str(real_dest))
+                shutil.copytree(str(real_ent), str(real_dest), ignore_dangling_symlinks=True)
             else:
                 shutil.copy2(str(real_ent), str(real_dest))
     else:

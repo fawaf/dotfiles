@@ -1,1 +1,1 @@
-/home/waf/.vimrc
+../../.vimrc
