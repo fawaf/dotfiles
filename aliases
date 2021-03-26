@@ -146,6 +146,7 @@ alias rssl="ruby -r 'openssl' -e 'puts OpenSSL::X509::DEFAULT_CERT_FILE'"
 alias scp='echo "use rsync!\n\nrsync"'
 alias scpi="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias screen="screen -t `hostname`"
+alias sexi="leela"
 alias si="li"
 alias sl="ls"
 alias sls="screen -list"
