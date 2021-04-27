@@ -68,18 +68,18 @@ bindsym $ctrl+$shift+$alt+f exec firefox
 bindsym $ctrl+$shift+$alt+c exec google-chrome
 bindsym $ctrl+$shift+$alt+s exec slack
 
-bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a"
-bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh -l"
-bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r"
-bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/nuc.sh"
+bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/.config/lenovo.sh -a"
+bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/.config/lenovo.sh -l"
+bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/.config/lenovo.sh -r"
+bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/.config/nuc.sh"
 
 set $apps launch with apps
 bindsym $mod+o mode "$apps"
 mode "$apps" {
-  bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/lenovo.sh -l -p"
-  bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/lenovo.sh -r -p"
-  bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/lenovo.sh -a -p"
-  bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/nuc.sh -p"
+  bindsym $ctrl+$shift+$alt+l exec --no-startup-id "$HOME/.config/lenovo.sh -l -p"
+  bindsym $ctrl+$shift+$alt+r exec --no-startup-id "$HOME/.config/lenovo.sh -r -p"
+  bindsym $ctrl+$shift+$alt+a exec --no-startup-id "$HOME/.config/lenovo.sh -a -p"
+  bindsym $ctrl+$shift+$alt+n exec --no-startup-id "$HOME/.config/nuc.sh -p"
 
   bindsym Escape mode "default"
   bindsym Return mode "default"
