@@ -206,9 +206,11 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # volume controls
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 3.5dB+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q set Master 3.5dB- unmute
-bindsym XF86AudioMute exec amixer -q set Master toggle
+set $card 1
+set $control PCM
+bindsym XF86AudioRaiseVolume exec amixer --quiet --card $card set $control 3.5dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer --quiet --card $card set $control 3.5dB- unmute
+bindsym XF86AudioMute exec amixer --quiet --card $card set $control toggle
 
 # Sreen brightness controls
 # THUPER BROKEN
