@@ -117,8 +117,8 @@ bindsym $mod+j focus output down
 bindsym $mod+k focus output up
 bindsym $mod+l focus output right
 
-bindsym $mod+bracketleft focus left
-bindsym $mod+bracketright focus right
+bindsym $alt+bracketleft focus left
+bindsym $alt+bracketright focus right
 
 bindsym $mod+$shift+Left focus left
 bindsym $mod+$shift+Down focus down

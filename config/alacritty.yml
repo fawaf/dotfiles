@@ -270,11 +270,11 @@ colors:
   normal:
     black:   '#111111'
     red:     '#cc6666'
-    green:   '#b5bd68'
-    yellow:  '#f0c674'
-    blue:    '#81a2be'
+    green:   '#26ad00'
+    yellow:  '#111100'
+    blue:    '#00027a'
     magenta: '#b294bb'
-    cyan:    '#00cfb3'
+    cyan:    '#006c75'
     white:   '#c5c8c6'
 
   # Bright colors
