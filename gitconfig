@@ -5,19 +5,25 @@
   autosetuprebase = always
 
 [alias]
+  aa = add -A
+  body = log --format=%B
+  br = branch
   ci = commit
   co = checkout
   dc = diff --cached
   di = diff --color-words
+  dif = diff
   ds = diff --staged
+  last = log -1 HEAD
   lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
   lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(bold white)— %an%C(reset)' --abbrev-commit
   ll = log --graph --format=\"%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)\"
   r = !_(){ git log --graph --oneline --all -40 --decorate=short --color=always $@ | php -r "$log = Array(); foreach( explode( \"\\n\", trim( shell_exec( \"git log --all --pretty=format:\\\"%h %Cgreen(%cr) %C(bold blue)<%an>%Creset\\\" --abbrev-commit --date=relative -5000\" ) ) ) as $line ) { list( $commit, $decor ) = explode( \" \", $line, 2 ); $log[ $commit ] = $decor; } foreach( explode( \"\\n\", trim( file_get_contents( \"php://stdin\" ) ) ) as $line ) { if( preg_match( \"#([a-f0-9]{7})#\", $line, $m ) ) { echo $line . \" \" . $log[ $m[ 1 ] ] . \"\\n\"; } else { echo $line . \"\\n\"; } }'; } ; _"
+  sl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all --since='90 days ago'
+  ssl = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'
+  st = status
+  summary = show  # Mercurial crib
   up = !git pull --rebase
-  aa = add -A
-  last = log -1 HEAD
-  body = log --format=%B
 
 [color]
   ui = auto

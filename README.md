@@ -44,5 +44,9 @@ Contributors
 ### [oh my zsh](https://github.com/ohmyzsh/ohmyzsh) ###
 * various functions
 
+### git aliases ###
+https://gist.github.com/grant-h/761d753011b8df8ec417
+https://gist.github.com/jessesquires/d0f3fc99be8208394a450ce86443ce7d
+
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles?ref=badge_large)
