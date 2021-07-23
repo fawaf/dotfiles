@@ -229,6 +229,8 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:indentLine_noConcealCursor = "nc"
+let g:indentLine_setConceal = 0
+
 let g:vim_json_syntax_conceal = 0
 
 let g:vim_markdown_folding_disabled = 1
