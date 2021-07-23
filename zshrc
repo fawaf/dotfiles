@@ -277,11 +277,6 @@ if [ -f $HOME/.zshrc-custom ]
 then
     source $HOME/.zshrc-custom
 fi
-
-if [ -f $HOME/.aliases-custom ]
-then
-    source $HOME/.aliases-custom
-fi
 # }}}
 
 autoload zcalc

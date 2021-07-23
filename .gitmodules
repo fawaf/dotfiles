@@ -21,7 +21,7 @@
 	url = https://github.com/tpope/vim-endwise.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
+	url = https://github.com/vim-syntastic/syntastic.git
 [submodule "vim/bundle/vim-terraform"]
 	path = vim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git

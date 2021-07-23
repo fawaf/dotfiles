@@ -5,7 +5,7 @@
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2018.08.28
+" Last change:       2021.01.27
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
@@ -230,6 +230,10 @@ let g:syntastic_check_on_wq = 0
 
 let g:indentLine_noConcealCursor = "nc"
 let g:vim_json_syntax_conceal = 0
+
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_conceal = 0
+
 autocmd InsertEnter *.json setlocal conceallevel=2 concealcursor=
 autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=inc
 

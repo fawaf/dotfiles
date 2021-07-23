@@ -184,6 +184,7 @@ alias zp="$EDITOR $HOME/.zsh-prompt"
 KERNEL_NAME="`uname`"
 if [[ "$KERNEL_NAME" == "Linux" ]]; then
     source $HOME/.aliases-linux
+
     if [[ -f /etc/debian_version ]]; then
         source $HOME/.aliases-debian
     fi
@@ -199,3 +200,8 @@ elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
     source $HOME/.aliases-cygwin
 fi
 # }}}
+
+if [ -f $HOME/.aliases-custom ]
+then
+    source $HOME/.aliases-custom
+fi
