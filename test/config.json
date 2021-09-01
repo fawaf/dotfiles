@@ -1,0 +1,10 @@
+{
+  "append": {
+    "root": [
+      "appendrootdir"
+    ],
+    "rootsubdir": [
+      "appendrootsubdir"
+    ]
+  }
+}

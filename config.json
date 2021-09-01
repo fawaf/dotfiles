@@ -1,8 +1,7 @@
 {
   "append": {
     "root": [
-      "gnupg",
-      "ipython"
+      "gnupg"
     ],
     "config": [
       "dunst",
