@@ -90,16 +90,6 @@ if test:
     DOTFILES_DIR = pathlib.Path(DOTFILES_DIR, "test")
     config = waflibs.config.parse_json_file(pathlib.Path(DOTFILES_DIR, "config.json"))
 
-    random = base64.b64encode(os.urandom(22))
-
-    for root, dirs, files in os.walk(DOTFILES_DIR):
-        for fl in files:
-            if "config.json" == fl:
-                continue
-            f = open(pathlib.Path(root, fl), "w")
-            f.write(str(random))
-            f.close()
-
 if dev:
     temp_dir = tempfile.TemporaryDirectory()
     home_dir = pathlib.Path(temp_dir.name).absolute()
@@ -164,11 +154,13 @@ logger.debug("config: {}".format(config))
 logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
 
 print("setting up dotfiles... ", end="")
-for root_entry in DOTFILES_DIR.glob("*"):
+root_entries = [re for re in DOTFILES_DIR.glob("*")]
+root_entries.sort()
+for root_entry in root_entries:
     root_entry_name = root_entry.name
     logger.debug("root level entry name is {}".format(root_entry_name))
+    logger.debug("top level root entry is {}".format(root_entry))
 
-    logger.debug("top level entry is {}".format(root_entry))
     if root_entry_name.startswith(
         (
             "README",
@@ -180,14 +172,22 @@ for root_entry in DOTFILES_DIR.glob("*"):
             ".git",
         )
     ):
-        logger.debug("ignoring entry {}".format(root_entry))
+        logger.debug("ignoring entry starts with {}".format(root_entry))
 
         continue
-    elif root_entry_name.startswith("test") and not test:
+    if root_entry_name.endswith(
+            (
+                "swp",
+                )
+            ):
+        logger.debug(f"ignoring entry ends with {root_entry}")
+
+        continue
+    if root_entry_name.startswith("test") and not test:
         logger.debug("ignoring entry {} as testing is not in progress".format(root_entry))
         continue
 
-    root_dest_dir = get_dest_location(root_entry)
+    root_dest_dir = get_dest_location(root_entry).parent.absolute()
     if not root_dest_dir.is_dir():
         logger.debug(f"{root_dest_dir} directory does not exist, creating...")
 
@@ -196,7 +196,9 @@ for root_entry in DOTFILES_DIR.glob("*"):
     if root_entry.is_dir():
         logger.debug(f"root entry is dir: {root_entry}")
 
-        for entry in root_entry.glob("*"):
+        entries = [e for e in root_entry.glob("*")]
+        entries.sort()
+        for entry in entries:
             entry_name = entry.name
             logger.debug(f"entry: {entry}")
             logger.debug(f"entry name: {entry_name}")
@@ -212,52 +214,54 @@ for root_entry in DOTFILES_DIR.glob("*"):
 
                     dest.mkdir()
 
-                for e in entry.glob("*"):
-                    logger.debug(f"root entry: {e}")
-                    logger.debug(f"dest: {dest}")
-                    logger.debug("copying root entry {} to dest {}".format(e, dest))
+                backup_and_remove(dest)
 
-                    backup_and_remove(pathlib.Path(f"{dest}/{os.path.basename(e)}"))
+                logger.debug("copying root entry {} to dest {}".format(e, dest))
+                shutil.copytree(entry, dest)
+            else:
+                logger.debug(f"not an append root dir: {entry}")
 
-                    if e.is_dir():
-                        shutil.copytree(e, dest, dirs_exist_ok=True)
-                    else:
-                        shutil.copy2(e, dest)
-            elif entry.is_dir():
-                for sub_entry in entry.glob("*"):
+                dest_path = get_dest_location(entry)
+                backup_and_remove(dest_path)
+
+                shutil.copy2(entry, dest_path, follow_symlinks=False)
+
+            if entry.is_dir():
+                sub_entries = [se for se in entry.glob("*")]
+                sub_entries.sort()
+                for sub_entry in sub_entries:
                     sub_entry_name = sub_entry.name
                     logger.debug(f"sub entry: {sub_entry}")
                     logger.debug(f"sub entry name: {sub_entry_name}")
 
-                    sub_entry_dest_dir = get_dest_location(sub_entry)
+                    sub_entry_dest_dir = get_dest_location(sub_entry).parent.absolute()
                     if not sub_entry_dest_dir.is_dir():
                         logger.debug(f"{sub_entry_dest_dir} directory does not exist, creating...")
 
                         sub_entry_dest_dir.mkdir()
 
-                    if sub_entry_name in config["append"]:
-                        if type(config["append"][sub_entry_name]) == list:
+                    if entry_name in config["append"]:
+                        if type(config["append"][entry_name]) == list:
                             logger.debug("sub entry is array, hence append: {}".format(entry_name))
 
                             for entry_dir in config["append"][entry_name]:
                                 logger.debug(f"append entry dir: {entry_dir}")
 
-                                for ent in pathlib.Path(entry_name, entry_dir).glob("*"):
-                                    real_ent = pathlib.Path(ent)
-                                    logger.debug(f"real entry: {real_ent}")
-                                    real_dest = pathlib.Path(dest, entry_dir, real_ent.name)
-                                    logger.debug(f"real dest: {real_dest}")
+                                real_ent = pathlib.Path(ent)
+                                logger.debug(f"real entry: {real_ent}")
+                                real_dest = pathlib.Path(dest, entry_dir, real_ent.name)
+                                logger.debug(f"real dest: {real_dest}")
 
-                                    logger.debug(
-                                        "copying entry {} to dest {}".format(real_ent, real_dest)
-                                    )
+                                logger.debug(
+                                    "copying entry {} to dest {}".format(real_ent, real_dest)
+                                )
 
-                                    backup_and_remove(real_dest)
+                                backup_and_remove(real_dest)
 
-                                    if real_ent.is_dir():
-                                        shutil.copytree(real_ent, real_dest, ignore_dangling_symlinks=True)
-                                    else:
-                                        shutil.copy2(real_ent, real_dest, follow_symlinks=False)
+                                if real_ent.is_dir():
+                                    shutil.copytree(real_ent, real_dest, ignore_dangling_symlinks=True)
+                                else:
+                                    shutil.copy2(real_ent, real_dest, follow_symlinks=False)
                         else:
                             logger.debug(f"not a sub entry append: {sub_entry}")
 
@@ -265,13 +269,6 @@ for root_entry in DOTFILES_DIR.glob("*"):
                             backup_and_remove(dest_path)
 
                             shutil.copy2(sub_entry, dest_path, follow_symlinks=False)
-                    else:
-                        logger.debug(f"not an append dir, but file: {sub_entry}")
-
-                        dest_path = get_dest_location(sub_entry)
-                        backup_and_remove(dest_path)
-
-                        shutil.copy2(sub_entry, dest_path, follow_symlinks=False)
             else:
                 logger.debug(f"entry is regular file: {entry}")
 
@@ -281,9 +278,9 @@ for root_entry in DOTFILES_DIR.glob("*"):
                 backup_and_remove(dest)
 
                 shutil.copy2(entry, dest, follow_symlinks=False)
-        print(waflibs.utils.divider(char="+"))
+        logger.debug(waflibs.utils.divider(char="+"))
     else:
-        logger.debug(f"root entry is not dir: {entry_name}")
+        logger.debug(f"root entry is not dir: {root_entry_name}")
 
         dest = get_dest_location(root_entry)
         logger.debug("dest is {}".format(dest))
@@ -292,7 +289,7 @@ for root_entry in DOTFILES_DIR.glob("*"):
 
         logger.debug("copying entry {} to dest {}".format(root_entry, dest))
         shutil.copy2(root_entry, dest, follow_symlinks=False)
-    print(waflibs.utils.divider(char="-", times=77))
+    logger.debug(waflibs.utils.divider(char="-", times=77))
 print("done.")
 
 custom_setup_script = pathlib.Path("setup-custom")

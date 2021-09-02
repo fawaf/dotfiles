@@ -4,9 +4,6 @@
       "gnupg"
     ],
     "config": [
-      "dunst",
-      "i3",
-      "i3status",
       "powerline",
       "systemd"
     ]
