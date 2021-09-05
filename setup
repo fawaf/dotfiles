@@ -20,11 +20,11 @@ def backup_and_remove(dest):
             logger.debug(f"removing backup dir: {dest_bak}")
             shutil.rmtree(dest_bak)
         logger.debug(f"backing up dir {dest} to {dest_bak}")
-        shutil.copytree(dest, dest_bak)
+        copy(dest, dest_bak)
     else:
         logger.debug(f"backing up file {dest} to {dest_bak}")
         try:
-            shutil.copy2(dest, dest_bak)
+            copy(dest, dest_bak)
         except FileNotFoundError as e:
             logger.debug(f"ignoring error: {e}")
 
@@ -56,7 +56,24 @@ def get_dest_location(dest):
 
     return real_dest
 
-DOTFILES_DIR = pathlib.Path(__file__).absolute().parent
+
+def get_parent_directory(directory):
+    parent_dir = directory.parent.absolute()
+    logger.debug(f"parent dir: {parent_dir}")
+
+    return parent_dir
+get_parent_dir = get_parent_directory
+
+
+def copy(src, dest):
+    if src.is_dir():
+        shutil.copytree(
+            src, dest, ignore_dangling_symlinks=True
+        )
+    else:
+        shutil.copy2(
+            src, dest, follow_symlinks=True)
+
 
 parser = argparse.ArgumentParser()
 waflibs.arg_parse.enable_verbose_logging(parser)
@@ -69,7 +86,6 @@ parser.add_argument(
     "-c",
     "--config",
     type=str,
-    default="{}/config.json".format(DOTFILES_DIR),
     help="config file",
 )
 parser.add_argument("-i", "--dir", "--directory", help="directory to use")
@@ -78,17 +94,28 @@ args = parser.parse_args()
 
 dev = args.dev
 force = args.force
-config_file = args.config
 directory = args.dir
 test = args.test
 
-config = waflibs.config.parse_json_file(config_file)
+logger = waflibs.log.create_logger(args)
+verbose = args.verbose
+
+DOTFILES_DIR = get_parent_directory(pathlib.Path(__file__))
+if args.config:
+    config_file = args.config
+else:
+    config_file = f"{DOTFILES_DIR}/config.yaml"
+logger.debug(f"config file from arg: {config_file}")
 
 if test:
     dev = True
 
     DOTFILES_DIR = pathlib.Path(DOTFILES_DIR, "test")
-    config = waflibs.config.parse_json_file(pathlib.Path(DOTFILES_DIR, "config.json"))
+    real_config_file = pathlib.Path(DOTFILES_DIR, "config.yaml")
+else:
+    real_config_file = config_file
+logger.debug("real config file: {real_config_file}")
+config = waflibs.config.parse_yaml_file(real_config_file)
 
 if dev:
     temp_dir = tempfile.TemporaryDirectory()
@@ -101,10 +128,9 @@ elif directory:
 else:
     home_dir = pathlib.Path(os.environ["HOME"]).absolute()
 
-logger = waflibs.log.create_logger(args)
-verbose = args.verbose
-
 logger.debug("using home dir: {}".format(home_dir))
+logger.debug("config: {}".format(config))
+logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
 
 logger.debug("args: {}".format(args))
 
@@ -150,9 +176,6 @@ print("done.")
 logger.debug("update stdout: {}".format(update_stdout))
 logger.debug("update stderr: {}".format(update_stderr))
 
-logger.debug("config: {}".format(config))
-logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
-
 print("setting up dotfiles... ", end="")
 root_entries = [re for re in DOTFILES_DIR.glob("*")]
 root_entries.sort()
@@ -166,7 +189,7 @@ for root_entry in root_entries:
             "README",
             "LICENSE",
             "setup",
-            "config.json",
+            "config.yaml",
             "Makefile",
             "update-",
             ".git",
@@ -175,19 +198,19 @@ for root_entry in root_entries:
         logger.debug("ignoring entry starts with {}".format(root_entry))
 
         continue
-    if root_entry_name.endswith(
-            (
-                "swp",
-                )
-            ):
+    if root_entry_name.endswith(("swp",)):
         logger.debug(f"ignoring entry ends with {root_entry}")
 
         continue
     if root_entry_name.startswith("test") and not test:
-        logger.debug("ignoring entry {} as testing is not in progress".format(root_entry))
+        logger.debug(
+            "ignoring entry {} as testing is not in progress".format(
+                root_entry
+            )
+        )
         continue
 
-    root_dest_dir = get_dest_location(root_entry).parent.absolute()
+    root_dest_dir = get_parent_directory(get_dest_location(root_entry))
     if not root_dest_dir.is_dir():
         logger.debug(f"{root_dest_dir} directory does not exist, creating...")
 
@@ -196,99 +219,29 @@ for root_entry in root_entries:
     if root_entry.is_dir():
         logger.debug(f"root entry is dir: {root_entry}")
 
-        entries = [e for e in root_entry.glob("*")]
-        entries.sort()
-        for entry in entries:
-            entry_name = entry.name
-            logger.debug(f"entry: {entry}")
-            logger.debug(f"entry name: {entry_name}")
+        if root_entry_name in config["append"]:
+            logger.debug(f"appending to root directory {root_entry}")
 
-            if entry_name in config["append"]["root"]:
-                logger.debug("appending to root directory {}".format(dest))
-
-                dest = get_dest_location(entry)
-                logger.debug("dest is {}".format(dest))
-
-                if not dest.is_dir():
-                    logger.debug("{} is not a directory, creating...".format(dest))
-
-                    dest.mkdir()
-
-                backup_and_remove(dest)
-
-                logger.debug("copying root entry {} to dest {}".format(e, dest))
-                shutil.copytree(entry, dest)
-            else:
-                logger.debug(f"not an append root dir: {entry}")
-
-                dest_path = get_dest_location(entry)
-                backup_and_remove(dest_path)
-
-                shutil.copy2(entry, dest_path, follow_symlinks=False)
-
-            if entry.is_dir():
-                sub_entries = [se for se in entry.glob("*")]
-                sub_entries.sort()
-                for sub_entry in sub_entries:
-                    sub_entry_name = sub_entry.name
-                    logger.debug(f"sub entry: {sub_entry}")
-                    logger.debug(f"sub entry name: {sub_entry_name}")
-
-                    sub_entry_dest_dir = get_dest_location(sub_entry).parent.absolute()
-                    if not sub_entry_dest_dir.is_dir():
-                        logger.debug(f"{sub_entry_dest_dir} directory does not exist, creating...")
-
-                        sub_entry_dest_dir.mkdir()
-
-                    if entry_name in config["append"]:
-                        if type(config["append"][entry_name]) == list:
-                            logger.debug("sub entry is array, hence append: {}".format(entry_name))
-
-                            for entry_dir in config["append"][entry_name]:
-                                logger.debug(f"append entry dir: {entry_dir}")
-
-                                real_ent = pathlib.Path(ent)
-                                logger.debug(f"real entry: {real_ent}")
-                                real_dest = pathlib.Path(dest, entry_dir, real_ent.name)
-                                logger.debug(f"real dest: {real_dest}")
-
-                                logger.debug(
-                                    "copying entry {} to dest {}".format(real_ent, real_dest)
-                                )
-
-                                backup_and_remove(real_dest)
-
-                                if real_ent.is_dir():
-                                    shutil.copytree(real_ent, real_dest, ignore_dangling_symlinks=True)
-                                else:
-                                    shutil.copy2(real_ent, real_dest, follow_symlinks=False)
-                        else:
-                            logger.debug(f"not a sub entry append: {sub_entry}")
-
-                            dest_path = get_dest_location(sub_entry)
-                            backup_and_remove(dest_path)
-
-                            shutil.copy2(sub_entry, dest_path, follow_symlinks=False)
-            else:
-                logger.debug(f"entry is regular file: {entry}")
-
+            entries = [e for e in root_entry.glob("*")]
+            entries.sort()
+            for entry in entries:
                 dest = get_dest_location(entry)
                 logger.debug("dest is {}".format(dest))
 
                 backup_and_remove(dest)
 
-                shutil.copy2(entry, dest, follow_symlinks=False)
-        logger.debug(waflibs.utils.divider(char="+"))
-    else:
-        logger.debug(f"root entry is not dir: {root_entry_name}")
+                logger.debug(f"copying root entry {entry} to dest {dest}")
+                copy(entry, dest)
+        else:
+            logger.debug(f"not appending to root dir: {root_entry}")
 
-        dest = get_dest_location(root_entry)
-        logger.debug("dest is {}".format(dest))
+            dest = get_dest_location(root_entry)
+            logger.debug("dest is {}".format(dest))
 
-        backup_and_remove(dest)
+            backup_and_remove(dest)
 
-        logger.debug("copying entry {} to dest {}".format(root_entry, dest))
-        shutil.copy2(root_entry, dest, follow_symlinks=False)
+            copy(root_entry, dest)
+
     logger.debug(waflibs.utils.divider(char="-", times=77))
 print("done.")
 
