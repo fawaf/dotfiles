@@ -99,6 +99,9 @@ bindkey "^[[1;3D" backward-word
 bindkey "^[l" forward-word
 bindkey "^[h" backward-word
 bindkey '^Q' push-line
+bindkey "^[[H"   beginning-of-line
+bindkey "^[[F"   end-of-line
+bindkey "^[[3~"  delete-char
 
 ## start typing + [Up-Arrow] - fuzzy find history forward
 if [[ "${terminfo[kcuu1]}" != "" ]]; then

@@ -5,13 +5,24 @@
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2021.01.27
+" Last change:       2021.09.15
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
 "           for OpenVMS:  sys$login:.vimrc
 "     for *nix and OS/2:  $HOME/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
+
+function! AddSubtract(char, back)
+  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+  call search(pattern, 'cw' . a:back)
+  execute 'normal! ' . v:count1 . a:char
+  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+endfunction
+nnoremap <silent>         <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+nnoremap <silent> <Leader><C-a> :<C-u>call AddSubtract("\<C-a>", 'b')<CR>
+nnoremap <silent>         <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
+nnoremap <silent> <Leader><C-x> :<C-u>call AddSubtract("\<C-x>", 'b')<CR>
 
 setglobal modeline
 

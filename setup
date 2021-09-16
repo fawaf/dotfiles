@@ -18,10 +18,14 @@ def backup_and_remove(dest):
     if dest.is_dir():
         if dest_bak.is_dir():
             logger.debug(f"removing backup dir: {dest_bak}")
-            shutil.rmtree(dest_bak)
+            remove(dest_bak)
+
         logger.debug(f"backing up dir {dest} to {dest_bak}")
         copy(dest, dest_bak)
     else:
+        logger.debug(f"removing backup file: {dest_bak}")
+        remove(dest_bak)
+
         logger.debug(f"backing up file {dest} to {dest_bak}")
         try:
             copy(dest, dest_bak)
@@ -50,7 +54,7 @@ def get_dest_location(dest):
     if DOTFILES_DIR.name in str(dest):
         dest = [home_dir, f".{os.path.relpath(dest, start=DOTFILES_DIR)}"]
         real_dest = pathlib.Path(*dest)
-    logger.debug(f"get dest location - dest path: {dest}")
+    logger.debug(f"get dest location - dest array: {dest}")
 
     logger.debug(f"get dest location - real dest path: {real_dest}")
 
@@ -71,7 +75,7 @@ def copy(src, dest):
     if src.is_dir():
         shutil.copytree(src, dest, ignore_dangling_symlinks=True)
     else:
-        shutil.copy2(src, dest, follow_symlinks=True)
+        shutil.copy2(src, dest, follow_symlinks=False)
 
 
 parser = argparse.ArgumentParser()
@@ -241,6 +245,15 @@ for root_entry in root_entries:
 
             copy(root_entry, dest)
         logger.debug(waflibs.utils.divider(char="+", times=66))
+    else:
+        dest = get_dest_location(root_entry)
+        logger.debug("dest is {}".format(dest))
+
+        backup_and_remove(dest)
+
+        logger.debug(f"copying root entry {root_entry} to dest {dest}")
+
+        copy(root_entry, dest)
     logger.debug(waflibs.utils.divider(char="-", times=66))
 print("done.")
 
