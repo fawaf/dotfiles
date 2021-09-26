@@ -11,6 +11,11 @@
 #  - http://zshwiki.org/home/examples/compquickstart
 # }}}
 
+if [ -f $HOME/.zshrc-pre ]
+then
+    source $HOME/.zshrc-pre
+fi
+
 for file in $HOME/.zsh.d/*
 do
   test -r "$file" && source "$file"
@@ -281,9 +286,9 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 
-if [ -f $HOME/.zshrc-custom ]
+if [ -f $HOME/.zshrc-post ]
 then
-    source $HOME/.zshrc-custom
+    source $HOME/.zshrc-post
 fi
 # }}}
 

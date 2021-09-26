@@ -187,8 +187,9 @@ alias wget="wget --content-disposition"
 alias whcih="which"
 alias wlk="mosh wlk"
 alias xs="ssh leela -t screen -r"
-alias za="$EDITOR $HOME/.zshrc-custom && source $HOME/.zshrc"
+alias zo="$EDITOR $HOME/.zshrc-post && source $HOME/.zshrc"
 alias zp="$EDITOR $HOME/.zsh-prompt"
+alias zr="$EDITOR $HOME/.zshrc-pre && source $HOME/.zshrc"
 # }}}
 
 # {{{ singular aliases
