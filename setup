@@ -3,80 +3,9 @@
 import os
 import argparse
 import pathlib
-import shutil
 import tempfile
-import base64
 
 import waflibs
-
-
-def backup_and_remove(dest):
-    logger.debug("backing up and removing {}".format(dest))
-    dest_bak = get_dest_location(f"{dest}.bak")
-    logger.debug("back up entry {}".format(dest_bak))
-
-    if dest.is_dir():
-        if dest_bak.is_dir():
-            logger.debug(f"removing backup dir: {dest_bak}")
-            remove(dest_bak)
-
-        logger.debug(f"backing up dir {dest} to {dest_bak}")
-        copy(dest, dest_bak)
-    else:
-        logger.debug(f"removing backup file: {dest_bak}")
-        remove(dest_bak)
-
-        logger.debug(f"backing up file {dest} to {dest_bak}")
-        try:
-            copy(dest, dest_bak)
-        except FileNotFoundError as e:
-            logger.debug(f"ignoring error: {e}")
-
-    if os.path.exists(dest):
-        remove(dest)
-
-
-def remove(dest):
-    if dest.is_dir():
-        logger.debug(f"removing dest dir: {dest}")
-
-        shutil.rmtree(dest)
-    else:
-        logger.debug(f"removing dest: {dest}")
-        dest.unlink(missing_ok=True)
-
-
-def get_dest_location(dest):
-    logger.debug(f"get dest location - original dest: {dest}")
-
-    real_dest = pathlib.Path(dest)
-
-    if DOTFILES_DIR.name in str(dest):
-        dest = [home_dir, f".{os.path.relpath(dest, start=DOTFILES_DIR)}"]
-        real_dest = pathlib.Path(*dest)
-    logger.debug(f"get dest location - dest array: {dest}")
-
-    logger.debug(f"get dest location - real dest path: {real_dest}")
-
-    return real_dest
-
-
-def get_parent_directory(directory):
-    parent_dir = directory.parent.absolute()
-    logger.debug(f"parent dir: {parent_dir}")
-
-    return parent_dir
-
-
-get_parent_dir = get_parent_directory
-
-
-def copy(src, dest):
-    if src.is_dir():
-        shutil.copytree(src, dest, ignore_dangling_symlinks=True)
-    else:
-        shutil.copy2(src, dest, follow_symlinks=False)
-
 
 parser = argparse.ArgumentParser()
 waflibs.arg_parse.enable_verbose_logging(parser)
@@ -99,11 +28,12 @@ dev = args.dev
 force = args.force
 directory = args.dir
 test = args.test
+dry_run = args.dry_run
 
 logger = waflibs.log.create_logger(args)
 verbose = args.verbose
 
-DOTFILES_DIR = get_parent_directory(pathlib.Path(__file__))
+DOTFILES_DIR = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
 if args.config:
     config_file = args.config
 else:
@@ -122,16 +52,15 @@ config = waflibs.config.parse_yaml_file(real_config_file)
 
 if dev:
     temp_dir = tempfile.TemporaryDirectory()
-    home_dir = pathlib.Path(temp_dir.name).absolute()
-    print(f"home dir to check: {home_dir}")
+    HOME_DIR = pathlib.Path(temp_dir.name).absolute()
 
     args.verbose = True
 elif directory:
-    home_dir = pathlib.Path(directory)
+    HOME_DIR = pathlib.Path(directory)
 else:
-    home_dir = pathlib.Path(os.environ["HOME"]).absolute()
+    HOME_DIR = pathlib.Path(os.environ["HOME"]).absolute()
 
-logger.debug("using home dir: {}".format(home_dir))
+logger.debug("using home dir: {}".format(HOME_DIR))
 logger.debug("config: {}".format(config))
 logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
 
@@ -189,6 +118,7 @@ for root_entry in root_entries:
 
     if root_entry_name.startswith(
         (
+            "clean",
             "README",
             "LICENSE",
             "setup",
@@ -213,7 +143,8 @@ for root_entry in root_entries:
         )
         continue
 
-    root_dest_dir = get_parent_directory(get_dest_location(root_entry))
+    root_dest_dir = waflibs.utils.get_parent_directory(waflibs.utils.get_dest_location(root_entry,
+        parent_dir=HOME_DIR))
     if not root_dest_dir.is_dir():
         logger.debug(f"{root_dest_dir} directory does not exist, creating...")
 
@@ -228,32 +159,32 @@ for root_entry in root_entries:
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
             for entry in entries:
-                dest = get_dest_location(entry)
+                dest = waflibs.utils.get_dest_location(entry, parent_dir=HOME_DIR)
                 logger.debug("dest is {}".format(dest))
 
-                backup_and_remove(dest)
+                waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
                 logger.debug(f"copying root entry {entry} to dest {dest}")
-                copy(entry, dest)
+                waflibs.utils.copy(entry, dest, dry_run=dry_run)
         else:
             logger.debug(f"not appending to root dir: {root_entry}")
 
-            dest = get_dest_location(root_entry)
+            dest = waflibs.utils.get_dest_location(root_entry, parent_dir=HOME_DIR)
             logger.debug("dest is {}".format(dest))
 
-            backup_and_remove(dest)
+            waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
-            copy(root_entry, dest)
+            waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
         logger.debug(waflibs.utils.divider(char="+", times=66))
     else:
-        dest = get_dest_location(root_entry)
+        dest = waflibs.utils.get_dest_location(root_entry, parent_dir=HOME_DIR)
         logger.debug("dest is {}".format(dest))
 
-        backup_and_remove(dest)
+        waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
         logger.debug(f"copying root entry {root_entry} to dest {dest}")
 
-        copy(root_entry, dest)
+        waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
     logger.debug(waflibs.utils.divider(char="-", times=66))
 print("done.")
 

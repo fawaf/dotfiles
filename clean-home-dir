@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -x
+
+TMP_DIR="$(mktemp --directory)"
+MV="mv --verbose"
+
+for i in * */*
+do
+  $MV $HOME/$(basename $i) $TMP_DIR
+  $MV $HOME/$(basename $i).bak $TMP_DIR
+done
