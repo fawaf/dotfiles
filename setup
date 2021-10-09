@@ -183,7 +183,6 @@ for root_entry in root_entries:
         waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
         logger.debug(f"copying root entry {root_entry} to dest {dest}")
-
         waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
     logger.debug(waflibs.utils.divider(char="-", times=66))
 print("done.")
