@@ -215,14 +215,14 @@ alias mmv='noglob zmv -W'
 
 # preexec() and precmd() {{{
 # Called by zsh before executing a command:
-function preexec() {
+preexec() {
     local -a cmd; cmd=(${(z)1})        # the command string
     tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_EXEC"
     tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_EXEC"
     set_titlebar $tab_title $tab_hardstatus
 }
 
-function rp() {
+rp() {
     if [[ -z "$RP" ]]
     then
       RP=1
@@ -233,7 +233,7 @@ function rp() {
 }
 
 # Called by zsh before showing the prompt:
-function precmd() {
+precmd() {
 #    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
 #    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
 #    set_titlebar $tab_title $tab_hardstatus
@@ -285,6 +285,8 @@ unset LS_COLORS
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+
+source_os_dotfiles zshrc
 
 if [ -f $HOME/.zshrc-post ]
 then

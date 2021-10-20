@@ -1,3 +1,5 @@
+. $HOME/.functions
+
 # common aliases {{{
 alias a="alias"
 alias ba="$EDITOR $HOME/.aliases-custom && source $HOME/.aliases && source $HOME/.aliases-custom"
@@ -192,28 +194,4 @@ alias zp="$EDITOR $HOME/.zsh-prompt"
 alias zr="$EDITOR $HOME/.zshrc-pre && source $HOME/.zshrc"
 # }}}
 
-# {{{ singular aliases
-KERNEL_NAME="`uname`"
-if [[ "$KERNEL_NAME" == "Linux" ]]; then
-    source $HOME/.aliases-linux
-
-    if [[ -f /etc/debian_version ]]; then
-        source $HOME/.aliases-debian
-    fi
-    if [[ -f /etc/SuSE-release ]]; then
-        source $HOME/.aliases-suse
-    fi
-    if [[ -f /etc/redhat-release ]]; then
-        source $HOME/.aliases-fedora
-    fi
-elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
-    source $HOME/.aliases-darwin
-elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
-    source $HOME/.aliases-cygwin
-fi
-# }}}
-
-if [ -f $HOME/.aliases-custom ]
-then
-    source $HOME/.aliases-custom
-fi
+source_os_dotfiles aliases
