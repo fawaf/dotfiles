@@ -1,3 +1,5 @@
+. $HOME/.functions
+
 #export ARCHDIR="$HOME/.local/mips"
 
 # Have less display colours
@@ -41,28 +43,5 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # Replace instances of \W with \w in prompt functions below to get display of full path name.
 # export PS1="\[[\e[1;34m\]\u\[\e[m\]@\[\e[\e[1;32m\h\[\e[m\]:\[\e[\e[1;31m\w\[\e[m\]]\n\e[1;35m\]%\[\e[m\] "
-# {{{ singular exports
-KERNEL_NAME="`uname`"
-if [[ "$KERNEL_NAME" == "Linux" ]]; then
-    source $HOME/.exports-linux
 
-    if [[ -f /etc/debian_version ]]; then
-        source $HOME/.exports-debian
-    fi
-    if [[ -f /etc/SuSE-release ]]; then
-        source $HOME/.exports-suse
-    fi
-    if [[ -f /etc/redhat-release ]]; then
-        source $HOME/.exports-fedora
-    fi
-elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
-    source $HOME/.exports-darwin
-elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
-    source $HOME/.exports-cygwin
-fi
-# }}}
-
-if [ -f "$HOME/.exports-custom" ]
-then
-    source "$HOME/.exports-custom"
-fi
+source_os_dotfiles exports
