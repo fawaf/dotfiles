@@ -161,6 +161,7 @@ if has("autocmd")
   augroup filetypedetect
     au BufRead,BufNewFile *.py.erb set filetype=python
     au BufRead,BufNewFile *.rb.erb set filetype=ruby
+    au BufRead,BufNewFile *.php set filetype=php shiftwidth=4 softtabstop=4 expandtab
   augroup END
 else
 
