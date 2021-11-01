@@ -294,6 +294,8 @@ then
 fi
 # }}}
 
+source $HOME/.zsh/k/k.sh
+
 autoload zcalc
 
 cd ~
