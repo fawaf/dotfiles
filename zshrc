@@ -281,6 +281,10 @@ export HISTFILE="$HOME/.zhistory_$HOSTNAME"
 unset LS_COLORS
 # }}}
 
+source $HOME/.zsh/k/k.sh
+
+autoload zcalc
+
 # Sources {{{
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -293,9 +297,5 @@ then
     source $HOME/.zshrc-post
 fi
 # }}}
-
-source $HOME/.zsh/k/k.sh
-
-autoload zcalc
 
 cd ~

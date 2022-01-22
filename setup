@@ -20,8 +20,9 @@ parser.add_argument(
     type=str,
     help="config file",
 )
-parser.add_argument("-i", "--dir", "--directory", help="directory to use")
+parser.add_argument("-i", "--dir", "--directory", help="destination directory to use")
 parser.add_argument("-t", "--test", action="store_true", help="run test")
+parser.add_argument("-o", "--dotfiles-dir", help="dotfiles dir")
 args = parser.parse_args()
 
 dev = args.dev
@@ -29,11 +30,15 @@ force = args.force
 directory = args.dir
 test = args.test
 dry_run = args.dry_run
+dotfiles_dir = args.dotfiles_dir
 
 logger = waflibs.log.create_logger(args)
 verbose = args.verbose
 
 DOTFILES_DIR = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
+if dotfiles_dir:
+    DOTFILES_DIR = pathlib.Path(dotfiles_dir)
+
 if args.config:
     config_file = args.config
 else:
@@ -47,7 +52,7 @@ if test:
     real_config_file = pathlib.Path(DOTFILES_DIR, "config.yaml")
 else:
     real_config_file = config_file
-logger.debug("real config file: {real_config_file}")
+logger.debug(f"real config file: {real_config_file}")
 config = waflibs.config.parse_yaml_file(real_config_file)
 
 if dev:
@@ -128,23 +133,21 @@ for root_entry in root_entries:
             ".git",
         )
     ):
-        logger.debug("ignoring entry starts with {}".format(root_entry))
+        logger.debug(f"ignoring entry... starts with - {root_entry}")
 
         continue
     if root_entry_name.endswith(("swp",)):
-        logger.debug(f"ignoring entry ends with {root_entry}")
+        logger.debug(f"ignoring entry... ends with - {root_entry}")
 
         continue
     if root_entry_name.startswith("test") and not test:
         logger.debug(
-            "ignoring entry {} as testing is not in progress".format(
-                root_entry
-            )
+            f"ignoring entry... testing is not in progress - {root_entry}"
         )
         continue
 
     root_dest_dir = waflibs.utils.get_parent_directory(waflibs.utils.get_dest_location(root_entry,
-        parent_dir=HOME_DIR))
+        target_dir=HOME_DIR))
     if not root_dest_dir.is_dir():
         logger.debug(f"{root_dest_dir} directory does not exist, creating...")
 
@@ -159,7 +162,7 @@ for root_entry in root_entries:
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
             for entry in entries:
-                dest = waflibs.utils.get_dest_location(entry, parent_dir=HOME_DIR)
+                dest = waflibs.utils.get_dest_location(entry, target_dir=HOME_DIR)
                 logger.debug("dest is {}".format(dest))
 
                 waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
@@ -169,7 +172,7 @@ for root_entry in root_entries:
         else:
             logger.debug(f"not appending to root dir: {root_entry}")
 
-            dest = waflibs.utils.get_dest_location(root_entry, parent_dir=HOME_DIR)
+            dest = waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
             logger.debug("dest is {}".format(dest))
 
             waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
@@ -177,7 +180,7 @@ for root_entry in root_entries:
             waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
         logger.debug(waflibs.utils.divider(char="+", times=66))
     else:
-        dest = waflibs.utils.get_dest_location(root_entry, parent_dir=HOME_DIR)
+        dest = waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
         logger.debug("dest is {}".format(dest))
 
         waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
