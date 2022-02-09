@@ -1,0 +1,19 @@
+new_window 1pixel
+popup_during_fullscreen smart
+workspace_auto_back_and_forth yes
+
+for_window [title="Authy"] floating enable
+for_window [title="^Google Hangouts"] floating enable
+for_window [title="^TeamViewer Panel" instance="(?i)(?!google-chrome)$"] floating enable, move absolute position 900 px 0 px
+for_window [title="TeamViewer" instance="^(?i)(?!google-chrome)$"] floating enable, move absolute position 0 px 0 px
+for_window [class="Xfce4-notifyd"] floating enable
+for_window [class="jetbrains-idea-ce"] floating disable
+for_window [class="TeamViewer.exe"] floating enable
+for_window [instance="TeamViewer"] floating enable
+for_window [instance="PanGPUI"] floating disable
+
+# kill focused window
+bindsym $mod+q kill
+
+# window title
+for_window [title=".*"] title_format %title | %instance | %class

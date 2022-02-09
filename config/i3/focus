@@ -1,0 +1,25 @@
+# Change window focus with VIM-style keybindings
+bindsym $mod+h focus output left
+bindsym $mod+j focus output down
+bindsym $mod+k focus output up
+bindsym $mod+l focus output right
+
+bindsym $alt+bracketleft focus prev
+bindsym $alt+bracketright focus next
+bindsym $alt+shift+bracketleft focus left
+bindsym $alt+shift+bracketright focus right
+
+bindsym $mod+$shift+Left focus left
+bindsym $mod+$shift+Down focus down
+bindsym $mod+$shift+Up focus up
+bindsym $mod+$shift+Right focus right
+
+focus_wrapping force
+
+# focus the parent container
+bindsym $mod+a focus parent
+bindsym $mod+p focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+bindsym $mod+c focus child

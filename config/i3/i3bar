@@ -1,0 +1,32 @@
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    position bottom
+    mode hide
+    hidden_state hide
+    modifier $mod
+    status_command $HOME/bin/i3status
+
+    colors {
+        background #1c1c1c
+        statusline #ffffff
+        separator #656565
+
+        # Class             Border  BG      Text
+        focused_workspace   #888888 #1c1c1c #eaeaea
+        active_workspace    #333333 #5f676a #ffffff
+        inactive_workspace  #333333 #222222 #888888
+        urgent_workspace    #2f343a #ffc123 #ffffff
+    }
+}
+
+#border     - titlebar border color (NA)
+#backgr     - window border
+#text       - titlebar text color (NA)
+#indicator  - layout type indicator
+
+# class                 border  backgr. text    indicator
+client.focused          #222222 #6272a4 #ffffff #ffffff
+client.focused_inactive #333333 #222222 #ffffff #888888
+client.unfocused        #333333 #222222 #888888 #888888
+client.urgent           #222222 #ffc123 #ffffff #ffc123

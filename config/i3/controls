@@ -1,0 +1,13 @@
+# volume controls
+set $card 0
+set $control Master
+bindsym XF86AudioRaiseVolume exec amixer --quiet --card $card set $control 3.5dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer --quiet --card $card set $control 3.5dB- unmute
+bindsym XF86AudioMute exec amixer --quiet --card $card set $control toggle
+
+# Sreen brightness controls
+# THUPER BROKEN
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec echo $(($(cat /sys/class/backlight/$(ls /sys/class/backlight)/brightness) + 25)) | sudo tee /sys/class/backlight/$(ls /sys/class/backlight)/brightness
+bindsym XF86MonBrightnessDown exec echo $(($(cat /sys/class/backlight/$(ls /sys/class/backlight)/brightness) - 25)) | sudo tee /sys/class/backlight/$(ls /sys/class/backlight)/brightness
