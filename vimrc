@@ -1,11 +1,12 @@
-" A vimrc file.
+" version controlled
+" DO NOT EDIT
 "
 " Original Author:   Bram Moolenaar <Bram@vim.org>
 " Contributors:      https://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
 "
 " Maintainer:        Felix Wong <felix@xilef.org>
 "
-" Last change:       2021.09.15
+" Last modified:     2022.02.10
 "
 "             To use it:  Copy it to
 "             for Amiga:  s:.vimrc
