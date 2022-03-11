@@ -1,6 +1,6 @@
 . $HOME/.functions
 
-# common aliases {{{
+# common {{{
 alias a="alias"
 alias ba="$EDITOR $HOME/.aliases-custom && source $HOME/.aliases && source $HOME/.aliases-custom"
 alias brewupdate="brew update && brew upgrade"
@@ -117,7 +117,6 @@ alias ls="ls --group-directories-first --color=auto"
 alias lss="ls --size"
 alias lsss="ls -S --size"
 alias lt="ls --almost-all -C --classify --no-group -l -t --human-readable --reverse"
-alias ltr="ls -l -t --reverse"
 alias mc="make clean"
 alias mcp="mvn clean package"
 alias mls="screen -list; echo ""; tmux list-sessions"
@@ -192,6 +191,12 @@ alias xs="ssh leela -t screen -r"
 alias zo="$EDITOR $HOME/.zshrc-post && source $HOME/.zshrc"
 alias zp="$EDITOR $HOME/.zsh-prompt"
 alias zr="$EDITOR $HOME/.zshrc-pre && source $HOME/.zshrc"
+# }}}
+
+# variables {{{
+LS_REVERSE="-t --reverse"
+alias ltr="ls $LS_REVERSE"
+alias lltr="ls -l $LS_REVERSE"
 # }}}
 
 source_os_dotfiles aliases
