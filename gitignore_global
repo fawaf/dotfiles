@@ -3,6 +3,7 @@
 
 # ruby
 vendor
+*.gem
 
 # Logs and databases
 *.log
