@@ -77,7 +77,7 @@ print("updating repo... ", end="")
 cmd = "git pull"
 logger.debug("command to run: {}".format(cmd))
 pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
+    cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
 print("done.")
 logger.debug("pull stdout: {}".format(pull_stdout))
@@ -87,7 +87,7 @@ print("submodule init... ", end="")
 cmd = "git submodule init"
 logger.debug("command to run: {}".format(cmd))
 init_stdout, init_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
+    cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
 print("done.")
 logger.debug("init stdout: {}".format(init_stdout))
@@ -97,7 +97,7 @@ print("submodule sync... ", end="")
 cmd = "git submodule sync"
 logger.debug("command to run: {}".format(cmd))
 sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
+    cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
 print("done.")
 logger.debug("sync stdout: {}".format(sync_stdout))
@@ -107,7 +107,7 @@ print("submodule update... ", end="")
 cmd = "git submodule update"
 logger.debug("command to run: {}".format(cmd))
 update_stdout, update_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
+    cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
 print("done.")
 logger.debug("update stdout: {}".format(update_stdout))
@@ -205,7 +205,7 @@ if custom_setup_script.is_file():
         "-ffffff" if force else "",
     ]
     logger.debug("command to run: {}".format(cmd))
-    custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(cmd)
+    custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(cmd, capture_output=False)
     logger.debug("custom stdout: {}".format(custom_stdout))
     logger.debug("custom stderr: {}".format(custom_stderr))
 
