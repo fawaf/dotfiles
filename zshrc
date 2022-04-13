@@ -157,8 +157,8 @@ zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
 # }}}
 
 # Prompt {{{
+set_host_variables
 set_prompt() {
-    set_host_variables
     export PS2="$PR_WHITE%#$PR_NO_COLOR($PR_LIGHT_GREEN%_$PR_NO_COLOR) "
 
     export RPS1BEGIN="%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)"
@@ -168,7 +168,7 @@ set_prompt() {
     export PS1END="$PR_NO_COLOR in dir $PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
 $PR_MAGENTA%#$PR_NO_COLOR "
 
-    if [ x"$INTERNALHOST" == x"" ] || [ x"$EXTERNALHOST" == x"" ] || [ x"$INTERNALHOST" == x"$EXTERNALHOST" ]
+    if [ -z "$INTERNALHOST" ] || [ -z "$EXTERNALHOST" ] || [ "$INTERNALHOST" == "$EXTERNALHOST" ]
     then
         export PS1="$PS1BEGIN$PS1END"
     else

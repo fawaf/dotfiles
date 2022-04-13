@@ -19,12 +19,6 @@ extract() { # Handy Extract Program.
       *.7z)
         7z x "$1"
       ;;
-      *.bz2)
-        bunzip2 "$1"
-      ;;
-      *.gz)
-        gunzip "$1"
-      ;;
       *.rar)
         unrar x "$1"
       ;;
@@ -39,6 +33,12 @@ extract() { # Handy Extract Program.
       ;;
       *.tbz2)
         tar xvjf "$1"
+      ;;
+      *.bz2)
+        bunzip2 "$1"
+      ;;
+      *.gz)
+        gunzip "$1"
       ;;
       *.tgz)
         tar xvzf "$1"
@@ -82,14 +82,14 @@ settermtype() { # Set terminal type
       for TERMTYPE in $terminal_types
       do
         if tput -T "$TERMTYPE" longname > /dev/null 2> /dev/null
-        then 
+        then
           export TERM=$TERMTYPE
           break
         fi
       done
     fi
   fi
-} 
+}
 # }}}
 
 # parse IP {{{
@@ -148,25 +148,31 @@ get_configured_ip() {
         if uname -a | \grep grsec &> /dev/null
         then
             return
-        elif uname -a | \grep -i cygwin &> /dev/null
+        elif uname -a | \grep --ignore-case cygwin &> /dev/null
         then
-            HOST_IP="$(ifconfig | \grep -i "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
-            export HOST_IP
-        elif uname -a | \grep -i darwin &> /dev/null
+            HOST_IP="$(ifconfig | \grep --ignore-case "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
+        elif uname -a | \grep --ignore-case darwin &> /dev/null
         then
-            NIC="en0"
-        elif uname -a | \grep -i linux &> /dev/null
+          IFACE_PREFIX="en"
+          for i in {0..9}
+          do
+              if ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet active
+              then
+                HOST_IP="$(ifconfig "$IFACE_PREFIX""$i" | \grep --word-regexp inet | head -1 | awk '{print $2}')"
+              fi
+          done
+        elif uname -a | \grep --ignore-case linux &> /dev/null
         then
-            NIC="$(ip addr | \grep -v NO-CARRIER | \grep -E "\<.*,?UP,?.*\>" | \grep -v lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
+            NIC="$(ip addr | \grep --invert-match NO-CARRIER | \grep -E "\<.*,?UP,?.*\>" | \grep --invert-match lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
         else
             echo "Unsupported OS while determining host ip"
         fi
     fi
-    INTERFACE="$NIC"
+    export INTERFACE="$NIC"
 
     if [[ -n "${NIC}" ]]
     then
-        export HOST_IP="$(ifconfig ${NIC} | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}')"
+        HOST_IP="$(ifconfig "${NIC}" | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}')"
     fi
 
     if [[ -z "$HOST_IP" ]]
@@ -175,33 +181,35 @@ get_configured_ip() {
         return
     fi
 
-    if [[ "$(echo $HOST_IP | \grep addr | wc -l)" -eq 1 ]]
+    if [[ "$(echo "$HOST_IP" | \grep -c addr)" -eq 1 ]]
     then
-        CONFIGURED_IP="$(echo $HOST_IP | cut -d : -f 2)"
+        CONFIGURED_IP="$(echo "$HOST_IP" | cut -d : -f 2)"
     else
         CONFIGURED_IP="$HOST_IP"
     fi
+
+    export HOST_IP
 }
 # }}}
 
 # set hostname variables {{{
 set_local_internal_host_variables() {
-    export INTERNALIP="NONE"
-    export INTERNALHOST="$(hostname -f)"
-    export INTERNALDOMAIN="$(hostname -f)"
-    export INTERNALHOSTNAME="$(hostname -s)"
+    INTERNALIP="NONE"
+    INTERNALHOST="$(hostname -f)"
+    INTERNALDOMAIN="$(hostname -f)"
+    INTERNALHOSTNAME="$(hostname -s)"
 }
 
 set_local_external_host_variables() {
-    export EXTERNALIP="NONE"
-    export EXTERNALHOST="$(hostname -f)"
-    export EXTERNALDOMAIN="$(hostname -f)"
-    export EXTERNALHOSTNAME="$(hostname -s)"
+    EXTERNALIP="NONE"
+    EXTERNALHOST="$(hostname -f)"
+    EXTERNALDOMAIN="$(hostname -f)"
+    EXTERNALHOSTNAME="$(hostname -s)"
 }
 
 set_local_host_variables() {
-  set_local_internal_host_variables
-  set_local_external_host_variables
+    set_local_internal_host_variables
+    set_local_external_host_variables
 }
 
 set_host_variables() {
@@ -215,31 +223,31 @@ set_host_variables() {
         then
             if which curl &> /dev/null
             then
-                export PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 https://www.waf.hk/ip)"
+                PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 https://www.waf.hk/ip)"
             else
-                export PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.waf.hk/ip)"
+                PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.waf.hk/ip)"
             fi
 
-            LOCAL_NAMESERVER="$(cat /etc/resolv.conf | \grep nameserver | tail -1 | awk '{print $NF}')"
-            if [[ "$PUBLIC_IP" =~ "^[0-9].+" ]]
+            LOCAL_NAMESERVER="$(\grep nameserver /etc/resolv.conf | tail -1 | awk '{print $NF}')"
+            if [[ "$PUBLIC_IP" =~ ^[0-9].+ ]]
             then
-                export EXTERNALIP="$PUBLIC_IP"
-                export EXTERNALHOST="$(/usr/bin/dig +short -x $EXTERNALIP @$LOCAL_NAMESERVER | head -1 | sed 's/\.$//')"
-                export EXTERNALHOSTNAME="$(echo $EXTERNALHOST | cut -d"." -f1)"
-                export EXTERNALDOMAIN="$(echo $EXTERNALHOST | cut -d"." -f2-)"
+                EXTERNALIP="$PUBLIC_IP"
+                EXTERNALHOST="$(/usr/bin/dig +short -x "$EXTERNALIP" @"$LOCAL_NAMESERVER" | head -1 | sed 's/\.$//')"
+                EXTERNALHOSTNAME="$(echo "$EXTERNALHOST" | cut -d"." -f1)"
+                EXTERNALDOMAIN="$(echo "$EXTERNALHOST" | cut -d"." -f2-)"
 
                 if [[ -z "$DISABLE_PRIVATE_IP_CHECK" ]]
                 then
                     export INTERNALIP="$CONFIGURED_IP"
                     if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
                     then
-                        export INTERNALHOST="$EXTERNALHOST"
-                        export INTERNALHOSTNAME="$EXTERNALHOSTNAME"
-                        export INTERNALDOMAIN="$EXTERNALDOMAIN"
+                        INTERNALHOST="$EXTERNALHOST"
+                        INTERNALHOSTNAME="$EXTERNALHOSTNAME"
+                        INTERNALDOMAIN="$EXTERNALDOMAIN"
                     else
-                        export INTERNALHOST="$(/usr/bin/dig +short -x $INTERNALIP @$LOCAL_NAMESERVER | head -1 | sed "s/\.$//")"
-                        export INTERNALHOSTNAME="$(echo $INTERNALHOST | cut -d"." -f1)"
-                        export INTERNALDOMAIN="$(echo $INTERNALHOST | cut -d"." -f2-)"
+                        INTERNALHOST="$(/usr/bin/dig +short -x "$INTERNALIP" @"$LOCAL_NAMESERVER" | head -1 | sed "s/\.$//")"
+                        INTERNALHOSTNAME="$(echo "$INTERNALHOST" | cut -d"." -f1)"
+                        INTERNALDOMAIN="$(echo "$INTERNALHOST" | cut -d"." -f2-)"
                     fi
                 else
                     set_local_internal_host_variables
@@ -251,63 +259,66 @@ set_host_variables() {
     fi
 
     HOST="$1"
-    if [[ x"$HOST" == x"" ]]
+    if [[ "$HOST" == "" ]]
     then
         if [[ x"$EXTERNALHOST" != x"" ]]
         then
-            export REALHOST="$EXTERNALHOST"
+            REALHOST="$EXTERNALHOST"
         elif [[ x"$INTERNALHOST" != x"" ]]
         then
-            export REALHOST="$INTERNALHOST"
+            REALHOST="$INTERNALHOST"
         else
-            export REALHOST="$(hostname -f)"
+            REALHOST="$(hostname -f)"
         fi
     else
-        export REALHOST="$HOST"
+        REALHOST="$HOST"
     fi
 
-    export HOSTNAME="$(hostname)"
-    export FULL_HOSTNAME="$(hostname -f)"
+    HOSTNAME="$(hostname)"
+    FULL_HOSTNAME="$(hostname -f)"
+    export HOSTNAME
+    export FULL_HOSTNAME
+    export INTERNALIP
+    export INTERNALHOST
+    export INTERNALDOMAIN
+    export INTERNALHOSTNAME
+    export EXTERNALIP
+    export EXTERNALHOST
+    export EXTERNALDOMAIN
+    export EXTERNALHOSTNAME
+    export REALHOST
+    export PUBLIC_IP
 }
 # }}}
 
 # ai {{{
 ai() { # Get current host related info.
-  echo -e "\nYou are logged in on host:"
-  hostname
-  echo -e "\nAdditional system information:"
-  uname -a
-  echo -e "\nUsers logged on:"
-  w -h
-  echo -e "\nCurrent date and time:"
-  date
-  echo -e "\nMachine uptime statistics:"
-  uptime
+  printf "You are logged in on host: %s\n" "$(hostname)"
+  printf "Additional system information: %s\n" "$(uname -a)"
+  printf "Users logged on: %s\n" "$(w -h)"
+  printf "Current date and time: %s\n" "$(date)"
+  printf "Machine uptime statistics: %s\n" "$(uptime)"
   if [[ -z "$HOST_IP" && -z "$EXTERNALIP" ]]
   then
-    echo "\nNot connected to the internet"
+    printf "Not connected to the internet\n"
     return
   fi
   if [[ "$EXTERNALIP" == "$HOST_IP" ]]
   then
-    echo -e "\nIP Address:"
-    echo "$HOST_IP"
+    printf "IP Address: %s\n" "$HOST_IP"
   else
-    echo -e "\nExternal IP Address:"
-    echo "$EXTERNALIP"
+    printf "External IP Address: %s\n" "$EXTERNALIP"
   fi
   if [[ "$HOST_IP" != "$EXTERNALIP" && -n "$HOST_IP" ]]
   then
-    echo -e "\nInternal IP Address:"
-    echo "$HOST_IP"
+    printf "Internal IP Address: %s\n" "$HOST_IP"
   fi
-  echo ""
 }
 # }}}
 
 # take {{{
 take() {
-  mkdir -p $@ && cd ${@:$#}
+  mkdir -p "$@" && cd "${@:$#}" || exit
 }
 # }}}
 
@@ -317,16 +328,25 @@ open_command() {
 
   # define the open command
   case "$OSTYPE" in
-    darwin*)  open_cmd='open' ;;
-    cygwin*)  open_cmd='cygstart' ;;
-    linux*)   [[ "$(uname -r)" != *icrosoft* ]] && open_cmd='nohup xdg-open' || {
-                open_cmd='cmd.exe /c start ""'
-                [[ -e "$1" ]] && { 1="$(wslpath -w "${1:a}")" || return 1 }
-              } ;;
-    msys*)    open_cmd='start ""' ;;
-    *)        echo "Platform $OSTYPE not supported"
-              return 1
+    darwin*)
+      open_cmd='open'
+      ;;
+    cygwin*)
+      open_cmd='cygstart'
+      ;;
+    linux*)
+      [[ "$(uname -r)" != *icrosoft* ]] && open_cmd='nohup xdg-open' || {
+                open_cmd="cmd.exe /c start ''"
+                [[ -e "$1" ]] && ( 1="$(wslpath -w "${1:a}")" || return 1 )
+              }
               ;;
+    msys*)
+      open_cmd='start ""'
+      ;;
+    *)
+      echo "Platform $OSTYPE not supported"
+      return 1
+      ;;
   esac
 
   ${=open_cmd} "$@" &>/dev/null
@@ -337,24 +357,24 @@ open_command() {
 source_os_dotfiles() {
   TYPE="$1"
 
-  KERNEL_NAME="`uname`"
+  KERNEL_NAME="$(uname)"
 
   if [[ "$KERNEL_NAME" == "Linux" ]]; then
-      source $HOME/.${TYPE}-linux
+      source "$HOME"/."${TYPE}"-linux
 
       if [[ -f /etc/debian_version ]]; then
-          source $HOME/.${TYPE}-debian
+          source "$HOME"/."${TYPE}"-debian
       fi
       if [[ -f /etc/SuSE-release ]]; then
-          source $HOME/.${TYPE}-suse
+          source "$HOME"/."${TYPE}"-suse
       fi
       if [[ -f /etc/redhat-release ]]; then
-          source $HOME/.${TYPE}-fedora
+          source "$HOME"/."${TYPE}"-fedora
       fi
   elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
-      source $HOME/.${TYPE}-darwin
+      source "$HOME"/."${TYPE}"-darwin
   elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
-      source $HOME/.${TYPE}-cygwin
+      source "$HOME"/."${TYPE}"-cygwin
   fi
 
   if [ -f "$HOME/.${TYPE}-custom" ]
