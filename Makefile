@@ -3,15 +3,15 @@ all: setup
 verb: verbose
 
 verbose:
-	./setup.rb --verbose
+	./setup --verbose
 
 dev:
-	./setup.rb --dev
+	./setup --dev
 
 setup:
-	./setup.rb
+	./setup
 
 custom: setup-custom
 
 setup-custom:
-	./setup-custom.rb
+	./setup-custom
