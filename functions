@@ -177,7 +177,6 @@ get_configured_ip() {
 
     if [[ -z "$HOST_IP" ]]
     then
-        echo_color red "No IP address(es) detected"
         return
     fi
 

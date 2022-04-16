@@ -1,4 +1,5 @@
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+
 bindkey '^o' fzf-file-widget
 
 # Use ~~ as the trigger sequence instead of the default **

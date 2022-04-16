@@ -23,6 +23,7 @@ parser.add_argument(
 parser.add_argument("-i", "--dir", "--directory", help="destination directory to use")
 parser.add_argument("-t", "--test", action="store_true", help="run test")
 parser.add_argument("-o", "--dotfiles-dir", help="dotfiles dir")
+parser.add_argument("-u", "--custom", action="store_false", help="do not run custom setup")
 args = parser.parse_args()
 
 dev = args.dev
@@ -31,6 +32,7 @@ directory = args.dir
 test = args.test
 dry_run = args.dry_run
 dotfiles_dir = args.dotfiles_dir
+custom = args.custom
 
 logger = waflibs.log.create_logger(args)
 verbose = args.verbose
@@ -157,7 +159,7 @@ for root_entry in root_entries:
         logger.debug(f"root entry is dir: {root_entry}")
 
         if root_entry_name in config["append"]:
-            logger.debug(f"appending to root directory {root_entry}")
+            logger.debug(f"will append to root directory {root_entry}")
 
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
@@ -167,8 +169,10 @@ for root_entry in root_entries:
 
                 waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
-                logger.debug(f"copying root entry {entry} to dest {dest}")
+                logger.debug(f"appending root entry {entry} to dest {dest}")
                 waflibs.utils.copy(entry, dest, dry_run=dry_run)
+
+                logger.debug(waflibs.utils.divider(char="*", times=66))
         else:
             logger.debug(f"not appending to root dir: {root_entry}")
 
@@ -190,23 +194,26 @@ for root_entry in root_entries:
     logger.debug(waflibs.utils.divider(char="-", times=66))
 print("done.")
 
-custom_setup_script = pathlib.Path("setup-custom")
-if custom_setup_script.is_file():
-    print(waflibs.utils.divider(char="*", times=77))
+if custom:
+    logger.debug(f"will run custom setup script")
 
-    print(
-        "running custom setup script {}... ".format(custom_setup_script),
-        end="",
-    )
+    custom_setup_script = pathlib.Path("setup-custom")
+    if custom_setup_script.is_file():
+        print(waflibs.utils.divider(char="*", times=77))
 
-    cmd = [
-        "./{}".format(custom_setup_script),
-        "-vvvvvv" if verbose else "",
-        "-ffffff" if force else "",
-    ]
-    logger.debug("command to run: {}".format(cmd))
-    custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(cmd, capture_output=False)
-    logger.debug("custom stdout: {}".format(custom_stdout))
-    logger.debug("custom stderr: {}".format(custom_stderr))
+        print(
+            "running custom setup script {}... ".format(custom_setup_script),
+            end="",
+        )
 
-    print("done.")
+        cmd = [
+            "./{}".format(custom_setup_script),
+            "-vvvvvv" if verbose else "",
+            "-ffffff" if force else "",
+        ]
+        logger.debug("command to run: {}".format(cmd))
+        custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(cmd, capture_output=False)
+        logger.debug("custom stdout: {}".format(custom_stdout))
+        logger.debug("custom stderr: {}".format(custom_stderr))
+
+        print("done.")

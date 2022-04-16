@@ -34,7 +34,7 @@ then
 fi
 if [ -f $HOME/.muttrc ]
 then
-    chmod 640 $HOME/.muttrc
+    chronic chmod 640 $HOME/.muttrc
 fi
 # }}}
 
@@ -297,5 +297,10 @@ then
     source $HOME/.zshrc-post
 fi
 # }}}
+
+if [[ -z "$HOST_IP" ]]
+then
+    echo_color red "No IP address(es) detected"
+fi
 
 cd ~
