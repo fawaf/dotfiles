@@ -165,7 +165,7 @@ get_configured_ip() {
         then
             NIC="$(ip addr | \grep --invert-match NO-CARRIER | \grep -E "\<.*,?UP,?.*\>" | \grep --invert-match lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
         else
-            echo "Unsupported OS while determining host ip"
+            echo "Unsupported OS while determining host IP"
         fi
     fi
     export INTERFACE="$NIC"
@@ -188,6 +188,7 @@ get_configured_ip() {
     fi
 
     export HOST_IP
+    export CONFIGURED_IP
 }
 # }}}
 

@@ -14,6 +14,8 @@
 "     for *nix and OS/2:  $HOME/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
 
+set background=light
+
 function! AddSubtract(char, back)
   let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
   call search(pattern, 'cw' . a:back)
@@ -257,8 +259,6 @@ autocmd InsertLeave *.json setlocal conceallevel=2 concealcursor=inc
 autocmd CursorHold,CursorHoldI,FocusGained,BufEnter * checktime
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-
-call pathogen#infect()
 
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
