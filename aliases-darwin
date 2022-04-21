@@ -19,6 +19,5 @@ alias rsync="rsync --archive --verbose --compress --hard-links --progress --time
 alias t="top -o -cpu -s 1"
 alias ua="uname -a"
 alias unlink="unlink -iv"
-alias vim="nvim"
 
 unalias rmdir

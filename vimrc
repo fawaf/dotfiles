@@ -14,6 +14,9 @@
 "     for *nix and OS/2:  $HOME/.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
 
+nnoremap ; :
+nnoremap : ;
+
 set background=light
 
 function! AddSubtract(char, back)
