@@ -130,9 +130,6 @@ set_titlebar() {
 
 # get IP {{{
 get_configured_ip() {
-    NIC=""
-    INTERFACE=""
-
     if ! type ifconfig &> /dev/null
     then
         return
@@ -159,6 +156,8 @@ get_configured_ip() {
               if ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet active
               then
                 HOST_IP="$(ifconfig "$IFACE_PREFIX""$i" | \grep --word-regexp inet | head -1 | awk '{print $2}')"
+
+                break
               fi
           done
         elif uname -a | \grep --ignore-case linux &> /dev/null
@@ -168,7 +167,8 @@ get_configured_ip() {
             echo "Unsupported OS while determining host IP"
         fi
     fi
-    export INTERFACE="$NIC"
+    INTERFACE="$NIC"
+    export INTERFACE
 
     if [[ -n "${NIC}" ]]
     then
@@ -178,17 +178,17 @@ get_configured_ip() {
     if [[ -z "$HOST_IP" ]]
     then
         return
-    fi
-
-    if [[ "$(echo "$HOST_IP" | \grep -c addr)" -eq 1 ]]
-    then
-        CONFIGURED_IP="$(echo "$HOST_IP" | cut -d : -f 2)"
     else
-        CONFIGURED_IP="$HOST_IP"
-    fi
+        if [[ "$(echo "$HOST_IP" | \grep -c addr)" -eq 1 ]]
+        then
+            CONFIGURED_IP="$(echo "$HOST_IP" | cut -d : -f 2)"
+        else
+            CONFIGURED_IP="$HOST_IP"
+        fi
 
-    export HOST_IP
-    export CONFIGURED_IP
+        export HOST_IP
+        export CONFIGURED_IP
+    fi
 }
 # }}}
 

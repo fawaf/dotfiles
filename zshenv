@@ -1,8 +1,6 @@
 if [[ -f $HOME/.functions ]]
 then
   source $HOME/.functions
-
-  set_host_variables
 fi
 
 if [[ -f $HOME/.exports ]]

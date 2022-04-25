@@ -11,6 +11,9 @@
 #  - http://zshwiki.org/home/examples/compquickstart
 # }}}
 
+autoload -Uz compinit
+compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
+
 if [ -f $HOME/.zshrc-pre ]
 then
     source $HOME/.zshrc-pre
@@ -158,6 +161,7 @@ zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
 
 # Prompt {{{
 set_host_variables
+
 set_prompt() {
     export PS2="$PR_WHITE%#$PR_NO_COLOR($PR_LIGHT_GREEN%_$PR_NO_COLOR) "
 
@@ -187,7 +191,6 @@ $PR_MAGENTA%#$PR_NO_COLOR "
 # }}}
 
 # Set variables {{{
-#set_host_variables
 # use current user@host as the prefix of the current tab title
 export TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
 # when at the shell prompt, show a truncated version of the current path (with
@@ -249,8 +252,6 @@ precmd() {
 # }}}
 
 # Environment {{{
-autoload -Uz compinit
-compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
 umask 022   # Deny group/world rwx by default (multiuser systems)
 # }}}
 
