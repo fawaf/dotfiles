@@ -1,0 +1,22 @@
+# Called by zsh before executing a command:
+preexec() {
+    local -a cmd; cmd=(${(z)1})        # the command string
+    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_EXEC"
+    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_EXEC"
+    set_titlebar $tab_title $tab_hardstatus
+}
+
+# Called by zsh before showing the prompt:
+precmd() {
+#    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
+#    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
+#    set_titlebar $tab_title $tab_hardstatus
+    vcs_info
+    if [[ -z "$RP" ]]
+    then
+      set_prompt
+    else
+      PS1="%n@$(hostname -s):%~%# "
+      RPS1=""
+    fi
+}

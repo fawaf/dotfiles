@@ -1,12 +1,28 @@
 #!/bin/bash
 
-set -x
+if [[ "$1" == "-v" ]]
+then
+  shift
 
-TMP_DIR="$(mktemp --directory)"
-MV="mv --verbose"
+  set -x
+fi
+
+if [[ "$(uname)" == "Darwin" ]]
+then
+  CMD="gmv"
+  MKTEMP="gmktemp"
+else
+  CMD="mv"
+  MKTEMP="mktemp"
+fi
+
+MV="$CMD --verbose"
+TMP_DIR="$($MKTEMP --directory)"
 
 for i in * */*
 do
   $MV $HOME/$(basename $i) $TMP_DIR
   $MV $HOME/$(basename $i).bak $TMP_DIR
 done
+
+echo $TMP_DIR

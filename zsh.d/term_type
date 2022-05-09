@@ -1,0 +1,3 @@
+# If ncurses is installed, use tput to gracefully degrade termtypes.
+settermtype
+stty ixoff -ixon

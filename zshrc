@@ -24,12 +24,6 @@ do
   test -r "$file" && source "$file"
 done
 
-# set term type {{{
-# If ncurses is installed, use tput to gracefully degrade termtypes.
-settermtype
-stty ixoff -ixon
-# }}}
-
 # chmods {{{
 if [ -f $HOME/.fetchmailrc ]
 then
@@ -97,34 +91,6 @@ bindkey -M menuselect k up-line-or-history
 bindkey -M menuselect l forward-char
 # }}}
 
-# key bindings {{{
-bindkey -v                  # vi keybindings
-bindkey ' ' magic-space     # Do history expansion on space
-bindkey '^_' undo           # Ctrl-/ usually inserts Ctrl-_
-bindkey '^r' history-incremental-search-backward
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;3D" backward-word
-bindkey "^[l" forward-word
-bindkey "^[h" backward-word
-bindkey '^Q' push-line
-bindkey "^[[H"   beginning-of-line
-bindkey "^[[F"   end-of-line
-bindkey "^[[3~"  delete-char
-
-## start typing + [Up-Arrow] - fuzzy find history forward
-if [[ "${terminfo[kcuu1]}" != "" ]]; then
-  autoload -U up-line-or-beginning-search
-  zle -N up-line-or-beginning-search
-  bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
-fi
-# start typing + [Down-Arrow] - fuzzy find history backward
-if [[ "${terminfo[kcud1]}" != "" ]]; then
-  autoload -U down-line-or-beginning-search
-  zle -N down-line-or-beginning-search
-  bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
-fi
-# }}}
-
 # Font colors {{{
 # colors adapted from Phil!'s Zsh prompt
 autoload -U colors zsh/terminfo
@@ -159,37 +125,6 @@ zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
 #zstyle ':vcs_info:git*:*' formats " on ±$PR_GREEN%b"
 # }}}
 
-# Prompt {{{
-set_host_variables
-
-set_prompt() {
-    export PS2="$PR_WHITE%#$PR_NO_COLOR($PR_LIGHT_GREEN%_$PR_NO_COLOR) "
-
-    export RPS1BEGIN="%(?..$PR_RED [%?]$PR_NO_COLOR)%(1j.$PR_CYAN [%j]$PR_NO_COLOR.)"
-    export RPS1END="$PR_LIGHT_CYAN%D{%Y-%m-%d %H:%M:%S %Z} (%D{%Y.%V})$PR_NO_COLOR"
-
-    export PS1BEGIN="%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST"
-    export PS1END="$PR_NO_COLOR in dir $PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
-$PR_MAGENTA%#$PR_NO_COLOR "
-
-    if [ -z "$INTERNALHOST" ] || [ -z "$EXTERNALHOST" ] || [ "$INTERNALHOST" == "$EXTERNALHOST" ]
-    then
-        export PS1="$PS1BEGIN$PS1END"
-    else
-        export PS1="$PS1BEGIN/$INTERNALHOST$PS1END"
-    fi
-    export RPS1="$RPS1BEGIN $RPS1END"
-
-    export PROMPT="$PS1"
-    export RPROMPT="$RPS1"
-
-    if [ -f $HOME/.zsh-prompt ]
-    then
-        source $HOME/.zsh-prompt
-    fi
-}
-# }}}
-
 # Set variables {{{
 # use current user@host as the prefix of the current tab title
 export TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
@@ -216,15 +151,6 @@ autoload -U zmv
 alias mmv='noglob zmv -W'
 # }}}
 
-# preexec() and precmd() {{{
-# Called by zsh before executing a command:
-preexec() {
-    local -a cmd; cmd=(${(z)1})        # the command string
-    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_EXEC"
-    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_EXEC"
-    set_titlebar $tab_title $tab_hardstatus
-}
-
 rp() {
     if [[ -z "$RP" ]]
     then
@@ -234,22 +160,6 @@ rp() {
     fi
     clear
 }
-
-# Called by zsh before showing the prompt:
-precmd() {
-#    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
-#    tab_hardstatus="$TAB_HARDSTATUS_PREFIX$TAB_HARDSTATUS_PROMPT"
-#    set_titlebar $tab_title $tab_hardstatus
-    vcs_info
-    if [[ -z "$RP" ]]
-    then
-      set_prompt
-    else
-      PS1="%n@$(hostname -s):%~%# "
-      RPS1=""
-    fi
-}
-# }}}
 
 # Environment {{{
 umask 022   # Deny group/world rwx by default (multiuser systems)
@@ -307,5 +217,3 @@ fi
 cd ~
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
