@@ -1,3 +1,6 @@
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+
 [core]
     excludesfile = ~/.gitignore_global
 
