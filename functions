@@ -83,7 +83,8 @@ settermtype() { # Set terminal type
       do
         if tput -T "$TERMTYPE" longname > /dev/null 2> /dev/null
         then
-          export TERM=$TERMTYPE
+          TERM=$TERMTYPE
+          export TERM
           break
         fi
       done
@@ -238,7 +239,8 @@ set_host_variables() {
 
                 if [[ -z "$DISABLE_PRIVATE_IP_CHECK" ]]
                 then
-                    export INTERNALIP="$CONFIGURED_IP"
+                    INTERNALIP="$CONFIGURED_IP"
+                    export INTERNALIP
                     if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
                     then
                         INTERNALHOST="$EXTERNALHOST"

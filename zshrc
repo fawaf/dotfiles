@@ -107,7 +107,8 @@ do
     (( count = $count + 1 ))
 done
 
-export PR_NO_COLOR="%{$reset_color%}"
+PR_NO_COLOR="%{$reset_color%}"
+export PR_NO_COLOR
 # }}}
 
 # VCS {{{
@@ -127,23 +128,29 @@ zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
 
 # Set variables {{{
 # use current user@host as the prefix of the current tab title
-export TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
+TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
+export TAB_TITLE_PREFIX
 # when at the shell prompt, show a truncated version of the current path (with
 # standard ~ replacement) as the rest of the title.
-export TAB_TITLE_PROMPT='`print -Pn "%~" | sed "s:\([~/][^/]*\)/.*/:\1...:"`'
+TAB_TITLE_PROMPT='`print -Pn "%~" | sed "s:\([~/][^/]*\)/.*/:\1...:"`'
+export TAB_TITLE_PROMPT
 # when running a command, show the title of the command as the rest of the
 # title (truncate to drop the path to the command)
-export TAB_TITLE_EXEC='`case $cmd[1]:t in ; "sudo") echo $cmd[2]:t;; *) echo $cmd[1]:t;; esac`'
+TAB_TITLE_EXEC='`case $cmd[1]:t in ; "sudo") echo $cmd[2]:t;; *) echo $cmd[1]:t;; esac`'
+export TAB_TITLE_EXEC
 
 # use the current path (with standard ~ replacement) in square brackets as the
 # prefix of the tab window hardstatus.
-export TAB_HARDSTATUS_PREFIX='`print -Pn "[%~] "`'
+TAB_HARDSTATUS_PREFIX='`print -Pn "[%~] "`'
+export TAB_HARDSTATUS_PREFIX
 # when at the shell prompt, use the shell name (truncated to remove the path to
 # the shell) as the rest of the title
-export TAB_HARDSTATUS_PROMPT='$SHELL:t'
+TAB_HARDSTATUS_PROMPT='$SHELL:t'
+export TAB_HARDSTATUS_PROMPT
 # when running a command, show the command name and arguments as the rest of
 # the title
-export TAB_HARDSTATUS_EXEC='$cmd'
+TAB_HARDSTATUS_EXEC='$cmd'
+export TAB_HARDSTATUS_EXEC
 # }}}
 
 # mmv {{{
@@ -183,12 +190,18 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-export DIRSTACKSIZE=2000 # maximum size of directory stack
-export HISTSIZE=5000     # Maximum size of history list
-export SAVEHIST=7000     # Save the last x commands
-export LISTMAX=0         # Only ask if completion listing would scroll off screen
-export REPORTTIME=60     # Give timing statistics for programs that take longer than a minute to run
-export HISTFILE="$HOME/.zhistory_$HOSTNAME"
+DIRSTACKSIZE=2000 # maximum size of directory stack
+export DIRSTACKSIZE
+HISTSIZE=5000     # Maximum size of history list
+export HISTSIZE
+SAVEHIST=7000     # Save the last x commands
+export SAVEHIST
+LISTMAX=0         # Only ask if completion listing would scroll off screen
+export LISTMAX
+REPORTTIME=60     # Give timing statistics for programs that take longer than a minute to run
+export REPORTTIME
+HISTFILE="$HOME/.zhistory_$HOSTNAME"
+export HISTFILE
 unset LS_COLORS
 # }}}
 
