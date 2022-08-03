@@ -30,6 +30,7 @@ Thumbs.db
 # swap files
 *~
 *.swp
+*.swo
 
 # eclipse
 .classpath

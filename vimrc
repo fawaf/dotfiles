@@ -1,21 +1,27 @@
 " version controlled
 " DO NOT EDIT
 "
-" Original Author:   Bram Moolenaar <Bram@vim.org>
-" Contributors:      https://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
+" Original Author:  Bram Moolenaar <Bram@vim.org>
+" Contributors:     https://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
+" Maintainers:      Felix Wong <felix@xilef.org>
 "
-" Maintainer:        Felix Wong <felix@xilef.org>
+" Last modified:  2022.07.14
 "
-" Last modified:     2022.02.10
-"
-"             To use it:  Copy it to
-"             for Amiga:  s:.vimrc
-"           for OpenVMS:  sys$login:.vimrc
-"     for *nix and OS/2:  $HOME/.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
+" | to use it on     | Copy it to       |
+" |==================|==================|
+" |     Amiga        | s:.vimrc         |
+" |       OpenVMS    | sys$login:.vimrc |
+" | *nix and OS/2    | $HOME/.vimrc     |
+" | MS-DOS and Win32 | $VIM\_vimrc      |
 
+" basic vim stuffs
+let mapleader = ","
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+cnoremap ; :
+cnoremap : ;
 
 set background=light
 
@@ -53,7 +59,6 @@ if &term=="xterm" || &term=="xterm-color" || &term=="xterm-256color"
   :imap <Esc>OS -
 endif
 
-let mapleader = ","
 set showtabline=2
 
 " When started as "evim", evim.vim will already have done these settings.
@@ -202,11 +207,11 @@ set ls=2
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 let g:detectindent_max_lines_to_analyse = 1024
-map <leader>p :set paste<cr>
-map <leader>n :set nopaste<cr>
-map <leader>el :colorscheme elflord<cr>
-map <leader>gh :colorscheme github<cr>
-map <leader>tw :set textwidth=999999<cr>
+map <leader>p ;set paste<cr>
+map <leader>n ;set nopaste<cr>
+map <leader>el ;colorscheme elflord<cr>
+map <leader>gh ;colorscheme github<cr>
+map <leader>tw ;set textwidth=999999<cr>
 
 " Instead of failing a command because of unsaved changes, instead raise a
 " dialogue asking if you wish to save changed files.
