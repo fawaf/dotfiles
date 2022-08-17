@@ -1,0 +1,7 @@
+formatter: "markdown table"
+header-from: main.tf
+output:
+  file: README.md
+sort:
+  enabled: true
+  by: required

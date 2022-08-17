@@ -1,80 +1,93 @@
 . $HOME/.functions
 
-#export ARCHDIR="$HOME/.local/mips"
+#ARCHDIR="$HOME/.local/mips"
+#export ARCHDIR
 
+# less {{{
 # Have less display colours
 # from: https://wiki.archlinux.org/index.php/Color_output_in_console#man
 LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --IGNORE-CASE"
-export LESS
 LESS_TERMCAP_mb=$'\e[1;32m'     # begin bold
-export LESS_TERMCAP_mb
 LESS_TERMCAP_md=$'\e[1;31m'     # begin blink
-export LESS_TERMCAP_md
 LESS_TERMCAP_so=$'\e[01;44;37m' # begin reverse video
-export LESS_TERMCAP_so
 LESS_TERMCAP_us=$'\e[01;34m'    # begin underline
-export LESS_TERMCAP_us
 LESS_TERMCAP_me=$'\e[0m'        # reset bold/blink
-export LESS_TERMCAP_me
 LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
-export LESS_TERMCAP_se
 LESS_TERMCAP_ue=$'\e[0m'        # reset underline
-export LESS_TERMCAP_ue
 GROFF_NO_SGR=1                  # for konsole and gnome-terminal
-export GROFF_NO_SGR
 
+export LESS
+export LESS_TERMCAP_mb
+export LESS_TERMCAP_md
+export LESS_TERMCAP_so
+export LESS_TERMCAP_us
+export LESS_TERMCAP_me
+export LESS_TERMCAP_se
+export LESS_TERMCAP_ue
+export GROFF_NO_SGR
+# }}}
+
+# exports {{{
+## define vars
+BASH_COMP_DEBUG_FILE="/tmp/bash_debug.log"
+BAT_PAGER="less"
 BAT_THEME="GitHub"
-export BAT_THEME
 CASE_SENSITIVE="true"
-export CASE_SENSITIVE
 CC="gcc"
-export CC
 CDPATH="$HOME:.:.."
-export CDPATH
 EDITOR="vim"
-export EDITOR
 FPATH="$FPATH:$HOME/.zsh/completion"
-export FPATH
 FZF_ALT_C_COMMAND='fd . $(git rev-parse --show-toplevel) --type d --exclude .git --color=never'
-export FZF_ALT_C_COMMAND=
 FZF_ALT_C_OPTS="--preview 'cd {} && basename {} && tree -C .' --delimiter $OKTA_HOME/ --with-nth 2"
-export FZF_ALT_C_OPTS
 FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_CTRL_T_COMMAND
 FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
-export FZF_CTRL_T_OPTS
 FZF_DEFAULT_COMMAND='fd --type f --color=never'
-export FZF_DEFAULT_COMMAND
 GOPATH="$HOME/go"
-export GOPATH
 INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
-export INFOPATH
 LIBRARY_PATH="/usr/local/lib"
-export LIBRARY_PATH
 LYNX_CFG_FILE="$HOME/.lynxrc"
-export LYNX_CFG_FILE
 LYNX_CFG="$HOME/.lynxrc"
-export LYNX_CFG
 MANPATH="/usr/local/share/man:/usr/share/man:/sw/share/man:/opt/local/share/man:/usr/X11R6/man:$HOME/.local/share/man:/opt/X11/share/man:/usr/X11/share/man:$HOME/.rvm/man:/home/linuxbrew/.linuxbrew/share/man:$HOME/.linuxbrew/share/man"
-export MANPATH
 MYSQL_PS1="\u@\h using database \d \n(\c) > "
-export MYSQL_PS1
 OPENSSL_CONF="$XDG_CONFIG_HOME/openssl.cnf"
-export OPENSSL_CONF
 PAGER="most"
-export PAGER
 PATH="$ARCHDIR:$HOME/bin:$HOME/.local/bin:/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:/usr/local/Cellar/openssl/1.0.1e/bin:/opt/local/bin:/opt/local/sbin:/sw/bin:/sw/sbin:/usr/local/bin:/usr/local/sbin:/bin:/usr/sbin:/sbin:/usr/bin:/usr/local/git/bin:/usr/texbin:/usr/X11/bin:/var/lib/gems/1.9/bin:/usr/local/mysql/bin:gtk-prefix/bin:/gtk-prefix/bin:$HOME/.local/android/tools:$HOME/.local/android/platform-tools:/opt/X11/bin:/opt/aws/bin:$HOME/.rvm/bin:$HOME/.cargo/bin:$GOPATH/bin:$JAVA_HOME/bin:$PATH"
-export PATH
 SVN_EDITOR="vim"
-export SVN_EDITOR
 TERMINAL="alacritty"
-export TERMINAL
 VISUAL="vim"
-export VISUAL
 WWW_HOME="https://www.google.com"
-export WWW_HOME
 XDG_CONFIG_HOME="$HOME/.config"
+
+## export vars
+export BASH_COMP_DEBUG_FILE
+export BAT_PAGER
+export BAT_THEME
+export CASE_SENSITIVE
+export CC
+export CDPATH
+export EDITOR
+export FPATH
+export FZF_ALT_C_COMMAND=
+export FZF_ALT_C_OPTS
+export FZF_CTRL_T_COMMAND
+export FZF_CTRL_T_OPTS
+export FZF_DEFAULT_COMMAND
+export GOPATH
+export INFOPATH
+export LIBRARY_PATH
+export LYNX_CFG_FILE
+export LYNX_CFG
+export MANPATH
+export MYSQL_PS1
+export OPENSSL_CONF
+export PAGER
+export PATH
+export SVN_EDITOR
+export VISUAL
+export WWW_HOME
+export TERMINAL
 export XDG_CONFIG_HOME
+# }}}
 
 # Replace instances of \W with \w in prompt functions below to get display of full path name.
 # export PS1="\[[\e[1;34m\]\u\[\e[m\]@\[\e[\e[1;32m\h\[\e[m\]:\[\e[\e[1;31m\w\[\e[m\]]\n\e[1;35m\]%\[\e[m\] "
