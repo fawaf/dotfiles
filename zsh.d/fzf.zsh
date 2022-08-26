@@ -1,4 +1,7 @@
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
+for file in $HOME/.fzf.zsh /usr/share/fzf/shell/key-bindings.zsh
+do
+  [ -f $file ] && source $file
+done
 
 bindkey '^o' fzf-file-widget
 
