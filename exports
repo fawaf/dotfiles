@@ -30,7 +30,7 @@ export GROFF_NO_SGR
 # exports {{{
 ## define vars
 BASH_COMP_DEBUG_FILE="/tmp/bash_debug.log"
-BAT_PAGER="less"
+BAT_PAGER="most"
 BAT_THEME="GitHub"
 CASE_SENSITIVE="true"
 CC="gcc"
