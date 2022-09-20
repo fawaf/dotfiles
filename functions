@@ -3,10 +3,14 @@
 # echo with color {{{
 echo_color() {
   MESSAGE="$2"
+
   case "$1" in
     red)
       echo "[1;31m${MESSAGE}[0;0m"
-    ;;
+      ;;
+    green)
+      echo "[1;32m${MESSAGE}[0;0m"
+      ;;
   esac
 }
 # }}}
@@ -91,12 +95,6 @@ settermtype() { # Set terminal type
     fi
   fi
 }
-# }}}
-
-# parse IP {{{
-#ip() { # Parse only the ip address
-#  echo "$1" | /usr/bin/env \grep -oE '([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})'
-#}
 # }}}
 
 # growl {{{
@@ -296,10 +294,17 @@ set_host_variables() {
 # ai {{{
 ai() { # Get current host related info.
   printf "You are logged in on host: %s\n" "$(hostname)"
+  echo
   printf "Additional system information: %s\n" "$(uname -a)"
+  echo
   printf "Users logged on: %s\n" "$(w -h)"
+  echo
   printf "Current date and time: %s\n" "$(date)"
+  echo
   printf "Machine uptime statistics: %s\n" "$(uptime)"
+  echo "==================================================================================================="
+  echo "network info"
+  echo
   if [[ -z "$HOST_IP" && -z "$EXTERNALIP" ]]
   then
     printf "Not connected to the internet\n"
@@ -383,5 +388,34 @@ source_os_dotfiles() {
   then
       source "$HOME/.${TYPE}-custom"
   fi
+}
+# }}}
+
+# exponential backoff {{{
+expbackoff() {
+    # Exponential backoff: retries a command upon failure, scaling up the delay between retries.
+    # Example: "expbackoff my_command --with --some --args --maybe"
+    local MAX_RETRIES=${EXPBACKOFF_MAX_RETRIES:-19} # Max number of retries
+    local BASE=${EXPBACKOFF_BASE:-1} # Base value for backoff calculation
+    local MAX=${EXPBACKOFF_MAX:-9999999} # Max value for backoff calculation
+    local FAILURES=0
+
+    while ! "$@"; do
+        FAILURES=$(( $FAILURES + 1 ))
+        if (( $FAILURES > $MAX_RETRIES )); then
+            echo "$@" >&2
+            echo " * Failed, max retries exceeded" >&2
+            return 1
+        else
+            local SECONDS=$(( $BASE * 2 ** ($FAILURES - 1) ))
+            if (( $SECONDS > $MAX )); then
+                SECONDS=$MAX
+            fi
+            echo "$@" >&2
+            echo_color red " * $FAILURES failure(s), retrying in $SECONDS second(s)" >&2
+            sleep $SECONDS
+            echo
+        fi
+    done
 }
 # }}}
