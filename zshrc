@@ -161,16 +161,6 @@ autoload -U zmv
 alias mmv='noglob zmv -W'
 # }}}
 
-rp() {
-    if [[ -z "$RP" ]]
-    then
-      RP=1
-    else
-      unset RP
-    fi
-    clear
-}
-
 # Environment {{{
 umask 022   # Deny group/world rwx by default (multiuser systems)
 # }}}

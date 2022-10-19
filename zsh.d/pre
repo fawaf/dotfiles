@@ -6,6 +6,18 @@ preexec() {
     set_titlebar $tab_title $tab_hardstatus
 }
 
+# clean prompt {{{
+rp() {
+    if [[ -z "$RP" ]]
+    then
+      RP=1
+    else
+      unset RP
+    fi
+    clear
+}
+# }}}
+
 # Called by zsh before showing the prompt:
 precmd() {
 #    tab_title="$TAB_TITLE_PREFIX$TAB_TITLE_PROMPT"
@@ -16,7 +28,7 @@ precmd() {
     then
       set_prompt
     else
-      PS1="%n@$(hostname -s):%~%# "
+      PS1="$(date) %n@$(hostname -s):%~%# "
       RPS1=""
     fi
 }
