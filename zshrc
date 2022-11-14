@@ -215,7 +215,7 @@ then
 fi
 # }}}
 
-if [[ -z "$HOST_IP" ]]
+if [[ "$HOST_IP" == "" ]]
 then
     echo_color red "No IP address(es) detected"
 fi
@@ -228,5 +228,10 @@ test $commands[kubectl] && source <(kubectl completion zsh)
 
 # fig {{{
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+if [[ "$DISABLE_FIG" == "true" ]]
+then
+  fig quit
+else
+  [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+fi
 # }}}

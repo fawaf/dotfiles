@@ -35,6 +35,7 @@ BAT_THEME="GitHub"
 CASE_SENSITIVE="true"
 CC="gcc"
 CDPATH="$HOME:.:.."
+DISABLE_FIG="true"
 EDITOR="vim"
 FPATH="$FPATH:$HOME/.zsh/completion"
 FZF_ALT_C_COMMAND='fd . $(git rev-parse --show-toplevel) --type d --exclude .git --color=never'
@@ -65,6 +66,7 @@ export BAT_THEME
 export CASE_SENSITIVE
 export CC
 export CDPATH
+export DISABLE_FIG
 export EDITOR
 export FPATH
 export FZF_ALT_C_COMMAND=
