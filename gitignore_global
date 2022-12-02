@@ -42,6 +42,8 @@ z
 z.*
 git.sh
 compile.sh
+'
+"
 
 # notes
 notes.*
