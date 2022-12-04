@@ -45,7 +45,8 @@ FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 FZF_DEFAULT_COMMAND='fd --type f --color=never'
 GOPATH="$HOME/go"
 INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
-LIBRARY_PATH="/usr/local/lib"
+LD_LIBRARY_PATH="/lib:/usr/lib:/usr/lib64:/lib64:/usr/local/lib:/lib32:/usr/lib32:/libx32:/usr/libx32"
+LIBRARY_PATH="$LD_LIBRARY_PATH"
 LYNX_CFG_FILE="$HOME/.lynxrc"
 LYNX_CFG="$HOME/.lynxrc"
 MANPATH="/usr/local/share/man:/usr/share/man:/sw/share/man:/opt/local/share/man:/usr/X11R6/man:$HOME/.local/share/man:/opt/X11/share/man:/usr/X11/share/man:$HOME/.rvm/man:/home/linuxbrew/.linuxbrew/share/man:$HOME/.linuxbrew/share/man"
@@ -76,7 +77,8 @@ export FZF_CTRL_T_OPTS
 export FZF_DEFAULT_COMMAND
 export GOPATH
 export INFOPATH
-export LIBRARY_PATH
+#export LD_LIBRARY_PATH
+#export LIBRARY_PATH
 export LYNX_CFG_FILE
 export LYNX_CFG
 export MANPATH
