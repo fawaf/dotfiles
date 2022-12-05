@@ -11,6 +11,7 @@
     aa = add -A
     body = log --format=%B
     br = branch
+    cc = !git clean --force && git checkout -- .
     ci = commit
     co = checkout
     dc = diff --cached
