@@ -85,27 +85,26 @@ print("done.")
 logger.debug("pull stdout: {}".format(pull_stdout))
 logger.debug("pull stderr: {}".format(pull_stderr))
 
-print("submodule init... ", end="")
+print("running submodule init... ", end="")
 cmd = "git submodule init"
 logger.debug("command to run: {}".format(cmd))
 init_stdout, init_stderr, _ = waflibs.utils.shell_command(
     cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
-print("done.")
 logger.debug("init stdout: {}".format(init_stdout))
 logger.debug("init stderr: {}".format(init_stderr))
+print("done.")
 
-print("submodule sync... ", end="")
+print("running submodule sync...")
 cmd = "git submodule sync"
 logger.debug("command to run: {}".format(cmd))
 sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
     cmd.split(" "), cwd=DOTFILES_DIR, capture_output=False
 )
-print("done.")
 logger.debug("sync stdout: {}".format(sync_stdout))
 logger.debug("sync stderr: {}".format(sync_stderr))
 
-print("submodule update... ", end="")
+print("running submodule update... ", end="")
 cmd = "git submodule update"
 logger.debug("command to run: {}".format(cmd))
 update_stdout, update_stderr, _ = waflibs.utils.shell_command(
