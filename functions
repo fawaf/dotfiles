@@ -152,9 +152,9 @@ get_configured_ip() {
           IFACE_PREFIX="en"
           for i in {0..9}
           do
-              if ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet active
+              if ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet active && ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet inet
               then
-                HOST_IP="$(ifconfig "$IFACE_PREFIX""$i" | \grep --word-regexp inet | head -1 | awk '{print $2}')"
+                HOST_IP="$(ifconfig "$IFACE_PREFIX""$i" | \grep --word-regexp inet | tail -1 | awk '{print $2}')"
 
                 break
               fi
