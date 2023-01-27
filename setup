@@ -26,7 +26,10 @@ parser.add_argument(
 parser.add_argument("-t", "--test", action="store_true", help="run test")
 parser.add_argument("-o", "--dotfiles-dir", help="dotfiles dir")
 parser.add_argument(
-    "-u", "--custom", action="store_false", help="do not run custom setup"
+    "-u", "--no-custom", action="store_false", help="do not run custom setup"
+)
+parser.add_argument(
+    "-s", "--only-custom", action="store_true", help="only run custom setup"
 )
 args = parser.parse_args()
 
@@ -36,7 +39,8 @@ directory = args.dir
 test = args.test
 dry_run = args.dry_run
 dotfiles_dir = args.dotfiles_dir
-custom = args.custom
+no_custom = args.no_custom
+only_custom = args.only_custom
 
 logger = waflibs.log.create_logger(args)
 verbose = args.verbose
@@ -77,112 +81,129 @@ logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
 
 logger.debug("args: {}".format(args))
 
-os.chdir(DOTFILES_DIR)
+if only_custom:
+    logger.debug(f"only custom is {only_custom}... ONLY running custom script")
+else:
+    os.chdir(DOTFILES_DIR)
 
-print("updating repo... ", end="")
-cmd = "git pull"
-logger.debug("command to run: {}".format(cmd))
-pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
-)
-print("done.")
-logger.debug("pull stdout: {}".format(pull_stdout))
-logger.debug("pull stderr: {}".format(pull_stderr))
-
-print("running submodule init... ", end="")
-cmd = "git submodule init"
-logger.debug("command to run: {}".format(cmd))
-init_stdout, init_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
-)
-logger.debug("init stdout: {}".format(init_stdout))
-logger.debug("init stderr: {}".format(init_stderr))
-print("done.")
-
-print("running submodule sync... ", end="")
-cmd = "git submodule sync"
-logger.debug("command to run: {}".format(cmd))
-sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
-)
-logger.debug("sync stdout: {}".format(sync_stdout))
-logger.debug("sync stderr: {}".format(sync_stderr))
-print("done.")
-
-print("running submodule update... ", end="")
-cmd = "git submodule update"
-logger.debug("command to run: {}".format(cmd))
-update_stdout, update_stderr, _ = waflibs.utils.shell_command(
-    cmd.split(" "), cwd=DOTFILES_DIR
-)
-print("done.")
-logger.debug("update stdout: {}".format(update_stdout))
-logger.debug("update stderr: {}".format(update_stderr))
-
-print("setting up dotfiles... ", end="")
-root_entries = [re for re in DOTFILES_DIR.glob("*")]
-root_entries.sort()
-for root_entry in root_entries:
-    root_entry_name = root_entry.name
-    logger.debug("root level entry name is {}".format(root_entry_name))
-    logger.debug("top level root entry is {}".format(root_entry))
-
-    if root_entry_name.startswith(
-        (
-            "clean",
-            "README",
-            "LICENSE",
-            "setup",
-            "config.yaml",
-            "Makefile",
-            "update-",
-            ".git",
-        )
-    ):
-        logger.debug(f"ignoring entry... starts with - {root_entry}")
-
-        continue
-    if root_entry_name.endswith(("swp",)):
-        logger.debug(f"ignoring entry... ends with - {root_entry}")
-
-        continue
-    if root_entry_name.startswith("test") and not test:
-        logger.debug(
-            f"ignoring entry... testing is not in progress - {root_entry}"
-        )
-        continue
-
-    root_dest_dir = waflibs.utils.get_parent_directory(
-        waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
+    print("updating repo... ", end="")
+    cmd = "git pull"
+    logger.debug("command to run: {}".format(cmd))
+    pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
+        cmd.split(" "), cwd=DOTFILES_DIR
     )
-    if not root_dest_dir.is_dir():
-        logger.debug(f"{root_dest_dir} directory does not exist, creating...")
+    print("done.")
+    logger.debug("pull stdout: {}".format(pull_stdout))
+    logger.debug("pull stderr: {}".format(pull_stderr))
 
-        root_dest_dir.mkdir()
+    print("running submodule init... ", end="")
+    cmd = "git submodule init"
+    logger.debug("command to run: {}".format(cmd))
+    init_stdout, init_stderr, _ = waflibs.utils.shell_command(
+        cmd.split(" "), cwd=DOTFILES_DIR
+    )
+    logger.debug("init stdout: {}".format(init_stdout))
+    logger.debug("init stderr: {}".format(init_stderr))
+    print("done.")
 
-    if root_entry.is_dir():
-        logger.debug(f"root entry is dir: {root_entry}")
+    print("running submodule sync... ", end="")
+    cmd = "git submodule sync"
+    logger.debug("command to run: {}".format(cmd))
+    sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
+        cmd.split(" "), cwd=DOTFILES_DIR
+    )
+    logger.debug("sync stdout: {}".format(sync_stdout))
+    logger.debug("sync stderr: {}".format(sync_stderr))
+    print("done.")
 
-        if root_entry_name in config["append"]:
-            logger.debug(f"will append to root directory {root_entry}")
+    print("running submodule update... ", end="")
+    cmd = "git submodule update"
+    logger.debug("command to run: {}".format(cmd))
+    update_stdout, update_stderr, _ = waflibs.utils.shell_command(
+        cmd.split(" "), cwd=DOTFILES_DIR
+    )
+    print("done.")
+    logger.debug("update stdout: {}".format(update_stdout))
+    logger.debug("update stderr: {}".format(update_stderr))
 
-            entries = [e for e in root_entry.glob("*")]
-            entries.sort()
-            for entry in entries:
+    print("setting up dotfiles... ", end="")
+    root_entries = [re for re in DOTFILES_DIR.glob("*")]
+    root_entries.sort()
+    for root_entry in root_entries:
+        root_entry_name = root_entry.name
+        logger.debug("root level entry name is {}".format(root_entry_name))
+        logger.debug("top level root entry is {}".format(root_entry))
+
+        if root_entry_name.startswith(
+            (
+                "clean",
+                "README",
+                "LICENSE",
+                "setup",
+                "config.yaml",
+                "Makefile",
+                "update-",
+                ".git",
+            )
+        ):
+            logger.debug(f"ignoring entry... starts with - {root_entry}")
+
+            continue
+        if root_entry_name.endswith(("swp",)):
+            logger.debug(f"ignoring entry... ends with - {root_entry}")
+
+            continue
+        if root_entry_name.startswith("test") and not test:
+            logger.debug(
+                f"ignoring entry... testing is not in progress - {root_entry}"
+            )
+            continue
+
+        root_dest_dir = waflibs.utils.get_parent_directory(
+            waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
+        )
+        if not root_dest_dir.is_dir():
+            logger.debug(
+                f"{root_dest_dir} directory does not exist, creating..."
+            )
+
+            root_dest_dir.mkdir()
+
+        if root_entry.is_dir():
+            logger.debug(f"root entry is dir: {root_entry}")
+
+            if root_entry_name in config["append"]:
+                logger.debug(f"will append to root directory {root_entry}")
+
+                entries = [e for e in root_entry.glob("*")]
+                entries.sort()
+                for entry in entries:
+                    dest = waflibs.utils.get_dest_location(
+                        entry, target_dir=HOME_DIR
+                    )
+                    logger.debug("dest is {}".format(dest))
+
+                    waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
+
+                    logger.debug(
+                        f"appending root entry {entry} to dest {dest}"
+                    )
+                    waflibs.utils.copy(entry, dest, dry_run=dry_run)
+
+                    logger.debug(waflibs.utils.divider(char="*", times=66))
+            else:
+                logger.debug(f"not appending to root dir: {root_entry}")
+
                 dest = waflibs.utils.get_dest_location(
-                    entry, target_dir=HOME_DIR
+                    root_entry, target_dir=HOME_DIR
                 )
                 logger.debug("dest is {}".format(dest))
 
                 waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
-                logger.debug(f"appending root entry {entry} to dest {dest}")
-                waflibs.utils.copy(entry, dest, dry_run=dry_run)
-
-                logger.debug(waflibs.utils.divider(char="*", times=66))
+                waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
+            logger.debug(waflibs.utils.divider(char="+", times=66))
         else:
-            logger.debug(f"not appending to root dir: {root_entry}")
-
             dest = waflibs.utils.get_dest_location(
                 root_entry, target_dir=HOME_DIR
             )
@@ -190,20 +211,12 @@ for root_entry in root_entries:
 
             waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
+            logger.debug(f"copying root entry {root_entry} to dest {dest}")
             waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
-        logger.debug(waflibs.utils.divider(char="+", times=66))
-    else:
-        dest = waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
-        logger.debug("dest is {}".format(dest))
+        logger.debug(waflibs.utils.divider(char="-", times=66))
+    print("done.")
 
-        waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
-
-        logger.debug(f"copying root entry {root_entry} to dest {dest}")
-        waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
-    logger.debug(waflibs.utils.divider(char="-", times=66))
-print("done.")
-
-if custom:
+if no_custom or only_custom:
     logger.debug(f"will run custom setup script")
 
     custom_setup_script = pathlib.Path("setup-custom")
@@ -228,3 +241,7 @@ if custom:
         logger.debug("custom stderr: {}".format(custom_stderr))
 
         print("done.")
+else:
+    logger.debug(
+        f"no custom run is {no_custom} or only custom is {only_custom}... not running custom setup script"
+    )
