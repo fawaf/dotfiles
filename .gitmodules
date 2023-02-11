@@ -66,10 +66,13 @@
 	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "zsh/k"]
 	path = zsh/k
-	url = https://github.com/supercrabtree/k
+	url = https://github.com/supercrabtree/k.git
 [submodule "vim/pack/colors/start/papercolor-theme"]
 	path = vim/pack/colors/start/papercolor-theme
-	url = https://github.com/NLKNguyen/papercolor-theme
+	url = https://github.com/NLKNguyen/papercolor-theme.git
 [submodule "tmux/plugins"]
 	path = tmux/plugins/tmux-thumbs
-	url = https://github.com/fcsonline/tmux-thumbs
+	url = https://github.com/fcsonline/tmux-thumbs.git
+[submodule "vim/pack/tools/start/nerdtree"]
+	path = vim/pack/tools/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
