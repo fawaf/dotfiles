@@ -7,10 +7,10 @@ rm -f "$HOME"/Downloads/*.part
 rm -f "$HOME"/Desktop/*.part
 # }}}
 
-# {{{ sanity checks
+# {{{ garbage checks
 if [ -f /etc/motd ]
 then
-    uname -a | diff -q - <(cat /etc/motd | \grep "$(uname -a)")
+    cat /etc/motd | grep --quiet "$(uname -a)"
 fi
 
 type uptime > /dev/null

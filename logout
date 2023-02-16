@@ -5,10 +5,11 @@ then
     ssh-agent -k
 fi
 
+SUDO="/usr/bin/sudo"
 if ! type sudo
 then
-  echo yes | sudo -k
-  echo yes | sudo -K
+  $SUDO -k
+  $SUDO -K
 fi
 
 rm -f "$HOME"/.bash_history

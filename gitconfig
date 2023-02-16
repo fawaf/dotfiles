@@ -9,6 +9,7 @@
 
 [alias]
     aa = add -A
+    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
     body = log --format=%B
     br = branch
     cc = !git clean --force && git checkout -- .
