@@ -5,13 +5,13 @@
 " Contributors:     https://jeffkreeftmeijer.com/2012/relative-line-numbers-in-vim-for-super-fast-movement/
 " Maintainers:      Felix Wong <felix@xilef.org>
 "
-" Last modified:  2022.07.14
+" Last modified:  2023.03.14
 "
 " | to use it on     | Copy it to       |
 " |==================|==================|
 " |     Amiga        | s:.vimrc         |
-" |       OpenVMS    | sys$login:.vimrc |
-" | *nix and OS/2    | $HOME/.vimrc     |
+" |     OpenVMS      | sys$login:.vimrc |
+" |  *nix and OS/2   | $HOME/.vimrc     |
 " | MS-DOS and Win32 | $VIM\_vimrc      |
 
 " basic vim stuffs
@@ -73,11 +73,11 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-"if has("vms")
-"  set nobackup         " do not keep a backup file, use versions instead
-"else
-"  set backup           " keep a backup file
-"endif
+if has("vms")
+  set nobackup         " do not keep a backup file, use versions instead
+else
+  set backup           " keep a backup file
+endif
 
 set history=500         " keep x lines of command line history
 set ruler               " show the cursor position all the time
@@ -95,7 +95,7 @@ map Q gq
 inoremap <C-U> <C-G>u<C-U>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
+if has("mouse")
   set mouse=a
 endif
 
@@ -120,65 +120,60 @@ set wildmenu
 set switchbuf=useopen
 set winwidth=90
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+filetype plugin indent on
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
+" Put these in an autocmd group, so that we can delete them easily.
+augroup vimrcEx
+  au!
+  autocmd!
 
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-    au!
-
-    " For all text files set 'textwidth' to 99 characters.
-    autocmd FileType text setlocal textwidth=99
-    set textwidth=99
-    if exists('+colorcolumn')
-      set colorcolumn=+1        " highlight column after 'textwidth'
-    else
-      au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-    endif
-    highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    " Also don't do it when the mark is in the first line, that is the default
-    " position when opening a file.
-    autocmd BufReadPost *
-          \ if line("'\"") > 1 && line("'\"") <= line("$") |
-          \   exe "normal! g`\"" |
-          \ endif
-
-    autocmd FileType ruby,eruby set filetype=ruby.eruby
-  augroup END
-
-  " Convenient command to see the difference between the current buffer and the
-  " file it was loaded from, thus the changes you made.
-  " Only define it when not defined already.
-  if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-          \ | wincmd p | diffthis
+  " For all text files set 'textwidth' to 99 characters.
+  autocmd FileType text setlocal textwidth=99
+  set textwidth=99
+  if exists('+colorcolumn')
+    set colorcolumn=+1        " highlight column after 'textwidth'
+  else
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
   endif
+  highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
-  "augroup vimrc
-  "  au BufReadPre * setlocal foldmethod=indent
-  "  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-  "augroup END
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
 
-  augroup filetypedetect
-    au BufRead,BufNewFile *.py.erb set filetype=python
-    au BufRead,BufNewFile *.rb.erb set filetype=ruby
-    au BufRead,BufNewFile *.php set filetype=php shiftwidth=4 softtabstop=4 expandtab
-  augroup END
-else
+  autocmd FileType ruby,eruby set filetype=ruby.eruby
+augroup END
 
-  set autoindent                " always set autoindenting on
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+        \ | wincmd p | diffthis
+endif
 
-endif " has("autocmd")
+"augroup vimrc
+"  au BufReadPre * setlocal foldmethod=indent
+"  au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+"augroup END
+
+augroup filetypedetect
+  au BufRead,BufNewFile *.py.erb set filetype=python
+  au BufRead,BufNewFile *.rb.erb set filetype=ruby
+  au BufRead,BufNewFile *.php set filetype=php shiftwidth=4 softtabstop=4 expandtab
+augroup END
+
+set autoindent                " always set autoindenting on
 
 " Alias :WQ to save with sudo
 cnoremap WQ w !sudo tee % > /dev/null
