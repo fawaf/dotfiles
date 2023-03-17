@@ -78,7 +78,7 @@ if has("vms")
 else
   set backup           " keep a backup file
 
-  let backupdir = "/tmp/vim-bak/"
+  let backupdir = "/tmp/vim-bak-" . $USER . "/"
 
   if !isdirectory(backupdir)
     call mkdir(backupdir, "p", 0700)
