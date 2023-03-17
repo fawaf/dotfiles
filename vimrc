@@ -77,6 +77,14 @@ if has("vms")
   set nobackup         " do not keep a backup file, use versions instead
 else
   set backup           " keep a backup file
+
+  let backupdir = "/tmp/vim-bak/"
+
+  if !isdirectory(backupdir)
+    call mkdir(backupdir, "p", 0700)
+  endif
+  execute "set backupdir=".backupdir
+  execute "set dir=".backupdir
 endif
 
 set history=500         " keep x lines of command line history
