@@ -201,8 +201,16 @@ else:
 
                 waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
-                waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
-            logger.debug(waflibs.utils.divider(char="+", times=66))
+                d_p_dir = dest.parent
+                logger.debug(f"dest parent dir: {d_p_dir}")
+                if not pathlib.Path(d_p_dir).exists():
+                    logger.debug(f"dest parent dir {d_p_dir} does not exist... creating dir")
+
+                    pathlib.Path(d_p_dir).mkdir()
+                logger.debug(f"appending root entry {entry} to dest {dest}")
+                waflibs.utils.copy(entry, dest, dry_run=dry_run)
+
+                logger.debug(waflibs.utils.divider(char="*", times=66))
         else:
             dest = waflibs.utils.get_dest_location(
                 root_entry, target_dir=HOME_DIR
