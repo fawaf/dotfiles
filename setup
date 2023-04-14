@@ -4,163 +4,184 @@ import os
 import argparse
 import pathlib
 import tempfile
+import sys
 
 import waflibs
+
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+
+script_dir = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
+dotfiles_dir = pathlib.Path(script_dir, "dotfiles")
 
 parser = argparse.ArgumentParser()
 waflibs.arg_parse.enable_verbose_logging(parser)
 waflibs.arg_parse.enable_dry_run(parser)
 parser.add_argument(
-    "-f", "--force", action="store_true", help="do not force commands"
+    "-f",
+    "--force",
+    action="store_true",
+    help="do not force commands",
 )
-parser.add_argument("-e", "--dev", action="store_true", help="dev mode")
+parser.add_argument(
+    "-t",
+    "-e",
+    "--test",
+    "--dev",
+    action="store_true",
+    help="dev/test mode",
+)
 parser.add_argument(
     "-c",
     "--config",
+    "--config-file",
     type=str,
     help="config file",
+    default=f"{script_dir}/config.yaml",
 )
 parser.add_argument(
-    "-i", "--dir", "--directory", help="destination directory to use"
+    "-i",
+    "--home-dir",
+    "--home-directory",
+    "--directory",
+    help="destination directory to use",
+    default=pathlib.Path(os.environ["HOME"]).absolute(),
 )
-parser.add_argument("-t", "--test", action="store_true", help="run test")
-parser.add_argument("-o", "--dotfiles-dir", help="dotfiles dir")
 parser.add_argument(
-    "-u", "--no-custom", action="store_false", help="do not run custom setup"
+    "-o",
+    "--dotfiles-dir",
+    help="dotfiles dir",
+    default=dotfiles_dir,
 )
 parser.add_argument(
-    "-s", "--only-custom", action="store_true", help="only run custom setup"
+    "-u",
+    "--no-custom",
+    action="store_true",
+    help="do not run custom setup",
+)
+parser.add_argument(
+    "-s",
+    "--only-custom",
+    action="store_true",
+    help="only run custom setup",
 )
 args = parser.parse_args()
 
-dev = args.dev
 force = args.force
-directory = args.dir
+home_dir = args.home_dir
 test = args.test
 dry_run = args.dry_run
 dotfiles_dir = args.dotfiles_dir
 no_custom = args.no_custom
 only_custom = args.only_custom
+config_file = args.config
+
+if test:
+    dotfiles_dir = pathlib.Path(script_dir, "test")
+    real_config_file = pathlib.Path(script_dir, "config.yaml")
+
+    temp_dir = tempfile.mkdtemp()
+    home_dir = pathlib.Path(temp_dir).absolute()
+
+    args.verbose = True
+else:
+    real_config_file = config_file
 
 logger = waflibs.log.create_logger(args)
 verbose = args.verbose
 
-DOTFILES_DIR = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
-if dotfiles_dir:
-    DOTFILES_DIR = pathlib.Path(dotfiles_dir)
-
-if args.config:
-    config_file = args.config
-else:
-    config_file = f"{DOTFILES_DIR}/config.yaml"
 logger.debug(f"config file from arg: {config_file}")
-
-if test:
-    dev = True
-
-    DOTFILES_DIR = pathlib.Path(DOTFILES_DIR, "test")
-    real_config_file = pathlib.Path(DOTFILES_DIR, "config.yaml")
-else:
-    real_config_file = config_file
 logger.debug(f"real config file: {real_config_file}")
 config = waflibs.config.parse_yaml_file(real_config_file)
+logger.debug(f"config: {config}")
+if test:
+    for d, sub_dir in config["append"].items():
+        real_dir = f"{home_dir}/.{d}"
+        logger.debug(f"creating test dir {real_dir}")
 
-if dev:
-    temp_dir = tempfile.TemporaryDirectory()
-    HOME_DIR = pathlib.Path(temp_dir.name).absolute()
+        os.mkdir(real_dir)
+        if sub_dir:
+            for sd in sub_dir:
+                real_sub_dir = f"{real_dir}/{sd}"
+                logger.debug(f"creating test sub dir {real_sub_dir}")
 
-    args.verbose = True
-elif directory:
-    HOME_DIR = pathlib.Path(directory)
-else:
-    HOME_DIR = pathlib.Path(os.environ["HOME"]).absolute()
+                os.mkdir(real_sub_dir)
 
-logger.debug("using home dir: {}".format(HOME_DIR))
-logger.debug("config: {}".format(config))
-logger.debug("dotfiles dir: {}".format(DOTFILES_DIR))
+
+logger.debug(f"using home dir: {home_dir}")
+logger.debug(f"dotfiles dir: {dotfiles_dir}")
 
 logger.debug("args: {}".format(args))
 
 if only_custom:
     logger.debug(f"only custom is {only_custom}... ONLY running custom script")
 else:
-    os.chdir(DOTFILES_DIR)
+    os.chdir(dotfiles_dir)
 
-    print("updating repo... ", end="")
+    eprint("updating repo... ", end="")
     cmd = "git pull"
     logger.debug("command to run: {}".format(cmd))
     pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
-        cmd.split(" "), cwd=DOTFILES_DIR
+        cmd.split(" "),
+        cwd=dotfiles_dir,
     )
-    print("done.")
+    eprint("done.")
     logger.debug("pull stdout: {}".format(pull_stdout))
     logger.debug("pull stderr: {}".format(pull_stderr))
 
-    print("running submodule init... ", end="")
+    eprint("running submodule init... ", end="")
     cmd = "git submodule init"
     logger.debug("command to run: {}".format(cmd))
     init_stdout, init_stderr, _ = waflibs.utils.shell_command(
-        cmd.split(" "), cwd=DOTFILES_DIR
+        cmd.split(" "),
+        cwd=dotfiles_dir,
     )
     logger.debug("init stdout: {}".format(init_stdout))
     logger.debug("init stderr: {}".format(init_stderr))
-    print("done.")
+    eprint("done.")
 
-    print("running submodule sync... ", end="")
+    eprint("running submodule sync... ", end="")
     cmd = "git submodule sync"
     logger.debug("command to run: {}".format(cmd))
     sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
-        cmd.split(" "), cwd=DOTFILES_DIR
+        cmd.split(" "),
+        cwd=dotfiles_dir,
     )
     logger.debug("sync stdout: {}".format(sync_stdout))
     logger.debug("sync stderr: {}".format(sync_stderr))
-    print("done.")
+    eprint("done.")
 
-    print("running submodule update... ", end="")
+    eprint("running submodule update... ", end="")
     cmd = "git submodule update"
     logger.debug("command to run: {}".format(cmd))
     update_stdout, update_stderr, _ = waflibs.utils.shell_command(
-        cmd.split(" "), cwd=DOTFILES_DIR
+        cmd.split(" "),
+        cwd=dotfiles_dir,
     )
-    print("done.")
+    eprint("done.")
     logger.debug("update stdout: {}".format(update_stdout))
     logger.debug("update stderr: {}".format(update_stderr))
 
-    print("setting up dotfiles... ", end="")
-    root_entries = [re for re in DOTFILES_DIR.glob("*")]
+    eprint("setting up dotfiles... ", end="")
+    root_entries = [re for re in dotfiles_dir.glob("*")]
     root_entries.sort()
     for root_entry in root_entries:
         root_entry_name = root_entry.name
         logger.debug("root level entry name is {}".format(root_entry_name))
         logger.debug("top level root entry is {}".format(root_entry))
 
-        if root_entry_name.startswith(
-            (
-                "clean",
-                "README",
-                "LICENSE",
-                "setup",
-                "config.yaml",
-                "Makefile",
-                "update-",
-                ".git",
-            )
-        ):
-            logger.debug(f"ignoring entry... starts with - {root_entry}")
-
-            continue
         if root_entry_name.endswith(("swp",)):
             logger.debug(f"ignoring entry... ends with - {root_entry}")
 
             continue
-        if root_entry_name.startswith("test") and not test:
-            logger.debug(
-                f"ignoring entry... testing is not in progress - {root_entry}"
-            )
-            continue
 
         root_dest_dir = waflibs.utils.get_parent_directory(
-            waflibs.utils.get_dest_location(root_entry, target_dir=HOME_DIR)
+            waflibs.utils.get_dest_location(
+                root_entry,
+                target_dir=home_dir,
+            )
         )
         if not root_dest_dir.is_dir():
             logger.debug(
@@ -169,78 +190,83 @@ else:
 
             root_dest_dir.mkdir()
 
-        if root_entry.is_dir():
-            logger.debug(f"root entry is dir: {root_entry}")
+        logger.debug(f"root entry is dir: {root_entry}")
 
-            if root_entry_name in config["append"]:
-                logger.debug(f"will append to root directory {root_entry}")
+        if root_entry_name in config["append"]:
+            logger.debug(f"will append to root directory {root_entry}")
 
-                entries = [e for e in root_entry.glob("*")]
-                entries.sort()
-                for entry in entries:
-                    dest = waflibs.utils.get_dest_location(
-                        entry, target_dir=HOME_DIR
-                    )
-                    logger.debug("dest is {}".format(dest))
-
-                    waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
-
-                    logger.debug(
-                        f"appending root entry {entry} to dest {dest}"
-                    )
-                    waflibs.utils.copy(entry, dest, dry_run=dry_run)
-
-                    logger.debug(waflibs.utils.divider(char="*", times=66))
-            else:
-                logger.debug(f"not appending to root dir: {root_entry}")
-
+            entries = [e for e in root_entry.glob("*")]
+            entries.sort()
+            for entry in entries:
                 dest = waflibs.utils.get_dest_location(
-                    root_entry, target_dir=HOME_DIR
+                    entry,
+                    target_dir=home_dir,
                 )
                 logger.debug("dest is {}".format(dest))
 
                 waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
-                d_p_dir = dest.parent
-                logger.debug(f"dest parent dir: {d_p_dir}")
-                if not pathlib.Path(d_p_dir).exists():
-                    logger.debug(f"dest parent dir {d_p_dir} does not exist... creating dir")
-
-                    pathlib.Path(d_p_dir).mkdir()
                 logger.debug(f"appending root entry {entry} to dest {dest}")
                 waflibs.utils.copy(entry, dest, dry_run=dry_run)
 
                 logger.debug(waflibs.utils.divider(char="*", times=66))
         else:
+            logger.debug(f"not appending to root dir: {root_entry}")
+
             dest = waflibs.utils.get_dest_location(
-                root_entry, target_dir=HOME_DIR
+                root_entry,
+                target_dir=home_dir,
             )
             logger.debug("dest is {}".format(dest))
 
             waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
 
+            d_p_dir = dest.parent
+            logger.debug(f"dest parent dir: {d_p_dir}")
+            if not pathlib.Path(d_p_dir).exists():
+                logger.debug(
+                    f"dest parent dir {d_p_dir} does not exist... creating dir"
+                )
+
+                pathlib.Path(d_p_dir).mkdir()
             logger.debug(f"copying root entry {root_entry} to dest {dest}")
             waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
-        logger.debug(waflibs.utils.divider(char="-", times=66))
-    print("done.")
 
-if no_custom or only_custom:
+            logger.debug(waflibs.utils.divider(char="*", times=66))
+    else:
+        dest = waflibs.utils.get_dest_location(
+            root_entry,
+            target_dir=home_dir,
+        )
+        logger.debug("dest is {}".format(dest))
+
+        waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
+
+        logger.debug(f"copying root entry {root_entry} to dest {dest}")
+        waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
+    logger.debug(waflibs.utils.divider(char="-", times=66))
+    eprint("done.")
+
+if not no_custom or only_custom:
     logger.debug(f"will run custom setup script")
 
-    custom_setup_script = pathlib.Path("setup-custom")
+    custom_setup_script = pathlib.Path(script_dir, "setup-custom")
+    logger.debug(f"custom setup script path: {custom_setup_script}")
     if custom_setup_script.is_file():
-        print(waflibs.utils.divider(char="*", times=77))
+        eprint(waflibs.utils.divider(char="*", times=77))
 
-        print(
+        eprint(
             "running custom setup script {}... ".format(custom_setup_script),
             end="",
         )
 
         cmd = [
-            "./{}".format(custom_setup_script),
-            "-vvvvvv" if verbose else "",
-            "-ffffff" if force else "",
+            str(custom_setup_script),
         ]
+        if verbose:
+            cmd.append("-vvvvvv")
+        if force:
+            cmd.append("-ffffff")
         logger.debug("command to run: {}".format(cmd))
         custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(
             cmd, capture_output=False
@@ -248,8 +274,11 @@ if no_custom or only_custom:
         logger.debug("custom stdout: {}".format(custom_stdout))
         logger.debug("custom stderr: {}".format(custom_stderr))
 
-        print("done.")
+        eprint("done.")
 else:
     logger.debug(
         f"no custom run is {no_custom} or only custom is {only_custom}... not running custom setup script"
     )
+
+if test:
+    print(home_dir)

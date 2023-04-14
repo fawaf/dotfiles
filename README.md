@@ -3,18 +3,16 @@
 dotfiles
 ========
 
-my terribibble dotfiles
+horribly terribibble garbage dotfiles
 
 Requirements
 ------------
-* slop
-* fileutils
-* json
+see [requirements.txt](https://github.com/fawaf/dotfiles/blob/main/requirements.txt) file
 
 Install
 -------
-1. clone the repo (`git clone https://github.com/gnowxilef/dotfiles.git PATH_TO_DOTFILES`)
-2. execute `PATH_TO_DOTFILES/setup.rb`
+1. clone the repo (`git clone https://github.com/fawaf/dotfiles.git PATH_TO_DOTFILES`)
+2. execute `PATH_TO_DOTFILES/setup`
 
 ### Config ###
 ```json
