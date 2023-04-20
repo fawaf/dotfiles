@@ -227,7 +227,7 @@ set_host_variables() {
                 PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 https://www.waf.hk/ip)"
             fi
 
-            LOCAL_NAMESERVER="$(\grep nameserver /etc/resolv.conf | tail -1 | awk '{print $NF}')"
+            LOCAL_NAMESERVER="$(\grep nameserver /etc/resolv.conf | head -1 | awk '{print $NF}')"
             if [[ "$PUBLIC_IP" =~ ^[0-9].+ ]]
             then
                 EXTERNALIP="$PUBLIC_IP"

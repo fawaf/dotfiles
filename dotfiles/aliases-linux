@@ -28,6 +28,7 @@ alias rsync="rsync --iconv=utf8,utf8 --archive --verbose --compress --hard-links
 alias scrots="scrot --select --exec 'mv \$f /tmp/'"
 alias t="top -o +%CPU -d 1"
 alias ud="update"
+alias ur="$SUDO ufw reload"
 alias us="$SUDO ufw status"
 alias usn="$SUDO ufw status numbered"
 alias www="cd /var/www"
