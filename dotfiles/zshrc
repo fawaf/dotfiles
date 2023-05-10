@@ -220,8 +220,6 @@ then
     echo_color red "No IP address(es) detected"
 fi
 
-cd ~
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 test $commands[kubectl] && source <(kubectl completion zsh)
@@ -235,3 +233,7 @@ else
   [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 fi
 # }}}
+
+git config --global include.path $HOME/.gitconfig-custom-${HOSTNAME}
+
+cd ~
