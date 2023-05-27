@@ -10,7 +10,15 @@ import waflibs
 
 
 def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
+    logger.debug(f"original kwargs: {kwargs}")
+
+    if "newline" in kwargs and not kwargs["newline"]:
+        kwargs["flush"] = True
+        kwargs["end"] = ""
+        kwargs.pop("newline")
+    logger.debug(f"after kwargs: {kwargs}")
+
+    print(*args, **kwargs, file=sys.stderr)
 
 
 script_dir = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
@@ -120,7 +128,10 @@ if only_custom:
 else:
     os.chdir(dotfiles_dir)
 
-    eprint("updating repo... ", end="")
+    eprint(
+        "updating repo... ",
+        newline=False,
+    )
     cmd = "git pull"
     logger.debug("command to run: {}".format(cmd))
     pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
@@ -131,7 +142,10 @@ else:
     logger.debug("pull stdout: {}".format(pull_stdout))
     logger.debug("pull stderr: {}".format(pull_stderr))
 
-    eprint("running submodule init... ", end="")
+    eprint(
+        "running submodule init... ",
+        newline=False,
+    )
     cmd = "git submodule init"
     logger.debug("command to run: {}".format(cmd))
     init_stdout, init_stderr, _ = waflibs.utils.shell_command(
@@ -142,7 +156,10 @@ else:
     logger.debug("init stderr: {}".format(init_stderr))
     eprint("done.")
 
-    eprint("running submodule sync... ", end="")
+    eprint(
+        "running submodule sync... ",
+        newline=False,
+    )
     cmd = "git submodule sync"
     logger.debug("command to run: {}".format(cmd))
     sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
@@ -153,7 +170,10 @@ else:
     logger.debug("sync stderr: {}".format(sync_stderr))
     eprint("done.")
 
-    eprint("running submodule update... ", end="")
+    eprint(
+        "running submodule update... ",
+        newline=False,
+    )
     cmd = "git submodule update"
     logger.debug("command to run: {}".format(cmd))
     update_stdout, update_stderr, _ = waflibs.utils.shell_command(
@@ -164,7 +184,10 @@ else:
     logger.debug("update stdout: {}".format(update_stdout))
     logger.debug("update stderr: {}".format(update_stderr))
 
-    eprint("setting up dotfiles... ", end="")
+    eprint(
+        "setting up dotfiles... ",
+        newline=False,
+    )
     root_entries = [re for re in dotfiles_dir.glob("*")]
     root_entries.sort()
     for root_entry in root_entries:
@@ -256,8 +279,8 @@ if not no_custom or only_custom:
         eprint(waflibs.utils.divider(char="*", times=77))
 
         eprint(
-            "running custom setup script {}... ".format(custom_setup_script),
-            end="",
+            f"running custom setup script {custom_setup_script}",
+            newline=False,
         )
 
         cmd = [
