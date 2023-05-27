@@ -64,3 +64,6 @@
 [commit]
     template = ~/.git_commit_message
     gpgsign = true
+
+[include]
+    path = /home/waf/.gitconfig-custom

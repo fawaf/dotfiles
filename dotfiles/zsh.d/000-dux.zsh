@@ -1,6 +1,6 @@
 if [[ -z "$DISABLE_DUX" ]]
 then
-  if [[ ! "$TERM" =~ screen  ]]
+  if [[ ! "$TERM" =~ tmux  ]]
   then
     if [[ $(uname -s) == "Darwin" ]] || [[ ! "$(tty)" =~ "tty" ]]
     then

@@ -71,8 +71,10 @@ settermtype() { # Set terminal type
   if type tput > /dev/null
   then # tput is installed
     local terminal_types
-    set -A terminal_types screen-256color-bce screen-256color screen-bce \
-    screen xterm-256color xterm-color xtermc xterm vt100 dumb
+    set -A terminal_types xterm-256color xterm-color xtermc xterm \
+      screen.xterm-256color vscreen-256color-bce screen \
+      screen-256color screen-bce \
+      t100 dumb
 
     # find $TERM in $terminal_types
     while [[ -z ${terminal_types[1]} && ${terminal_types[1]} != "$TERM" ]]
@@ -89,6 +91,7 @@ settermtype() { # Set terminal type
         then
           TERM=$TERMTYPE
           export TERM
+
           break
         fi
       done
@@ -114,12 +117,12 @@ set_titlebar() {
             # print -nR $'\033]0;'$2$'\a'
             echo -ne "\033]0;$(hostname -f)\007"
         ;;
-        # screen*)
-            # set tab window title (%t)
-            # print -nR $'\033k'$(hostname -f)$'\033'\\\
-            # and hardstatus of tab window (%h)
-            # print -nR $'\033];'$(hostname -f)$'\a'
-        # ;;
+        screen*)
+            set tab window title (%t)
+            print -nR $'\033k'$(hostname -f)$'\033'\\\
+              and hardstatus of tab window (%h)
+            print -nR $'\033];'$(hostname -f)$'\a'
+        ;;
         *)
             # all other terminals -- don't do anything
         ;;
