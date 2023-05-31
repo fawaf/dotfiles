@@ -66,4 +66,4 @@
     gpgsign = true
 
 [include]
-    path = /home/waf/.gitconfig-custom
+    path = ~/.gitconfig-custom
