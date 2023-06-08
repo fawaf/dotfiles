@@ -68,63 +68,57 @@ extract() { # Handy Extract Program.
 
 # set term type {{{
 settermtype() { # Set terminal type
-  if type tput > /dev/null
-  then # tput is installed
-    local terminal_types
-    set -A terminal_types xterm-256color xterm-color xtermc xterm \
-      screen.xterm-256color vscreen-256color-bce screen \
-      screen-256color screen-bce \
-      t100 dumb
+  if [[ -n $TERM ]]
+  then
+    if type tput > /dev/null
+    then # tput is installed
+      local terminal_types
+      set -A terminal_types xterm-256color xterm-color xtermc xterm \
+        screen.xterm-256color vscreen-256color-bce screen \
+        screen-256color screen-bce \
+        tmux-256color tmux \
+        t100 dumb
 
-    # find $TERM in $terminal_types
-    while [[ -z ${terminal_types[1]} && ${terminal_types[1]} != "$TERM" ]]
-    do
-      shift terminal_types
-    done
-
-    # as soon as we find a terminal type ncurses recognizes, choose it
-    if [[ -z ${terminal_types[1]} ]]
-    then
-      for TERMTYPE in $terminal_types
+      # find $TERM in $terminal_types
+      while [[ -z ${terminal_types[1]} && ${terminal_types[1]} != "$TERM" ]]
       do
-        if tput -T "$TERMTYPE" longname > /dev/null 2> /dev/null
-        then
-          TERM=$TERMTYPE
-          export TERM
-
-          break
-        fi
+        shift terminal_types
       done
+
+      # as soon as we find a terminal type ncurses recognizes, choose it
+      if [[ -z ${terminal_types[1]} ]]
+      then
+        for TERMTYPE in $terminal_types
+        do
+          if tput -T "$TERMTYPE" longname > /dev/null 2> /dev/null
+          then
+            TERM=$TERMTYPE
+            export TERM
+
+            break
+          fi
+        done
+      fi
     fi
+  else
+    echo "TERM is already set to $TERM... not doing anything"
   fi
 }
 # }}}
 
-# growl {{{
-#growl() { # Growl notifications
-#        echo -ne $'\e]9;'${*}'\007'
-#}
-# }}}
-
-# Titlebars for GNU Screen and Xterm {{{
+# Titlebars {{{
 set_titlebar() {
     # Set either xterm's titlebar or screen's hardstatus.
-    # Usage:    set_titlebar short-title descriptive-title
-    # eg.,      set_titlebar "user@host:~" "[~] vim"
+    # Usage: set_titlebar short-title descriptive-title
+    #     eg. set_titlebar "user@host:~" "[~] vim"
     case $TERM in
-        xterm*)
-            # set a descriptive title for xterms
-            # print -nR $'\033]0;'$2$'\a'
-            echo -ne "\033]0;$(hostname -f)\007"
-        ;;
-        screen*)
-            set tab window title (%t)
-            print -nR $'\033k'$(hostname -f)$'\033'\\\
-              and hardstatus of tab window (%h)
-            print -nR $'\033];'$(hostname -f)$'\a'
+        # set a descriptive title for xterm/screen
+        xterm*|screen*)
+            print -nR $'\033]0;'$2$'\a'
         ;;
         *)
             # all other terminals -- don't do anything
+            echo "nothing to set"
         ;;
     esac
 }

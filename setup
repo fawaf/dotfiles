@@ -278,7 +278,7 @@ if not no_custom or only_custom:
             cmd.append("-vvvvvv")
         if force:
             cmd.append("-ffffff")
-        logger.debug("command to run: {}".format(cmd))
+        logger.debug(f"command to run: `{cmd}`")
         custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(
             cmd, capture_output=False
         )

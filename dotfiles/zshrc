@@ -121,7 +121,7 @@ zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' get-revision true
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' formats " using $PR_BLUE%s$PR_NO_COLOR on $PR_GREEN%b$PR_NO_COLOR branch in working directory $PR_MAGENTA%S$PR_NO_COLOR with status $PR_RED%m%u%c$PR_NO_COLOR"
+zstyle ':vcs_info:*' formats " | vcs: $PR_BLUE%s$PR_NO_COLOR | branch: $PR_GREEN%b$PR_NO_COLOR | vcs dir: $PR_MAGENTA%S$PR_NO_COLOR | status: $PR_RED%m%u%c$PR_NO_COLOR"
 zstyle ':vcs_info:*' actionformats " on $PR_GREEN%b on:%a"
 zstyle ':vcs_info:hg*:*' hgrevformat "$PR_GREEN%r" # only show local revision
 zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
@@ -233,7 +233,5 @@ else
   [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 fi
 # }}}
-
-git config --global include.path $HOME/.gitconfig-custom-${HOSTNAME}
 
 cd ~
