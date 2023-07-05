@@ -266,10 +266,7 @@ if not no_custom or only_custom:
     if custom_setup_script.is_file():
         waflibs.utils.eprint(waflibs.utils.divider(char="*", times=77))
 
-        waflibs.utils.eprint(
-            f"running custom setup script {custom_setup_script}",
-            newline=False,
-        )
+        waflibs.utils.eprint( f"running custom setup script {custom_setup_script}")
 
         cmd = [
             str(custom_setup_script),
@@ -284,8 +281,6 @@ if not no_custom or only_custom:
         )
         logger.debug("custom stdout: {}".format(custom_stdout))
         logger.debug("custom stderr: {}".format(custom_stderr))
-
-        waflibs.utils.eprint("done.")
 else:
     logger.debug(
         f"no custom run is {no_custom} or only custom is {only_custom}... not running custom setup script"
