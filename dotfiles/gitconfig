@@ -1,69 +1,69 @@
 [url "ssh://git@github.com/"]
-    insteadOf = https://github.com/
+	insteadOf = https://github.com/
 
 [core]
-    excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
 [branch]
-    autosetuprebase = always
+	autosetuprebase = always
 
 [alias]
-    aa = add -A
-    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
-    body = log --format=%B
-    br = branch
-    cc = !git clean --force && git checkout -- .
-    ci = commit
-    co = checkout
-    dc = diff --cached
-    di = diff --color-words
-    dif = diff
-    ds = diff --staged
-    last = log -1 HEAD
-    lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
-    lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(bold white)— %an%C(reset)' --abbrev-commit
-    ll = log --graph --format=\"%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)\"
-    r = !_(){ git log --graph --oneline --all -40 --decorate=short --color=always $@ | php -r "$log = Array(); foreach( explode( \"\\n\", trim( shell_exec( \"git log --all --pretty=format:\\\"%h %Cgreen(%cr) %C(bold blue)<%an>%Creset\\\" --abbrev-commit --date=relative -5000\" ) ) ) as $line ) { list( $commit, $decor ) = explode( \" \", $line, 2 ); $log[ $commit ] = $decor; } foreach( explode( \"\\n\", trim( file_get_contents( \"php://stdin\" ) ) ) as $line ) { if( preg_match( \"#([a-f0-9]{7})#\", $line, $m ) ) { echo $line . \" \" . $log[ $m[ 1 ] ] . \"\\n\"; } else { echo $line . \"\\n\"; } }'; } ; _"
-    set = !git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a
-    sl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all --since='90 days ago'
-    ssl = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'
-    st = status
-    summary = show    # Mercurial crib
-    up = !git pull --rebase
+	aa = add -A
+	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+	body = log --format=%B
+	br = branch
+	cc = !git clean --force && git checkout -- .
+	ci = commit
+	co = checkout
+	dc = diff --cached
+	di = diff --color-words
+	dif = diff
+	ds = diff --staged
+	last = log -1 HEAD
+	lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+	lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(bold white)— %an%C(reset)' --abbrev-commit
+	ll = log --graph --format=\"%C(yellow)%h%C(red)%d%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)\"
+	r = !_(){ git log --graph --oneline --all -40 --decorate=short --color=always $@ | php -r "$log = Array(); foreach( explode( \"\\n\", trim( shell_exec( \"git log --all --pretty=format:\\\"%h %Cgreen(%cr) %C(bold blue)<%an>%Creset\\\" --abbrev-commit --date=relative -5000\" ) ) ) as $line ) { list( $commit, $decor ) = explode( \" \", $line, 2 ); $log[ $commit ] = $decor; } foreach( explode( \"\\n\", trim( file_get_contents( \"php://stdin\" ) ) ) as $line ) { if( preg_match( \"#([a-f0-9]{7})#\", $line, $m ) ) { echo $line . \" \" . $log[ $m[ 1 ] ] . \"\\n\"; } else { echo $line . \"\\n\"; } }'; } ; _"
+	set = !git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a
+	sl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all --since='90 days ago'
+	ssl = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'
+	st = status
+	summary = show    # Mercurial crib
+	up = !git pull --rebase
 
 [color]
-    ui = auto
+	ui = auto
 
 [diff]
-    tool = vimdiff
+	tool = vimdiff
 
 [difftool "sourcetree"]
-    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-    path =
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 
 [merge]
-    tool = vimdiff
+	tool = vimdiff
 
 [mergetool "sourcetree"]
-    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
 
 [push]
-    default = current
+	default = current
 
 [pull]
-    rebase = true
+	rebase = true
 
 [init]
-    templatedir = ~/.git_templates
-    defaultBranch = main
+	templatedir = ~/.git_templates
+	defaultBranch = main
 
 [log]
-    decorate = short
+	decorate = short
 
 [commit]
-    template = ~/.git_commit_message
-    gpgsign = true
+	template = ~/.git_commit_message
+	gpgsign = true
 
 [include]
-    path = ~/.gitconfig-custom
+	path = ~/.gitconfig-custom
