@@ -57,6 +57,7 @@ PATH="$ARCHDIR:$HOME/bin:$HOME/.local/bin:/opt/homebrew/sbin:/home/linuxbrew/.li
 SUDO="/usr/bin/sudo"
 SVN_EDITOR="vim"
 TERMINAL="alacritty"
+TF_LOG_PATH="/tmp/terraform.log"
 VISUAL="vim"
 WWW_HOME="https://www.google.com"
 XDG_CONFIG_HOME="$HOME/.config"
@@ -89,9 +90,10 @@ export PAGER
 export PATH
 export SUDO
 export SVN_EDITOR
+export TERMINAL
+export TF_LOG_PATH
 export VISUAL
 export WWW_HOME
-export TERMINAL
 export XDG_CONFIG_HOME
 # }}}
 
