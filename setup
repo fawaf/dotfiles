@@ -9,7 +9,7 @@ import sys
 import waflibs
 
 
-script_dir = waflibs.utils.get_parent_directory(pathlib.Path(__file__))
+script_dir = waflibs.filedir.get_parent_directory(pathlib.Path(__file__))
 dotfiles_dir = pathlib.Path(script_dir, "dotfiles")
 
 parser = argparse.ArgumentParser()
@@ -188,8 +188,8 @@ else:
 
             continue
 
-        root_dest_dir = waflibs.utils.get_parent_directory(
-            waflibs.utils.get_dest_location(
+        root_dest_dir = waflibs.filedir.get_parent_directory(
+            waflibs.filedir.get_dest_location(
                 root_entry,
                 target_dir=home_dir,
             )
@@ -209,28 +209,28 @@ else:
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
             for entry in entries:
-                dest = waflibs.utils.get_dest_location(
+                dest = waflibs.filedir.get_dest_location(
                     entry,
                     target_dir=home_dir,
                 )
                 logger.debug("dest is {}".format(dest))
 
-                waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
+                waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
 
                 logger.debug(f"appending root entry {entry} to dest {dest}")
-                waflibs.utils.copy(entry, dest, dry_run=dry_run)
+                waflibs.filedir.copy(entry, dest, dry_run=dry_run)
 
                 logger.debug(waflibs.utils.divider(char="*", times=66))
         else:
             logger.debug(f"not appending to root dir: {root_entry}")
 
-            dest = waflibs.utils.get_dest_location(
+            dest = waflibs.filedir.get_dest_location(
                 root_entry,
                 target_dir=home_dir,
             )
             logger.debug("dest is {}".format(dest))
 
-            waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
+            waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
 
             d_p_dir = dest.parent
             logger.debug(f"dest parent dir: {d_p_dir}")
@@ -241,20 +241,20 @@ else:
 
                 pathlib.Path(d_p_dir).mkdir()
             logger.debug(f"copying root entry {root_entry} to dest {dest}")
-            waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
+            waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
 
             logger.debug(waflibs.utils.divider(char="*", times=66))
     else:
-        dest = waflibs.utils.get_dest_location(
+        dest = waflibs.filedir.get_dest_location(
             root_entry,
             target_dir=home_dir,
         )
         logger.debug("dest is {}".format(dest))
 
-        waflibs.utils.backup_and_remove(dest, dry_run=dry_run)
+        waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
 
         logger.debug(f"copying root entry {root_entry} to dest {dest}")
-        waflibs.utils.copy(root_entry, dest, dry_run=dry_run)
+        waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
     logger.debug(waflibs.utils.divider(char="-", times=66))
     waflibs.utils.eprint("done.")
 
