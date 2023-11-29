@@ -24,7 +24,7 @@ Host *codeberg*
     IdentityFile ~/.ssh/git_id_rsa
     User git
 
-## DEFAULTS
+# defaults
 Host *
     ChallengeResponseAuthentication no
     ForwardAgent no
@@ -33,7 +33,7 @@ Host *
     IdentitiesOnly yes
     IdentityFile ~/.ssh/id_rsa
     PasswordAuthentication no
-    Port 22
+    Port 2225
     PreferredAuthentications publickey
     PubkeyAuthentication yes
     ServerAliveCountMax 7
