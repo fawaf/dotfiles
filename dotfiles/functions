@@ -389,7 +389,7 @@ source_os_dotfiles() {
 # }}}
 
 # exponential backoff {{{
-expbackoff() {
+exponential_backoff() {
     # Exponential backoff: retries a command upon failure, scaling up the delay between retries.
     # Example: "expbackoff my_command --with --some --args --maybe"
     local MAX_RETRIES=${EXPBACKOFF_MAX_RETRIES:-19} # Max number of retries
@@ -415,4 +415,5 @@ expbackoff() {
         fi
     done
 }
+expbackoff=exponential_backoff
 # }}}
