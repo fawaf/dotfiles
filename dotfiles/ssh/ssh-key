@@ -1,0 +1,56 @@
+#!/bin/bash
+
+usage() {
+  echo "$(basename $0) keyname [-g]"
+  echo "    -g generate new key"
+  echo ""
+  echo "NOTE: DO NOT include the id_rsa suffix, it will be added automatically"
+}
+
+while getopts "hg" opt; do
+    case "$opt" in
+      h)
+        usage
+        exit 0
+        ;;
+      g)
+        GENERATE="true"
+        ;;
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [[ "$#" -lt 1 ]]
+then
+  echo "keyname must be specified"
+  echo ""
+
+  usage
+  exit 1
+fi
+NAME="$1"
+shift
+
+set -x
+
+KEY="${NAME}_id_rsa"
+shift
+
+KEYGEN="ssh-keygen -f $KEY -t ed25519"
+
+if [[ "$GENERATE" == "true" ]]
+then
+  $KEYGEN
+else
+  vim $KEY
+
+  $KEYGEN -p
+fi
+
+./fix-permissions
+
+$KEYGEN -y | tee "$KEY.pub"

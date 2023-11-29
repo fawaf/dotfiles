@@ -3,3 +3,4 @@ append:
     config:
       - powerline
       - systemd
+    ssh:

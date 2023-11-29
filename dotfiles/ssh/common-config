@@ -1,0 +1,51 @@
+# git
+Host *bitbucket*
+    HostName bitbucket.org
+    IdentityFile ~/.ssh/git_id_rsa
+    User git
+
+Host *github*
+    HostName github.com
+    IdentityFile ~/.ssh/git_id_rsa
+    User git
+
+Host *gitlab*
+    HostName gitlab.com
+    IdentityFile ~/.ssh/git_id_rsa
+    User git
+
+Host *git.sr.ht*
+    HostName git.sr.ht
+    IdentityFile ~/.ssh/git_id_rsa
+    User git
+
+Host *codeberg*
+    HostName codeberg.org
+    IdentityFile ~/.ssh/git_id_rsa
+    User git
+
+## DEFAULTS
+Host *
+    ChallengeResponseAuthentication no
+    ForwardAgent no
+    GSSAPIAuthentication no
+    HashKnownHosts no
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_rsa
+    PasswordAuthentication no
+    Port 22
+    PreferredAuthentications publickey
+    PubkeyAuthentication yes
+    ServerAliveCountMax 7
+    ServerAliveInterval 90
+    StrictHostKeyChecking yes
+    TCPKeepAlive yes
+    User waf
+    VerifyHostKeyDNS yes
+    VisualHostKey yes
+
+# Fig ssh integration. Keep at the bottom of this file.
+Match all
+    Include ~/.fig/ssh
+
+Include ~/.orbstack/ssh/config

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [[ "$#" -lt 1 ]]
+then
+  echo "Syntax: $(basename "$0") file"
+  exit 1
+fi
+
+if [[ "$1" == "-v" ]]
+then
+  set -x
+
+  shift
+fi
+
+FILE="$1"
+
+TEMP="$(mktemp)"
+OPENSSL="openssl rsa"
+MD5="openssl md5 -c"
+KEYGEN="ssh-keygen -f $TEMP"
+
+$OPENSSL -in "$FILE" -out "$TEMP"
+
+echo "ec2 priv"
+ssh-keygen -f "$TEMP" -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
+echo ""
+echo "ec2 pub"
+ssh-keygen -f "$FILE".pub -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
+
+echo "==============================================================================="
+
+echo "openssl"
+$OPENSSL -in "$TEMP" | $MD5
+
+echo "==============================================================================="
+
+echo "ssh"
+$KEYGEN -l
+
+echo "==============================================================================="
+
+echo "ssh -> openssl"
+$KEYGEN -e -m PEM | $OPENSSL -RSAPublicKey_in -outform DER | $MD5

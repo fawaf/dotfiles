@@ -18,7 +18,7 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 export FZF_DEFAULT_COMMAND='fd --type f --color=never'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd . $(git rev-parse --show-toplevel) --type d --exclude .git --color=never'
-export FZF_ALT_C_OPTS="--preview 'cd {} && basename {} && tree -C .' --delimiter $OKTA_HOME/ --with-nth 2"
+export FZF_ALT_C_OPTS="--preview 'cd {} && basename {} && tree -C .' --delimiter $HOME/ --with-nth 2"
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
