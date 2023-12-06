@@ -29,7 +29,7 @@ Host *codeberg*
     Port 22
     User git
 
-# defaults
+# defaults for all
 Host *
     ChallengeResponseAuthentication no
     ForwardAgent no
