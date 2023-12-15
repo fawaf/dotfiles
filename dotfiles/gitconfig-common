@@ -8,10 +8,19 @@
 	autosetuprebase = always
 
 [alias]
-	aa = add -A
+	a = add
+	a. = add .
+	aa = add --all
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /' | sort
+	b = branch
 	body = log --format=%B
 	br = branch
+	bsu = !git branch --set-upstream-to=origin/$1
+	bsum = !git branch --set-upstream-to=origin/main main
+	bsums = !git branch --set-upstream-to=origin/master master
+	c = commit
+	ca = commit --all --verbose
+	caa = !git add --all && git commit --all --verbose
 	cc = !git clean --force && git checkout -- .
 	ci = commit
 	co = checkout
