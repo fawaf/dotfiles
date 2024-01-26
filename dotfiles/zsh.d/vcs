@@ -1,0 +1,12 @@
+# Set up vcs_info.
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' disable bzr cdv darcs mtn svk tla
+zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' formats " | vcs: $PR_BLUE%s$PR_NO_COLOR | branch: $PR_GREEN%b$PR_NO_COLOR | vcs dir: $PR_MAGENTA%S$PR_NO_COLOR | status: $PR_RED%m%u%c$PR_NO_COLOR"
+zstyle ':vcs_info:*' actionformats " on $PR_GREEN%b on:%a"
+zstyle ':vcs_info:hg*:*' hgrevformat "$PR_GREEN%r" # only show local revision
+zstyle ':vcs_info:hg*:*' branchformat "$PR_GREEN%b" # only show branch
+#zstyle ':vcs_info:git*:*' actionformats " on ±$PR_GREEN%b|%a"
+#zstyle ':vcs_info:git*:*' formats " on ±$PR_GREEN%b"

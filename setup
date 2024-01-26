@@ -180,8 +180,8 @@ else:
     root_entries.sort()
     for root_entry in root_entries:
         root_entry_name = root_entry.name
-        logger.debug("root level entry name is {}".format(root_entry_name))
-        logger.debug("top level root entry is {}".format(root_entry))
+        logger.debug(f"root entry name is {root_entry_name}")
+        logger.debug(f"root entry is {root_entry}")
 
         if root_entry_name.endswith(("swp",)):
             logger.debug(f"ignoring entry... ends with - {root_entry}")
@@ -203,26 +203,40 @@ else:
 
         logger.debug(f"root entry is dir: {root_entry}")
 
-        if root_entry_name in config["append"]:
+        append_dirs = config["append"]
+        logger.debug(f"append dirs: {append_dirs}")
+        if root_entry_name in append_dirs:
             logger.debug(f"will append to root directory {root_entry}")
 
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
+            logger.debug(f"entries: {entries}")
             for entry in entries:
+                logger.debug(f"append entry is {entry}")
+
                 dest = waflibs.filedir.get_dest_location(
                     entry,
                     target_dir=home_dir,
                 )
-                logger.debug("dest is {}".format(dest))
+                logger.debug(f"append dest is {dest}")
 
-                waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
+                append_dirs_entry = append_dirs[root_entry_name]
+                logger.debug(f"append dirs entry: {append_dirs_entry}")
+                if isinstance(append_dirs_entry, list):
+                    waflibs.filedir.backup(dest, dry_run=dry_run)
 
-                logger.debug(f"appending root entry {entry} to dest {dest}")
-                waflibs.filedir.copy(entry, dest, dry_run=dry_run)
+                    print(entry.name)
+                else:
+                    waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
+
+                    logger.debug(
+                        f"appending root entry {entry} to dest {dest}"
+                    )
+                    waflibs.filedir.copy(entry, dest, dry_run=dry_run)
 
                 logger.debug(waflibs.utils.divider(char="*", times=66))
         else:
-            logger.debug(f"not appending to root dir: {root_entry}")
+            logger.debug(f"not appending {root_entry} to root dir")
 
             dest = waflibs.filedir.get_dest_location(
                 root_entry,
@@ -266,7 +280,9 @@ if not no_custom or only_custom:
     if custom_setup_script.is_file():
         waflibs.utils.eprint(waflibs.utils.divider(char="*", times=77))
 
-        waflibs.utils.eprint( f"running custom setup script {custom_setup_script}")
+        waflibs.utils.eprint(
+            f"running custom setup script {custom_setup_script}"
+        )
 
         cmd = [
             str(custom_setup_script),

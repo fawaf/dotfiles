@@ -1,6 +1,7 @@
 append:
     gnupg:
     config:
+      - lvim
       - powerline
       - systemd
     ssh:

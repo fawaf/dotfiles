@@ -1,0 +1,8 @@
+if [ -f $HOME/.fetchmailrc ]
+then
+    chmod 600 $HOME/.fetchmailrc
+fi
+if [ -f $HOME/.muttrc ]
+then
+    chronic chmod 640 $HOME/.muttrc
+fi

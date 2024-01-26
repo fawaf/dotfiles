@@ -1,0 +1,17 @@
+# colors adapted from Phil!'s Zsh prompt
+autoload -U colors zsh/terminfo
+if [ "$terminfo[colors]" -ge 8 ]
+then
+    colors
+fi
+
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE BLACK PURPLE PINK ORANGE
+do
+    eval PR_$color='%{$bold_color$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+    eval PR_BG_$color='%{$bold_color$bg[${(L)color}]%}'
+    (( count = $count + 1 ))
+done
+
+PR_NO_COLOR="%{$reset_color%}"
+export PR_NO_COLOR
