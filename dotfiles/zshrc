@@ -21,30 +21,6 @@ do
   test -r "$file" && source "$file"
 done
 
-
-# compinit/tab-completion {{{
-autoload -Uz compinit
-compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
-
-zstyle :compinstall filename "/home/waf/.zshrc"
-zmodload zsh/complist
-zstyle ':completion:::::' completer _complete _approximate
-zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
-zstyle ':completion:*:descriptions' format "- %d -"
-zstyle ':completion:*:corrections' format "- %d - (errors %e)"
-zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*:manuals' separate-sections true
-zstyle ':completion:*:manuals.(^1*)' insert-sections true
-zstyle ':completion:*' menu select
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o user,pid,command'
-zstyle ':completion:*' use-cache on
-# case insensitivity, partial matching, substitution
-zstyle ':completion:*' matcher-list 'm:{A-Z}={a-z}' 'm:{a-z}={A-Z}' 'r:|[-._]=* r:|=*' 'l:|=* r:|=*' '+l:|=*'
-# }}}
-
 # menu-select settings {{{
 bindkey '^d' menu-select    # Use ^D for more useful tab completion
 bindkey -M menuselect '^o' accept-and-infer-next-history

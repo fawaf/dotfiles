@@ -116,7 +116,7 @@ if only_custom:
 else:
     os.chdir(dotfiles_dir)
 
-    waflibs.utils.eprint(
+    waflibs.text.eprint(
         "updating repo... ",
         newline=False,
     )
@@ -126,11 +126,11 @@ else:
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
-    waflibs.utils.eprint("done.")
+    waflibs.text.eprint("done.")
     logger.debug("pull stdout: {}".format(pull_stdout))
     logger.debug("pull stderr: {}".format(pull_stderr))
 
-    waflibs.utils.eprint(
+    waflibs.text.eprint(
         "running submodule init... ",
         newline=False,
     )
@@ -142,9 +142,9 @@ else:
     )
     logger.debug("init stdout: {}".format(init_stdout))
     logger.debug("init stderr: {}".format(init_stderr))
-    waflibs.utils.eprint("done.")
+    waflibs.text.eprint("done.")
 
-    waflibs.utils.eprint(
+    waflibs.text.eprint(
         "running submodule sync... ",
         newline=False,
     )
@@ -156,9 +156,9 @@ else:
     )
     logger.debug("sync stdout: {}".format(sync_stdout))
     logger.debug("sync stderr: {}".format(sync_stderr))
-    waflibs.utils.eprint("done.")
+    waflibs.text.eprint("done.")
 
-    waflibs.utils.eprint(
+    waflibs.text.eprint(
         "running submodule update... ",
         newline=False,
     )
@@ -168,11 +168,11 @@ else:
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
-    waflibs.utils.eprint("done.")
+    waflibs.text.eprint("done.")
     logger.debug("update stdout: {}".format(update_stdout))
     logger.debug("update stderr: {}".format(update_stderr))
 
-    waflibs.utils.eprint(
+    waflibs.text.eprint(
         "setting up dotfiles... ",
         newline=False,
     )
@@ -234,7 +234,7 @@ else:
                     )
                     waflibs.filedir.copy(entry, dest, dry_run=dry_run)
 
-                logger.debug(waflibs.utils.divider(char="*", times=66))
+                logger.debug(waflibs.text.divider(char="*", times=66))
         else:
             logger.debug(f"not appending {root_entry} to root dir")
 
@@ -257,7 +257,7 @@ else:
             logger.debug(f"copying root entry {root_entry} to dest {dest}")
             waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
 
-            logger.debug(waflibs.utils.divider(char="*", times=66))
+            logger.debug(waflibs.text.divider(char="*", times=66))
     else:
         dest = waflibs.filedir.get_dest_location(
             root_entry,
@@ -269,8 +269,8 @@ else:
 
         logger.debug(f"copying root entry {root_entry} to dest {dest}")
         waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
-    logger.debug(waflibs.utils.divider(char="-", times=66))
-    waflibs.utils.eprint("done.")
+    logger.debug(waflibs.text.divider(char="-", times=66))
+    waflibs.text.eprint("done.")
 
 if not no_custom or only_custom:
     logger.debug(f"will run custom setup script")
@@ -278,9 +278,9 @@ if not no_custom or only_custom:
     custom_setup_script = pathlib.Path(script_dir, "setup-custom")
     logger.debug(f"custom setup script path: {custom_setup_script}")
     if custom_setup_script.is_file():
-        waflibs.utils.eprint(waflibs.utils.divider(char="*", times=77))
+        waflibs.text.eprint(waflibs.text.divider(char="*", times=77))
 
-        waflibs.utils.eprint(
+        waflibs.text.eprint(
             f"running custom setup script {custom_setup_script}"
         )
 
@@ -293,7 +293,7 @@ if not no_custom or only_custom:
             cmd.append("-ffffff")
         logger.debug(f"command to run: `{cmd}`")
         custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(
-            cmd, capture_output=False
+            cmd,
         )
         logger.debug("custom stdout: {}".format(custom_stdout))
         logger.debug("custom stderr: {}".format(custom_stderr))

@@ -28,8 +28,6 @@ fi
 
 unset LS_COLORS
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # custom login {{{
 if [ -f "$HOME"/.login-custom ]
 then
