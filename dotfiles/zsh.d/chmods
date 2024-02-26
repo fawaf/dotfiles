@@ -1,8 +1,14 @@
+CHMOD="chronic chmod"
+
+if [ -f $HOME/.gnupg ]
+  $CHMOD 700 $HOME/.gnupg
+fi
+
 if [ -f $HOME/.fetchmailrc ]
 then
-    chmod 600 $HOME/.fetchmailrc
+  $CHMOD 600 $HOME/.fetchmailrc
 fi
 if [ -f $HOME/.muttrc ]
 then
-    chronic chmod 640 $HOME/.muttrc
+  $CHMOD 640 $HOME/.muttrc
 fi

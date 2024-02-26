@@ -1,0 +1,6 @@
+bindkey '^d' menu-select    # Use ^D for more useful tab completion
+bindkey -M menuselect '^o' accept-and-infer-next-history
+bindkey -M menuselect h backward-char
+bindkey -M menuselect j down-line-or-history
+bindkey -M menuselect k up-line-or-history
+bindkey -M menuselect l forward-char

@@ -1,0 +1,46 @@
+# use current user@host as the prefix of the current tab title
+TAB_TITLE_PREFIX="${USER}@${REALHOST}:"
+# when at the shell prompt, show a truncated version of the current path (with
+# standard ~ replacement) as the rest of the title.
+TAB_TITLE_PROMPT='`print -Pn "%~" | sed "s:\([~/][^/]*\)/.*/:\1...:"`'
+# when running a command, show the title of the command as the rest of the
+# title (truncate to drop the path to the command)
+TAB_TITLE_EXEC='`case $cmd[1]:t in ; "sudo") echo $cmd[2]:t;; *) echo $cmd[1]:t;; esac`'
+
+# use the current path (with standard ~ replacement) in square brackets as the
+# prefix of the tab window hardstatus.
+TAB_HARDSTATUS_PREFIX='`print -Pn "[%~] "`'
+# when at the shell prompt, use the shell name (truncated to remove the path to
+# the shell) as the rest of the title
+TAB_HARDSTATUS_PROMPT='$SHELL:t'
+# when running a command, show the command name and arguments as the rest of
+# the title
+TAB_HARDSTATUS_EXEC='$cmd'
+
+# maximum size of directory stack
+DIRSTACKSIZE=2000
+# Maximum size of history list
+HISTSIZE=5000
+# Save the last x commands
+SAVEHIST=7000
+# Only ask if completion listing would scroll off screen
+LISTMAX=0
+# Give timing statistics for programs that take longer than a minute to run
+REPORTTIME=60
+# shell history file name
+HISTFILE="$HOME/.zhistory_$HOSTNAME"
+
+unset LS_COLORS
+
+export TAB_TITLE_PREFIX
+export TAB_TITLE_PROMPT
+export TAB_TITLE_EXEC
+export TAB_HARDSTATUS_PREFIX
+export TAB_HARDSTATUS_PROMPT
+export TAB_HARDSTATUS_EXEC
+export HISTFILE
+export SAVEHIST
+export REPORTTIME
+export LISTMAX
+export DIRSTACKSIZE
+export HISTSIZE

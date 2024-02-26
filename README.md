@@ -47,5 +47,17 @@ Contributors
 - https://gist.github.com/jessesquires/d0f3fc99be8208394a450ce86443ce7d
 - sarah riley
 
-## License
+License
+------------
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ffawaf%2Fdotfiles?ref=badge_large)
+
+Links
+----------
+- http://gentoo-wiki.com/Talk:Screen
+- http://www.gentoo.org/doc/en/zsh.xml
+- http://aperiodic.net/phil/prompt/
+- http://www.cs.elte.hu/zsh-manual/zsh_15.html
+- http://www.cs.elte.hu/zsh-manual/zsh_16.html
+- http://grml.org/zsh/zsh-lovers.html
+- http://wiki.archlinux.org/index.php/Zsh
+- http://zshwiki.org/home/examples/compquickstart

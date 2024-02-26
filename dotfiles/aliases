@@ -189,9 +189,7 @@ alias week="date +%Y.%V."
 alias wget="wget --content-disposition"
 alias whcih="which"
 alias wlk="mosh wlk"
-alias zo="$EDITOR $HOME/.zshrc-post && source $HOME/.zshrc"
-alias zp="$EDITOR $HOME/.zsh-prompt"
-alias zr="$EDITOR $HOME/.zshrc-pre && source $HOME/.zshrc"
+alias zp="$EDITOR $HOME/.zsh.custom.d/prompt"
 # }}}
 
 # variables {{{

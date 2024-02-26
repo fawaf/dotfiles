@@ -1,0 +1,1 @@
+umask 022   # Deny group/world rwx by default (multiuser systems)
