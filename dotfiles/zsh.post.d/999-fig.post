@@ -1,7 +1,7 @@
 # Fig post block. Keep at the bottom of this file.
 if [[ "$DISABLE_FIG" == "true" ]]
 then
-  fig quit
+  command -v fig && fig quit
 else
   [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 fi

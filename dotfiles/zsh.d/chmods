@@ -1,6 +1,7 @@
 CHMOD="chronic chmod"
 
 if [ -f $HOME/.gnupg ]
+then
   $CHMOD 700 $HOME/.gnupg
 fi
 
