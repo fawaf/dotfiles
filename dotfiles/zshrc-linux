@@ -1,1 +1,1 @@
-. /usr/share/autojump/autojump.zsh
+[[ -f /usr/share/autojump/autojump.zsh ]] && . /usr/share/autojump/autojump.zsh

@@ -9,6 +9,7 @@ if [ -f $HOME/.fetchmailrc ]
 then
   $CHMOD 600 $HOME/.fetchmailrc
 fi
+
 if [ -f $HOME/.muttrc ]
 then
   $CHMOD 640 $HOME/.muttrc

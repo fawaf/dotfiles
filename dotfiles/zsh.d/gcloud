@@ -1,6 +1,7 @@
 SDK_DIR="$(brew --prefix)/share/google-cloud-sdk"
 
 if [[ -d "$SDK_DIR" ]]
+then
   source "$SDK_DIR/path.zsh.inc"
   source "$SDK_DIR/completion.zsh.inc"
 fi
