@@ -1,6 +1,11 @@
 # rc -- zsh
 # vim:fdm=marker
 
+for file in $HOME/.zsh.functions.d/*
+do
+  test -r "$file" && source "$file"
+done
+
 for file in $HOME/.zsh.pre.d/*
 do
   test -r "$file" && source "$file"
@@ -11,11 +16,7 @@ do
   test -r "$file" && source "$file"
 done
 
-type mesg > /dev/null
-if [ $? -eq 0 ]
-then
-    mesg n
-fi
+command -v mesg && mesg n
 
 rationalise-dot() {
     if [[ "$LBUFFER" == *.. ]]
@@ -28,10 +29,9 @@ rationalise-dot() {
 zle -N rationalise-dot
 bindkey . rationalise-dot
 
-source $HOME/.zsh/k/k.sh
-
 autoload zcalc
 
+source $HOME/.zsh/k/k.sh
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
