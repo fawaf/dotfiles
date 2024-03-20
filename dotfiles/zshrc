@@ -16,7 +16,7 @@ do
   test -r "$file" && source "$file"
 done
 
-command -v mesg && mesg n
+command -v mesg &> /dev/null && mesg n
 
 rationalise-dot() {
     if [[ "$LBUFFER" == *.. ]]

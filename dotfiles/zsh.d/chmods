@@ -1,4 +1,4 @@
-CHMOD="chronic chmod"
+CHMOD="chmod -f"
 
 if [ -f $HOME/.gnupg ]
 then

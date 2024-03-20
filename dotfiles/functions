@@ -106,24 +106,6 @@ settermtype() { # Set terminal type
 }
 # }}}
 
-# Titlebars {{{
-set_titlebar() {
-    # Set either xterm's titlebar or screen's hardstatus.
-    # Usage: set_titlebar short-title descriptive-title
-    #     eg. set_titlebar "user@host:~" "[~] vim"
-    case $TERM in
-        # set a descriptive title for xterm/screen
-        xterm*|screen*)
-            print -nR $'\033]0;'$2$'\a'
-        ;;
-        *)
-            # all other terminals -- don't do anything
-            echo "nothing to set"
-        ;;
-    esac
-}
-# }}}
-
 # get IP {{{
 get_configured_ip() {
     if ! type ifconfig &> /dev/null

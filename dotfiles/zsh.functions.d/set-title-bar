@@ -1,0 +1,16 @@
+set_titlebar() {
+  # Set either xterm's titlebar or screen's hardstatus.
+  # Usage: set_titlebar short-title descriptive-title
+  #     eg. set_titlebar "user@host:~" "[~] vim"
+  case $TERM in
+    # set a descriptive title for xterm/screen
+    xterm*|screen*)
+      print -nR $'\033]0;'$2$'\a'
+      ;;
+    alacritty)
+      ;;
+    *)
+      # don't do anything for all other terminals
+      ;;
+  esac
+}
