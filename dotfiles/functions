@@ -339,37 +339,6 @@ open_command() {
 }
 # }}}
 
-# os-dependent sourcing {{{
-source_os_dotfiles() {
-  TYPE="$1"
-
-  KERNEL_NAME="$(uname)"
-
-  if [[ "$KERNEL_NAME" == "Linux" ]]; then
-      source "$HOME"/."${TYPE}"-linux
-
-      if [[ -f /etc/debian_version ]]; then
-          source "$HOME"/."${TYPE}"-debian
-      fi
-      if [[ -f /etc/SuSE-release ]]; then
-          source "$HOME"/."${TYPE}"-suse
-      fi
-      if [[ -f /etc/redhat-release ]]; then
-          source "$HOME"/."${TYPE}"-fedora
-      fi
-  elif [[ "$KERNEL_NAME" == "Darwin" ]]; then
-      source "$HOME"/."${TYPE}"-darwin
-  elif [[ "$KERNEL_NAME" =~ "CYGWIN_NT" ]]; then
-      source "$HOME"/."${TYPE}"-cygwin
-  fi
-
-  if [ -f "$HOME/.${TYPE}-custom" ]
-  then
-      source "$HOME/.${TYPE}-custom"
-  fi
-}
-# }}}
-
 # exponential backoff {{{
 exponential_backoff() {
     # Exponential backoff: retries a command upon failure, scaling up the delay between retries.

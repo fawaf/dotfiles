@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cmd() {
+  chmod -f $*
+}
+
+if [ -d $HOME/.gnupg ]
+then
+  cmd 700 $HOME/.gnupg
+fi
+
+if [ -f $HOME/.fetchmailrc ]
+then
+  cmd 600 $HOME/.fetchmailrc
+fi
+
+if [ -f $HOME/.muttrc ]
+then
+  cmd 640 $HOME/.muttrc
+fi

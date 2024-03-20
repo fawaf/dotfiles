@@ -1,1 +1,6 @@
-import = ["/Users/felix.wong/.config/alacritty/schemes.toml"]
+import = [
+  "~/.config/alacritty/themes/themes/papercolor_light.toml"
+]
+
+[font]
+size = 14.0

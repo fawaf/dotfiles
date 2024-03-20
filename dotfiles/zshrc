@@ -1,17 +1,12 @@
 # rc -- zsh
 # vim:fdm=marker
 
-for file in $HOME/.zsh.functions.d/*
-do
-  test -r "$file" && source "$file"
-done
-
 for file in $HOME/.zsh.pre.d/*
 do
   test -r "$file" && source "$file"
 done
 
-for file in $HOME/.zsh.d/*
+for file in $HOME/.zsh.conf.d/*
 do
   test -r "$file" && source "$file"
 done

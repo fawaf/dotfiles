@@ -1,17 +1,19 @@
 if [[ -z "$DISABLE_DUX" ]]
 then
-  if [[ "$TERM" =~ xterm  ]]
+  if [[ ! "$(tty)" =~ "tty" ]] || [[ "$(uname -s)" == "Darwin" ]]
   then
-    if [[ $(uname -s) == "Darwin" ]] || [[ ! "$(tty)" =~ "tty" ]]
+    if [[ -z "$TMUX" ]]
     then
         ~/bin/dux || echo "Failed to run Dux (returned with $?)"
+
         echo -n "Exiting in 3 "
         sleep 1
         echo -n "2 "
         sleep 1
         echo -n "1 "
         sleep 1
-        exit
+
+        exit 0
     fi
   fi
 fi

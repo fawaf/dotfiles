@@ -1,0 +1,23 @@
+source_os_dotfiles() {
+  TYPE="$1"
+
+  KERNEL_NAME="$(uname)"
+
+  source "$HOME/.zsh.${KERNEL_NAME}.d/${TYPE}"
+
+  if [[ "$KERNEL_NAME" == "Linux" ]]
+  then
+    if [[ -f /etc/debian_version ]]
+    then
+      source "$HOME/.zsh.debian.d/$TYPE"
+    fi
+    if [[ -f /etc/SuSE-release ]]
+    then
+      source "$HOME/.zsh.suse.d/$TYPE"
+    fi
+    if [[ -f /etc/redhat-release ]]
+    then
+      source "$HOME/.zsh.fedora.d/$TYPE"
+    fi
+  fi
+}

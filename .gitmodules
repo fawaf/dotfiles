@@ -139,3 +139,6 @@
 [submodule "dotfiles/tmux/plugins/tmux-thumbs"]
 	path = dotfiles/tmux/plugins/tmux-thumbs
 	url = https://github.com/fcsonline/tmux-thumbs.git
+[submodule "dotfiles/config/alacritty/themes"]
+	path = dotfiles/config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme.git
