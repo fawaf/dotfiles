@@ -1,0 +1,1 @@
+[[ -f $HOMEBREW_PREFIX/etc/autojump.sh ]] && . $HOMEBREW_PREFIX/etc/autojump.sh
