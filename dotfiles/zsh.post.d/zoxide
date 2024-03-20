@@ -1,0 +1,3 @@
+# aka z
+
+eval "$(zoxide init zsh)"

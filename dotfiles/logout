@@ -5,12 +5,14 @@ then
     ssh-agent -k
 fi
 
+# clear sudo {{{
 SUDO="/usr/bin/sudo"
 if ! type sudo
 then
   $SUDO -k
   $SUDO -K
 fi
+# }}}
 
 rm -f "$HOME"/.bash_history
 
@@ -19,9 +21,11 @@ then
     kdestroy
 fi
 
-if [ -f "$HOME"/.logout-custom ]
-then
-  source "$HOME"/.logout-custom
-fi
+# custom logout {{{
+for file in $HOME/.zsh.custom.logout.d
+do
+  [ -r "$file" ] && source "$file"
+done
+# }}}
 
 clear
