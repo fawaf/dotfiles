@@ -6,23 +6,17 @@ do
   test -r "$file" && source "$file"
 done
 
+for file in $HOME/.zsh.custom.pre.d/*
+do
+  test -r "$file" && source "$file"
+done
+
 for file in $HOME/.zsh.conf.d/*
 do
   test -r "$file" && source "$file"
 done
 
 command -v mesg &> /dev/null && mesg n
-
-rationalise-dot() {
-    if [[ "$LBUFFER" == *.. ]]
-    then
-        LBUFFER+=/..
-    else
-        LBUFFER+=.
-    fi
-}
-zle -N rationalise-dot
-bindkey . rationalise-dot
 
 autoload zcalc
 
@@ -35,7 +29,7 @@ source_os_dotfiles zshrc
 
 if [[ "$HOST_IP" == "" ]]
 then
-    echo_color red "No IP address(es) detected"
+  echo_color red "No IP address(es) detected"
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
@@ -45,6 +39,11 @@ test $commands[kubectl] && source <(kubectl completion zsh)
 cd ~
 
 for file in $HOME/.zsh.post.d/*
+do
+  test -r "$file" && source "$file"
+done
+
+for file in $HOME/.zsh.custom.post.d/*
 do
   test -r "$file" && source "$file"
 done
