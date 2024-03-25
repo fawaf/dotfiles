@@ -1,6 +1,8 @@
 # rc -- zsh
 # vim:fdm=marker
 
+source $HOME/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 for file in $HOME/.zsh.pre.d/*
 do
   test -r "$file" && source "$file"

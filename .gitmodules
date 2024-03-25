@@ -142,3 +142,6 @@
 [submodule "dotfiles/config/alacritty/themes"]
 	path = dotfiles/config/alacritty/themes
 	url = https://github.com/alacritty/alacritty-theme.git
+[submodule "dotfiles/zsh/zsh-autocomplete"]
+	path = dotfiles/zsh/zsh-autocomplete
+	url = https://github.com/marlonrichert/zsh-autocomplete.git

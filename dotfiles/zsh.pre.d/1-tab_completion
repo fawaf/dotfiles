@@ -1,10 +1,12 @@
 autoload -Uz compinit
+# now uses zsh-autocomplete
+#compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
+
 autoload -Uz bashcompinit
 
-compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
+zmodload zsh/complist
 
 zstyle :compinstall filename "/home/waf/.zshrc"
-zmodload zsh/complist
 zstyle ':completion:::::' completer _complete _approximate
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
 zstyle ':completion:*:descriptions' format "- %d -"
