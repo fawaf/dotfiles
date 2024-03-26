@@ -8,10 +8,14 @@ do
   test -r "$file" && source "$file"
 done
 
-for file in $HOME/.zsh.custom.pre.d/*
-do
-  test -r "$file" && source "$file"
+CUST_PRE="$HOME/.zsh.custom.pre.d"
+if [[ -d $CUST_PRE ]]
+then
+  for file in $CUST_PRE/*
+  do
+    test -r "$file" && source "$file"
 done
+fi
 
 for file in $HOME/.zsh.conf.d/*
 do
@@ -45,10 +49,14 @@ do
   test -r "$file" && source "$file"
 done
 
-for file in $HOME/.zsh.custom.post.d/*
-do
-  test -r "$file" && source "$file"
-done
+CUST_POST="$HOME/.zsh.custom.post.d"
+if [[ -d $CUST_POST ]]
+then
+  for file in $CUST_POST/*
+  do
+    test -r "$file" && source "$file"
+  done
+fi
 
 for file in $HOME/.zsh.custom.d/*
 do

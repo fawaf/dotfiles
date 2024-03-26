@@ -1,7 +1,7 @@
 source_os_dotfiles() {
   TYPE="$1"
 
-  KERNEL_NAME="$(uname)"
+  KERNEL_NAME="$(uname | tr '[A-Z]' '[a-z]')"
 
   source "$HOME/.zsh.${KERNEL_NAME}.d/${TYPE}"
 
