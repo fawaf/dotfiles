@@ -1,8 +1,8 @@
-autoload -Uz compinit
 # now uses zsh-autocomplete
+#autoload -Uz compinit
 #compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
 
-autoload -Uz bashcompinit
+#autoload -Uz bashcompinit
 
 zmodload zsh/complist
 

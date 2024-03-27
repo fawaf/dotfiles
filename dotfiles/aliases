@@ -1,5 +1,3 @@
-. $HOME/.functions
-
 # git {{{
 alias ga.="git aa"
 alias ga="git a"

@@ -3,11 +3,6 @@
 
 source $HOME/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-for file in $HOME/.zsh.pre.d/*
-do
-  test -r "$file" && source "$file"
-done
-
 CUST_PRE="$HOME/.zsh.custom.pre.d"
 if [[ -d $CUST_PRE ]]
 then
@@ -16,6 +11,11 @@ then
     test -r "$file" && source "$file"
 done
 fi
+
+for file in $HOME/.zsh.pre.d/*
+do
+  test -r "$file" && source "$file"
+done
 
 for file in $HOME/.zsh.conf.d/*
 do
@@ -49,6 +49,11 @@ do
   test -r "$file" && source "$file"
 done
 
+for file in $HOME/.zsh.custom.d/*
+do
+  test -r "$file" && source "$file"
+done
+
 CUST_POST="$HOME/.zsh.custom.post.d"
 if [[ -d $CUST_POST ]]
 then
@@ -57,8 +62,3 @@ then
     test -r "$file" && source "$file"
   done
 fi
-
-for file in $HOME/.zsh.custom.d/*
-do
-  test -r "$file" && source "$file"
-done

@@ -22,7 +22,7 @@ then
 fi
 
 # custom logout {{{
-for file in $HOME/.zsh.custom.logout.d
+for file in $HOME/.zsh.custom.logout.d/*
 do
   [ -r "$file" ] && source "$file"
 done
