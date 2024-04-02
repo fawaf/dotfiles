@@ -42,8 +42,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 test $commands[kubectl] && source <(kubectl completion zsh)
 
-cd ~
-
 for file in $HOME/.zsh.post.d/*
 do
   test -r "$file" && source "$file"
@@ -62,3 +60,5 @@ then
     test -r "$file" && source "$file"
   done
 fi
+
+cd ~

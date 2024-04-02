@@ -22,10 +22,14 @@ then
 fi
 
 # custom logout {{{
-for file in $HOME/.zsh.custom.logout.d/*
-do
-  [ -r "$file" ] && source "$file"
-done
+CUST_LOGOUT="$HOME/.zsh.custom.logout.d"
+if [[ -d $CUST_LOGOUT ]]
+then
+  for file in $CUST_LOGOUT/*
+  do
+    [ -r "$file" ] && source "$file"
+  done
+fi
 # }}}
 
 clear

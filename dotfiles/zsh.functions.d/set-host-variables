@@ -1,0 +1,98 @@
+set_local_internal_host_variables() {
+  INTERNALIP="NONE"
+  INTERNALHOST="$(hostname -f)"
+  INTERNALDOMAIN="$(hostname -f)"
+  INTERNALHOSTNAME="$(hostname -s)"
+}
+
+set_local_external_host_variables() {
+  EXTERNALIP="NONE"
+  EXTERNALHOST="$(hostname -f)"
+  EXTERNALDOMAIN="$(hostname -f)"
+  EXTERNALHOSTNAME="$(hostname -s)"
+}
+
+set_local_host_variables() {
+  set_local_internal_host_variables
+  set_local_external_host_variables
+}
+
+set_host_variables() {
+  get_configured_ip
+
+  if [[ -z "$CONFIGURED_IP" ]]
+  then
+    set_local_host_variables
+  else
+    if [[ -z "$DISABLE_PUBLIC_IP_CHECK" ]]
+    then
+      IP_URI="https://www.aatf.us/ip"
+      if which curl &> /dev/null
+      then
+        PUBLIC_IP="$(curl -4 --silent --fail --max-time 2 $IP_URI)"
+      else
+        PUBLIC_IP="$(wget -4 --quiet --output-document=- --timeout=2 $IP_URI)"
+      fi
+
+      LOCAL_NAMESERVER="$(\grep nameserver /etc/resolv.conf | head -1 | awk '{print $NF}')"
+      if [[ "$PUBLIC_IP" =~ ^[0-9].+ ]]
+      then
+        EXTERNALIP="$PUBLIC_IP"
+        EXTERNALHOST="$(/usr/bin/dig +short -x "$EXTERNALIP" @"$LOCAL_NAMESERVER" | head -1 | sed 's/\.$//')"
+        EXTERNALHOSTNAME="$(echo "$EXTERNALHOST" | cut -d"." -f1)"
+        EXTERNALDOMAIN="$(echo "$EXTERNALHOST" | cut -d"." -f2-)"
+
+        if [[ -z "$DISABLE_PRIVATE_IP_CHECK" ]]
+        then
+          INTERNALIP="$CONFIGURED_IP"
+          export INTERNALIP
+          if [[ "$EXTERNALIP" == "$INTERNALIP" ]]
+          then
+            INTERNALHOST="$EXTERNALHOST"
+            INTERNALHOSTNAME="$EXTERNALHOSTNAME"
+            INTERNALDOMAIN="$EXTERNALDOMAIN"
+          else
+            INTERNALHOST="$(/usr/bin/dig +short -x "$INTERNALIP" @"$LOCAL_NAMESERVER" | head -1 | sed "s/\.$//")"
+            INTERNALHOSTNAME="$(echo "$INTERNALHOST" | cut -d"." -f1)"
+            INTERNALDOMAIN="$(echo "$INTERNALHOST" | cut -d"." -f2-)"
+          fi
+        else
+          set_local_internal_host_variables
+        fi
+      fi
+    else
+      set_local_external_host_variables
+    fi
+  fi
+
+  HOST="$1"
+  if [[ "$HOST" == "" ]]
+  then
+    if [[ x"$EXTERNALHOST" != x"" ]]
+    then
+      REALHOST="$EXTERNALHOST"
+    elif [[ x"$INTERNALHOST" != x"" ]]
+    then
+      REALHOST="$INTERNALHOST"
+    else
+      REALHOST="$(hostname -f)"
+    fi
+  else
+    REALHOST="$HOST"
+  fi
+
+  HOSTNAME="$(hostname)"
+  FULL_HOSTNAME="$(hostname -f)"
+  export HOSTNAME
+  export FULL_HOSTNAME
+  export INTERNALIP
+  export INTERNALHOST
+  export INTERNALDOMAIN
+  export INTERNALHOSTNAME
+  export EXTERNALIP
+  export EXTERNALHOST
+  export EXTERNALDOMAIN
+  export EXTERNALHOSTNAME
+  export REALHOST
+  export PUBLIC_IP
+}

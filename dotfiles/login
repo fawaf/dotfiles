@@ -29,8 +29,12 @@ fi
 unset LS_COLORS
 
 # custom login {{{
-for file in $HOME/.zsh.custom.login.d/*
-do
-  [ -r "$file" ] && source "$file"
-done
+CUST_LOGIN="$HOME/.zsh.custom.login.d"
+if [[ -d $CUST_LOGIN ]]
+then
+  for file in $CUST_LOGIN/*
+  do
+    [ -r "$file" ] && source "$file"
+  done
+fi
 # }}}
