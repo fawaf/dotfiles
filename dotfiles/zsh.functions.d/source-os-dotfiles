@@ -5,7 +5,7 @@ source_os_dotfiles() {
 
   source "$HOME/.zsh.${KERNEL_NAME}.d/${TYPE}"
 
-  if [[ "$KERNEL_NAME" == "Linux" ]]
+  if [[ "$KERNEL_NAME" == "linux" ]]
   then
     if [[ -f /etc/debian_version ]]
     then
