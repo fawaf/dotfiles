@@ -63,6 +63,12 @@ parser.add_argument(
     action="store_true",
     help="only run custom setup",
 )
+parser.add_argument(
+        "-b",
+        "--stdout",
+    action="store_true",
+    help="print stderr to stdout for easier paging",
+        )
 args = parser.parse_args()
 
 force = args.force
@@ -111,12 +117,20 @@ logger.debug(f"dotfiles dir: {dotfiles_dir}")
 
 logger.debug("args: {}".format(args))
 
+def eprint(*print_args, **kwargs):
+    if args.stdout:
+        logger.debug("stdout arg set to true")
+
+        kwargs["stdout"] = True
+
+    waflibs.text.eprint(*print_args, **kwargs)
+
 if only_custom:
     logger.debug(f"only custom is {only_custom}... ONLY running custom script")
 else:
     os.chdir(dotfiles_dir)
 
-    waflibs.text.eprint(
+    eprint(
         "updating repo... ",
         newline=False,
     )
@@ -126,11 +140,11 @@ else:
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
-    waflibs.text.eprint("done.")
+    eprint("done.")
     logger.debug("pull stdout: {}".format(pull_stdout))
     logger.debug("pull stderr: {}".format(pull_stderr))
 
-    waflibs.text.eprint(
+    eprint(
         "running submodule init... ",
         newline=False,
     )
@@ -142,9 +156,9 @@ else:
     )
     logger.debug("init stdout: {}".format(init_stdout))
     logger.debug("init stderr: {}".format(init_stderr))
-    waflibs.text.eprint("done.")
+    eprint("done.")
 
-    waflibs.text.eprint(
+    eprint(
         "running submodule sync... ",
         newline=False,
     )
@@ -156,9 +170,9 @@ else:
     )
     logger.debug("sync stdout: {}".format(sync_stdout))
     logger.debug("sync stderr: {}".format(sync_stderr))
-    waflibs.text.eprint("done.")
+    eprint("done.")
 
-    waflibs.text.eprint(
+    eprint(
         "running submodule update... ",
         newline=False,
     )
@@ -168,11 +182,11 @@ else:
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
-    waflibs.text.eprint("done.")
+    eprint("done.")
     logger.debug("update stdout: {}".format(update_stdout))
     logger.debug("update stderr: {}".format(update_stderr))
 
-    waflibs.text.eprint(
+    eprint(
         "setting up dotfiles... ",
         newline=False,
     )
@@ -270,7 +284,7 @@ else:
         logger.debug(f"copying root entry {root_entry} to dest {dest}")
         waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
     logger.debug(waflibs.text.divider(char="-", times=66))
-    waflibs.text.eprint("done.")
+    eprint("done.")
 
 if not no_custom or only_custom:
     logger.debug(f"will run custom setup script")
@@ -278,9 +292,9 @@ if not no_custom or only_custom:
     custom_setup_script = pathlib.Path(script_dir, "setup-custom")
     logger.debug(f"custom setup script path: {custom_setup_script}")
     if custom_setup_script.is_file():
-        waflibs.text.eprint(waflibs.text.divider(char="*", times=77))
+        eprint(waflibs.text.divider(char="*", times=77))
 
-        waflibs.text.eprint(
+        eprint(
             f"running custom setup script {custom_setup_script}"
         )
 
