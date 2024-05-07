@@ -1,5 +1,0 @@
-HOMEBREW_BIN="/opt/homebrew/bin/brew"
-if [[ -f "$HOMEBREW_BIN" ]]
-then
-  eval "$($HOMEBREW_BIN shellenv)"
-fi
