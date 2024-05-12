@@ -1,27 +1,41 @@
 # setup brew {{{
-HOMEBREW_BIN="/opt/homebrew/bin/brew"
+if [[ $(uname) == "Linux" ]]
+then
+  HOMEBREW_BIN="/home/linuxbrew/.linuxbrew/bin/brew"
+else
+  HOMEBREW_BIN="/opt/homebrew/bin/brew"
+fi
+
 if [[ -f "$HOMEBREW_BIN" ]]
 then
   eval "$($HOMEBREW_BIN shellenv)"
 fi
 # }}}
 
+# functions {{{
 for file in $HOME/.zsh.functions.d/*
 do
   test -r "$file" && source "$file"
 done
+# }}}
 
+# exports {{{
 EXPORTS_FILE="$HOME/.zsh.conf.d/exports"
 if [[ -f $EXPORTS_FILE ]]
 then
   source $EXPORTS_FILE
 fi
+# }}}
 
+# aliases {{{
 ALIASES_FILE="$HOME/.zsh.conf.d/aliases"
 if [[ -f $ALIASES_FILE ]]
 then
   source $ALIASES_FILE
 fi
+# }}}
 
+# source {{{
 source $HOME/.zsh.conf.d/exports-with-aliases
 source $HOME/.zsh.conf.d/aliases-with-exports
+# }}}
