@@ -2,5 +2,13 @@
 
 if [[ -z "$DISABLE_ZOXIDE" ]]
 then
-  eval "$(zoxide init zsh)"
+  if [[ $(command -v zoxide) ]]
+  then
+    eval "$(zoxide init zsh)"
+
+    for pth in $cdpath
+    do
+      zoxide add "$pth"
+    done
+  fi
 fi
