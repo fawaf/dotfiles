@@ -3,3 +3,5 @@ generate-ip() {
 }
 
 alias gen-ip=generate-ip
+alias rand-ip=generate-ip
+alias random-ip=generate-ip
