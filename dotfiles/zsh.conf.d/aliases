@@ -61,9 +61,17 @@ alias gst="git status"
 alias rgh="rm --recursive --force --verbose .git/hooks && git init"
 # }}}
 
+# custom {{{
+CUST_DIR="$HOME/.zsh.custom.d"
+
+alias ba="$EDITOR $CUST_DIR/aliases && source $CUST_DIR/aliases"
+alias ee="$EDITOR $CUST_DIR/exports && source $CUST_DIR/exports"
+alias esc="$EDITOR $HOME/.ssh/config"
+alias zp="$EDITOR $CUST_DIR/prompt"
+# }}}
+
 # common {{{
 alias a="alias"
-alias ba="$EDITOR $HOME/.aliases-custom && source $HOME/.aliases && source $HOME/.aliases-custom"
 alias brewup="brewupdate && brewupgrade"
 alias brewupdate="brew update"
 alias brewupgrade="brew upgrade"
@@ -83,9 +91,7 @@ alias diff="diff --unified"
 alias dir="ls"
 alias e="exit"
 alias eb="exec bash"
-alias ee="$EDITOR $HOME/.exports-custom && source $HOME/.exports-custom"
 alias es="exec startx"
-alias esc="$EDITOR $HOME/.ssh/config"
 alias ez="exec zsh"
 alias fcx="fortune | cowsay | xclip"
 alias fiel="file"
@@ -189,7 +195,6 @@ alias week="date +%Y.%V."
 alias wget="wget --content-disposition"
 alias whcih="which"
 alias wlk="mosh wlk"
-alias zp="$EDITOR $HOME/.zsh.custom.d/prompt"
 # }}}
 
 # variables {{{

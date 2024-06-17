@@ -36,6 +36,7 @@ Host *
     GSSAPIAuthentication no
     HashKnownHosts no
     IdentitiesOnly yes
+    IdentityFile ~/.ssh/id_ed25519
     IdentityFile ~/.ssh/id_rsa
     PasswordAuthentication no
     Port 2225
