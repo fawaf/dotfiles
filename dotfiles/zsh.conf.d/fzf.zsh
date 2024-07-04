@@ -1,4 +1,6 @@
-for file in $HOME/.fzf.zsh /usr/share/fzf/shell/key-bindings.zsh
+command_exists fzf && source <(fzf --zsh)
+
+for file in /usr/share/fzf/shell/key-bindings.zsh
 do
   [ -f $file ] && source $file
 done

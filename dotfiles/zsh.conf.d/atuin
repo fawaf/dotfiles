@@ -1,1 +1,1 @@
-command -v atuin &> /dev/null && eval "$(atuin init zsh)"
+command_exists atuin &> /dev/null && eval "$(atuin init zsh)"

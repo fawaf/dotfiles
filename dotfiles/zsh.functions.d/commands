@@ -1,0 +1,5 @@
+command_exists() {
+  cmd=$1
+
+  command -v $cmd > /dev/null
+}

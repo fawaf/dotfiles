@@ -2,7 +2,7 @@
 
 if [[ -z "$DISABLE_ZOXIDE" ]]
 then
-  if [[ $(command -v zoxide) ]]
+  if command_exists zoxide
   then
     eval "$(zoxide init zsh)"
 

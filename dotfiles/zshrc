@@ -25,7 +25,7 @@ do
   test -r "$file" && source "$file"
 done
 
-command -v mesg &> /dev/null && mesg n
+command_exists mesg &> /dev/null && mesg n
 
 autoload zcalc
 
