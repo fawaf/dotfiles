@@ -91,7 +91,7 @@ if test:
 else:
     real_config_file = config_file
 
-logger = waflibs.log.create_logger(args)
+logger = waflibs.log.logger(args).get_logger()
 verbose = args.verbose
 
 logger.debug(f"config file from arg: {config_file}")
