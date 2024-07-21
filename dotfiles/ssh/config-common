@@ -1,4 +1,11 @@
 # git
+Host *gitea*
+    HostName gitea.com
+    IdentityFile ~/.ssh/git_id_ed25519
+    IdentityFile ~/.ssh/git_id_rsa
+    Port 22
+    User git
+
 Host *bitbucket*
     HostName bitbucket.org
     IdentityFile ~/.ssh/git_id_ed25519
