@@ -1,7 +1,4 @@
 if [[ -z "$POWERLINE_SETUP" ]]
 then
   powerline-config tmux setup
-
-  POWERLINE_SETUP="true"
-  export POWERLINE_SETUP
 fi
