@@ -1,4 +1,1 @@
-if [[ -z "$POWERLINE_SETUP" ]]
-then
-  powerline-config tmux setup
-fi
+powerline-config tmux setup
