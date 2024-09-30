@@ -31,8 +31,8 @@ $PR_MAGENTA%#$PR_NO_COLOR "
     RPROMPT="$RPS1"
     export RPROMPT
 
-    if [ -f $HOME/.zsh-prompt ]
+    if [ -f $HOME/.zsh.custom.d/prompt ]
     then
-        source $HOME/.zsh-prompt
+        source $HOME/.zsh.custom.d/prompt
     fi
 }
