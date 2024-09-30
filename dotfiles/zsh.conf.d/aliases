@@ -67,7 +67,7 @@ CUST_DIR="$HOME/.zsh.custom.d"
 alias ba="$EDITOR $CUST_DIR/aliases && source $CUST_DIR/aliases"
 alias ee="$EDITOR $CUST_DIR/exports && source $CUST_DIR/exports"
 alias esc="$EDITOR $HOME/.ssh/config"
-alias zp="$EDITOR $CUST_DIR/prompt"
+alias zp="$EDITOR $CUST_DIR/prompt && source $CUST_DIR/prompt"
 # }}}
 
 # common {{{
