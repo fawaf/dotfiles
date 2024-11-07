@@ -136,7 +136,7 @@ else:
     )
     cmd = "git pull"
     logger.debug("command to run: {}".format(cmd))
-    pull_stdout, pull_stderr, _ = waflibs.utils.shell_command(
+    pull_stdout, pull_stderr, _ = waflibs.shell.command(
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
@@ -150,7 +150,7 @@ else:
     )
     cmd = "git submodule init"
     logger.debug("command to run: {}".format(cmd))
-    init_stdout, init_stderr, _ = waflibs.utils.shell_command(
+    init_stdout, init_stderr, _ = waflibs.shell.command(
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
@@ -164,7 +164,7 @@ else:
     )
     cmd = "git submodule sync"
     logger.debug("command to run: {}".format(cmd))
-    sync_stdout, sync_stderr, _ = waflibs.utils.shell_command(
+    sync_stdout, sync_stderr, _ = waflibs.shell.command(
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
@@ -178,7 +178,7 @@ else:
     )
     cmd = "git submodule update"
     logger.debug("command to run: {}".format(cmd))
-    update_stdout, update_stderr, _ = waflibs.utils.shell_command(
+    update_stdout, update_stderr, _ = waflibs.shell.command(
         cmd.split(" "),
         cwd=dotfiles_dir,
     )
@@ -306,7 +306,7 @@ if not no_custom or only_custom:
         if force:
             cmd.append("-ffffff")
         logger.debug(f"command to run: `{cmd}`")
-        custom_stdout, custom_stderr, _ = waflibs.utils.shell_command(
+        custom_stdout, custom_stderr, _ = waflibs.shell.command(
             cmd,
         )
         logger.debug("custom stdout: {}".format(custom_stdout))
