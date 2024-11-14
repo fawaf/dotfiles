@@ -6,6 +6,10 @@
 
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
+
+[delta]
+	navigate = true
 
 [branch]
 	autosetuprebase = always
@@ -45,6 +49,7 @@
 	pfix = "!git fixup && git push -f"
 	r = !_(){ git log --graph --oneline --all -40 --decorate=short --color=always $@ | php -r "$log = Array(); foreach( explode( \"\\n\", trim( shell_exec( \"git log --all --pretty=format:\\\"%h %Cgreen(%cr) %C(bold blue)<%an>%Creset\\\" --abbrev-commit --date=relative -5000\" ) ) ) as $line ) { list( $commit, $decor ) = explode( \" \", $line, 2 ); $log[ $commit ] = $decor; } foreach( explode( \"\\n\", trim( file_get_contents( \"php://stdin\" ) ) ) as $line ) { if( preg_match( \"#([a-f0-9]{7})#\", $line, $m ) ) { echo $line . \" \" . $log[ $m[ 1 ] ] . \"\\n\"; } else { echo $line . \"\\n\"; } }'; } ; _"
 	reb = reb = "!git fetch --prune && git rebase -i origin/$(git default-branch)"
+	res = !git restore --staged %* && git restore $*
 	rbms = rebase --interactive origin/master
 	set = !git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a
 	sl = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all --since='90 days ago'
