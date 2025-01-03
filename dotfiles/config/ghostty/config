@@ -1,1 +1,2 @@
 theme = light:seoulbones_light,dark:arcoiris
+confirm-close-surface = true
