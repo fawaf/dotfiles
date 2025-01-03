@@ -1,2 +1,6 @@
 theme = light:seoulbones_light,dark:arcoiris
 confirm-close-surface = true
+
+# keybinds
+keybind = ctrl+k=reset
+keybind = cmd+k=reset
