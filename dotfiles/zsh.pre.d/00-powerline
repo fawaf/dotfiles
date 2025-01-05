@@ -1,1 +1,4 @@
-powerline-config tmux setup
+if env | grep --quiet TMUX
+then
+  powerline-config tmux setup
+fi
