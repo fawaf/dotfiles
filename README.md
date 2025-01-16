@@ -15,14 +15,18 @@ Install
 2. execute `PATH_TO_DOTFILES/setup`
 
 ### Config ###
-```json
-{
-  "append": [
-    "gnupg",
-    "config",
-    "other_dir"
-  ]
-}
+```yaml
+---
+not_dotfiles:
+  - somedir
+append:
+  config:
+  gnupg:
+  other_dir:
+    - append
+    - in
+    - these
+    - subdirs
 ```
 - "append" - directories to not overwrite, but only append to
 
