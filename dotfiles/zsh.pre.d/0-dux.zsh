@@ -2,7 +2,7 @@ if [[ -z "$DISABLE_DUX" ]]
 then
   if [[ "$UID" -ne 0 ]]
   then
-    if ! env | grep --quiet SSH
+    if ! env | grep --quiet SSH_C
     then
       if [[ ! "$(tty)" =~ "tty" ]] || [[ "$(uname -s)" == "Darwin" ]]
       then

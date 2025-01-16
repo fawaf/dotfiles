@@ -1,32 +1,66 @@
 #!/bin/bash
 
-if [[ "$#" -lt 1 ]]
+usage() {
+  cat <<EOF
+Syntax: $(basename "$0") [args] filename
+  -v - verbose
+EOF
+}
+
+while getopts "vhf:" opt
+do
+  case $opt in
+    f)
+      FILE="$OPTARG"
+      ;;
+    v)
+      VERBOSE="true"
+      ;;
+    h|?)
+      usage
+
+      exit 0
+      ;;
+    *)
+      usage
+
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [[ -z "$FILE" ]]
 then
-  echo "Syntax: $(basename "$0") file"
-  exit 1
+  usage
+
+  exit 22
 fi
 
-if [[ "$1" == "-v" ]]
+if [[ "$VERBOSE" == "true" ]]
 then
   set -x
-
-  shift
 fi
 
-FILE="$1"
+log() {
+  [[ "$VERBOSE" == "true" ]] && $*
+}
 
+TEMP_PUTTY="$(mktemp)"
 TEMP="$(mktemp)"
 OPENSSL="openssl rsa"
 MD5="openssl md5 -c"
 KEYGEN="ssh-keygen -f $TEMP"
 
-$OPENSSL -in "$FILE" -out "$TEMP"
+puttygen $FILE -O private-openssh -o $TEMP_PUTTY
+log cat $TEMP_PUTTY
+$OPENSSL -in $TEMP_PUTTY -out "$TEMP"
 
 echo "ec2 priv"
-ssh-keygen -f "$TEMP" -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
+ssh-keygen -f "$TEMP" -e -m PKCS8 | openssl pkey -pubin -outform DER | $MD5
 echo ""
 echo "ec2 pub"
-ssh-keygen -f "$FILE".pub -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
+ssh-keygen -f "$FILE".pub -e -m PKCS8 | openssl pkey -pubin -outform DER | $MD5
 
 echo "==============================================================================="
 

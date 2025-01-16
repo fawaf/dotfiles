@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -x
+
+if [[ $(uname) == "Darwin" ]]
+then
+  CHMOD="chmod -v"
+else
+  CHMOD="chmod --verbose"
+fi
+
+FILE_PERM="600"
+EXEC_PERM="700"
+
+$CHMOD $FILE_PERM config *.yml *.yaml
+
+$CHMOD $EXEC_PERM . fix-permissions

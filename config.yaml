@@ -1,9 +1,10 @@
 not_dotfiles:
   - Library
 append:
-  gnupg:
   config:
     - lvim
     - powerline
     - systemd
+  gnupg:
+  kube:
   ssh:
