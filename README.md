@@ -12,6 +12,7 @@ see [requirements.txt](https://github.com/fawaf/dotfiles/blob/main/requirements.
 Install
 -------
 1. clone the repo (`git clone https://github.com/fawaf/dotfiles.git PATH_TO_DOTFILES`)
+1. copy `config.yaml.example` to `config.yaml` and edit as needed
 2. execute `PATH_TO_DOTFILES/setup`
 
 ### Config ###
