@@ -1,0 +1,9 @@
+custom_setup_scripts:
+  - path/to/script
+not_dotfiles:
+  - Library
+append:
+  somedir:
+    - subdirdir
+    - anothersubdir
+  anotherdir:

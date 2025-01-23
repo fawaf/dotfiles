@@ -1,3 +1,5 @@
 setup-custom
+/config.yaml
+!/config.yaml.example
 
 *.bak

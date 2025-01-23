@@ -4,6 +4,8 @@ usage() {
   cat <<EOF
 Syntax: $(basename "$0") [args] filename
   -v - verbose
+  -f - file
+  -h - halp please
 EOF
 }
 

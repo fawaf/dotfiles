@@ -289,28 +289,29 @@ else:
 if not no_custom or only_custom:
     logger.debug(f"will run custom setup script")
 
-    custom_setup_script = pathlib.Path(script_dir, "setup-custom")
-    logger.debug(f"custom setup script path: {custom_setup_script}")
-    if custom_setup_script.is_file():
-        eprint(waflibs.text.divider(char="*", times=77))
+    for custom_setup_script in config["custom_setup_scripts"]:
+        custom_setup_script = pathlib.Path(os.path.expandvars(custom_setup_script))
+        logger.debug(f"custom setup script path: {custom_setup_script}")
+        if custom_setup_script.is_file():
+            eprint(waflibs.text.divider(char="*", times=77))
 
-        eprint(
-            f"running custom setup script {custom_setup_script}"
-        )
+            eprint(
+                f"running custom setup script {custom_setup_script}"
+            )
 
-        cmd = [
-            str(custom_setup_script),
-        ]
-        if verbose:
-            cmd.append("-vvvvvv")
-        if force:
-            cmd.append("-ffffff")
-        logger.debug(f"command to run: `{cmd}`")
-        custom_stdout, custom_stderr, _ = waflibs.shell.command(
-            cmd,
-        )
-        logger.debug("custom stdout: {}".format(custom_stdout))
-        logger.debug("custom stderr: {}".format(custom_stderr))
+            cmd = [
+                str(custom_setup_script),
+            ]
+            if verbose:
+                cmd.append("-vvvvvv")
+            if force:
+                cmd.append("-ffffff")
+            logger.debug(f"command to run: `{cmd}`")
+            custom_stdout, custom_stderr, _ = waflibs.shell.command(
+                cmd,
+            )
+            logger.debug("custom stdout: {}".format(custom_stdout))
+            logger.debug("custom stderr: {}".format(custom_stderr))
 else:
     logger.debug(
         f"no custom run is {no_custom} or only custom is {only_custom}... not running custom setup script"
