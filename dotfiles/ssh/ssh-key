@@ -3,8 +3,6 @@
 usage() {
   echo "$(basename $0) keyname [-g]"
   echo "    -g generate new key"
-  echo ""
-  echo "NOTE: DO NOT include the id_rsa suffix, it will be added automatically"
 }
 
 while getopts "hg" opt; do
@@ -22,7 +20,7 @@ while getopts "hg" opt; do
         ;;
     esac
 done
-shift $((OPTIND-1))
+shift $((OPTIND - 1))
 
 if [[ "$#" -lt 1 ]]
 then
@@ -32,13 +30,10 @@ then
   usage
   exit 1
 fi
-NAME="$1"
+KEY="$1"
 shift
 
 set -x
-
-KEY="${NAME}_id_rsa"
-shift
 
 KEYGEN="ssh-keygen -f $KEY -t ed25519"
 
