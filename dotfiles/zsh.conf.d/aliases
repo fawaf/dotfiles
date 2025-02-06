@@ -164,6 +164,7 @@ alias rmf="rm --recursive --force --verbose"
 alias rs="rails server"
 alias rssl="ruby -r 'openssl' -e 'puts OpenSSL::X509::DEFAULT_CERT_FILE'"
 alias s="screen -r"
+alias sa="source $HOME/.keychain/$HOSTNAME-sh"
 alias scp='echo "use rsync!\n\nrsync"'
 alias scpi="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias screen="screen -t $(hostname)"
