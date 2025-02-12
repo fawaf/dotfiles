@@ -5,7 +5,7 @@
         "function": "powerline.segments.common.time.date",
         "name": "time",
         "args": {
-          "format": "%H:%M:%S",
+          "format": "%A %Y-%m-%d %H:%M:%S",
           "istime": true
         }
       }
