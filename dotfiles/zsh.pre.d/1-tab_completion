@@ -1,6 +1,6 @@
 # now uses zsh-autocomplete
 #autoload -Uz compinit
-#compinit -d $HOME/.zsh/zcompdump.$HOSTNAME
+#compinit -d $HOME/.zsh/zcompdump.$SHORTHOST
 
 #autoload -Uz bashcompinit
 

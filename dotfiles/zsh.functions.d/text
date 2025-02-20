@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# echo with color {{{
+echo_color() {
+  MESSAGE="$2"
+
+  case "$1" in
+    red)
+      echo "[1;31m${MESSAGE}[0;0m"
+      ;;
+    green)
+      echo "[1;32m${MESSAGE}[0;0m"
+      ;;
+  esac
+}
+# }}}

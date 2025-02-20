@@ -83,6 +83,8 @@ set_host_variables() {
 
   HOSTNAME="$(hostname)"
   FULL_HOSTNAME="$(hostname -f)"
+  SHORTHOST="$(hostname -s)"
+
   export HOSTNAME
   export FULL_HOSTNAME
   export INTERNALIP
@@ -95,4 +97,5 @@ set_host_variables() {
   export EXTERNALHOSTNAME
   export REALHOST
   export PUBLIC_IP
+  export SHORTHOST
 }
