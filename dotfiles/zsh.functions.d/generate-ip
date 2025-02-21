@@ -1,7 +1,0 @@
-generate-ip() {
-  echo $((RANDOM % 255)).$((RANDOM % 255)).$((RANDOM % 255)).$((RANDOM % 255))
-}
-
-alias gen-ip=generate-ip
-alias rand-ip=generate-ip
-alias random-ip=generate-ip

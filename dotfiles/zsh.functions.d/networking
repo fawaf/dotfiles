@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# get IP {{{
+get_configured_ip() {
+  if ! type ifconfig &> /dev/null
+  then
+    return
+  fi
+
+  if [[ -n "$OVERRIDE_NIC" ]]
+  then
+    NIC="$OVERRIDE_NIC"
+  elif [[ -n "$OVERRIDE_INTERFACE" ]]
+  then
+    NIC="$OVERRIDE_INTERFACE"
+  else
+    if uname -a | \grep grsec &> /dev/null
+    then
+      return
+    elif uname -a | \grep --ignore-case cygwin &> /dev/null
+    then
+      HOST_IP="$(ifconfig | \grep --ignore-case "ipv4 address"| head -1 | cut -d: -f2 | cut -d"(" -f1 | cut -d" " -f2)"
+    elif uname -a | \grep --ignore-case darwin &> /dev/null
+    then
+      IFACE_PREFIX="en"
+      for i in {0..9}
+      do
+        if ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet active && ifconfig "$IFACE_PREFIX""$i" 2> /dev/null | \grep --word-regexp --quiet inet
+        then
+          HOST_IP="$(ifconfig "$IFACE_PREFIX""$i" | \grep --word-regexp inet | tail -1 | awk '{print $2}')"
+
+          break
+        fi
+      done
+    elif uname -a | \grep --ignore-case linux &> /dev/null
+    then
+      NIC="$(ip addr | \grep --invert-match NO-CARRIER | \grep -E "\<.*,?UP,?.*\>" | \grep --invert-match lo | head -1 | cut -d" " -f2 | cut -d":" -f1)"
+    else
+      echo "Unsupported OS while determining host IP"
+    fi
+  fi
+  INTERFACE="$NIC"
+  export INTERFACE
+
+  if [[ -n "${NIC}" ]]
+  then
+    HOST_IP="$(ifconfig "${NIC}" | \grep -w inet | \grep -v 127.0 | head -n 1 | awk '{print $2}')"
+  fi
+
+  if [[ -z "$HOST_IP" ]]
+  then
+    return
+  else
+    if [[ "$(echo "$HOST_IP" | \grep -c addr)" -eq 1 ]]
+    then
+      CONFIGURED_IP="$(echo "$HOST_IP" | cut -d : -f 2)"
+    else
+      CONFIGURED_IP="$HOST_IP"
+    fi
+
+    export HOST_IP
+    export CONFIGURED_IP
+  fi
+}
+# }}}
+
+# generate random ip {{{
+octet() {
+   shuf --head-count 1 \
+   --input-range 0-255
+}
+
+generate-ip() {
+  echo $(octet).$(octet).$(octet).$(octet)
+}
+
+alias gen-ip=generate-ip
+alias rand-ip=generate-ip
+alias random-ip=generate-ip
+# }}}
