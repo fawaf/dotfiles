@@ -30,7 +30,7 @@ precmd() {
     then
       set_prompt
     else
-      PS1="$(date) %n@$(hostname -s):%~%# "
+      PS1="$(date) %n@$(hostname -s):%3~%# "
       RPS1=""
     fi
 }
