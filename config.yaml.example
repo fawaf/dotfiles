@@ -1,9 +1,12 @@
 custom_setup_scripts:
   - path/to/script
+  - $ENV_VARS/also/work
 not_dotfiles:
   - Library
 append:
   somedir:
     - subdirdir
     - anothersubdir
-  anotherdir:
+  gnupg:
+  ssh:
+  config:
