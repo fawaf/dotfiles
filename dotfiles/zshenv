@@ -10,6 +10,16 @@ if [[ -f "$HOMEBREW_BIN" ]]
 then
   eval "$($HOMEBREW_BIN shellenv)"
 fi
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+chmod go-w '/opt/homebrew/share'
+chmod -R go-w '/opt/homebrew/share/zsh'
 # }}}
 
 # functions {{{
