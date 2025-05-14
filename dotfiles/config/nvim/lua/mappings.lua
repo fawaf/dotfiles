@@ -3,7 +3,13 @@
 
 local mode = require("consts").modes
 
-vim.g.mapleader = " "
+vim.g.mapleader = ","
+vim.keymap.set(mode.normal, ";", ":", { noremap = true })
+vim.keymap.set(mode.normal, ":", ";", { noremap = true })
+vim.keymap.set(mode.visual, ";", ":", { noremap = true })
+vim.keymap.set(mode.visual, ":", ";", { noremap = true })
+vim.keymap.set(mode.command_line, ";", ":", { noremap = true })
+vim.keymap.set(mode.command_line, ":", ";", { noremap = true })
 
 -- Pane navigation
 vim.keymap.set(mode.normal, "<C-j>", "<C-w><C-j>", { noremap = true })

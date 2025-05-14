@@ -33,6 +33,9 @@ append:
 
 Contributors
 ------------
+### [solidiquis](https://github.com/solidiquis/dotfiles) ###
+- nvim configs
+
 ### [csivanich](https://github.com/csivanich/dotfiles) ###
 - tmux configs
 - i3 configs
