@@ -3,7 +3,7 @@ opt.encoding = "utf-8"
 opt.expandtab = true
 opt.nu = true
 opt.errorbells = false
-opt.wrap = false
+opt.wrap = true
 opt.smartcase = true
 opt.swapfile = false
 opt.backup = false
@@ -16,6 +16,7 @@ opt.ts = 2
 opt.sts = 2
 opt.fillchars = {eob = " "}
 opt.cmdheight = 0
+opt.ignorecase = true
 
 vim.o.laststatus = 0
 vim.o.signcolumn = "yes:1"

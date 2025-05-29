@@ -4,6 +4,8 @@
 local mode = require("consts").modes
 
 vim.g.mapleader = ","
+
+-- map semicolon to command mode
 vim.keymap.set(mode.normal, ";", ":", { noremap = true })
 vim.keymap.set(mode.normal, ":", ";", { noremap = true })
 vim.keymap.set(mode.visual, ";", ":", { noremap = true })
