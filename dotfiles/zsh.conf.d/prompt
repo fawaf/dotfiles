@@ -11,7 +11,7 @@ set_prompt() {
 
     PS1BEGIN="%(!.$PR_BG_RED$PR_YELLOW%n$PR_NO_COLOR$PR_WHITE.$PR_GREEN%n$PR_NO_COLOR)@$PR_BLUE$REALHOST"
     export PS1BEGIN
-    PS1END="${PR_NO_COLOR} | dir: $PR_RED%~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
+    PS1END="${PR_NO_COLOR} | dir: $PR_RED%15~$PR_NO_COLOR${vcs_info_msg_0_}$PR_NO_COLOR
 $PR_MAGENTA%#$PR_NO_COLOR "
     export PS1END
 

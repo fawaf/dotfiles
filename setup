@@ -64,11 +64,11 @@ parser.add_argument(
     help="only run custom setup",
 )
 parser.add_argument(
-        "-b",
-        "--stdout",
+    "-b",
+    "--stdout",
     action="store_true",
     help="print stderr to stdout for easier paging",
-        )
+)
 args = parser.parse_args()
 
 force = args.force
@@ -91,7 +91,7 @@ if test:
 else:
     real_config_file = config_file
 
-logger = waflibs.log.logger(args).get_logger()
+logger = waflibs.log.logger(args, log_format="simple").get_logger()
 verbose = args.verbose
 
 logger.debug(f"config file from arg: {config_file}")
@@ -117,6 +117,7 @@ logger.debug(f"dotfiles dir: {dotfiles_dir}")
 
 logger.debug("args: {}".format(args))
 
+
 def eprint(*print_args, **kwargs):
     if args.stdout:
         logger.debug("stdout arg set to true")
@@ -124,6 +125,7 @@ def eprint(*print_args, **kwargs):
         kwargs["stdout"] = True
 
     waflibs.text.eprint(*print_args, **kwargs)
+
 
 if only_custom:
     logger.debug(f"only custom is {only_custom}... ONLY running custom script")
@@ -209,9 +211,7 @@ else:
             )
         )
         if not root_dest_dir.is_dir():
-            logger.debug(
-                f"{root_dest_dir} directory does not exist, creating..."
-            )
+            logger.debug(f"{root_dest_dir} directory does not exist, creating...")
 
             root_dest_dir.mkdir()
 
@@ -220,7 +220,7 @@ else:
         append_dirs = config["append"]
         logger.debug(f"append dirs: {append_dirs}")
         if root_entry_name in append_dirs:
-            logger.debug(f"will append to root directory {root_entry}")
+            logger.debug(f"found {root_entry_name} in append dirs... will append to root directory")
 
             entries = [e for e in root_entry.glob("*")]
             entries.sort()
@@ -237,15 +237,25 @@ else:
                 append_dirs_entry = append_dirs[root_entry_name]
                 logger.debug(f"append dirs entry: {append_dirs_entry}")
                 if isinstance(append_dirs_entry, list):
+                    logger.debug(f"append dirs entry is list")
+
                     waflibs.filedir.backup(dest, dry_run=dry_run)
 
-                    print(entry.name)
+                    entry_name = entry.name
+                    logger.debug(f"entry: {entry_name}")
+                    if entry_name in append_dirs_entry:
+                        logger.debug(f"found {entry_name} in append dirs")
+                        for e in entry.glob("*"):
+                            waflibs.filedir.copy(e, dest, dir_exist=True, dry_run=dry_run)
+                    else:
+                        logger.debug("not a append dir subdir")
+                        waflibs.filedir.copy(entry, dest, dir_exist=True, dry_run=dry_run)
                 else:
+                    logger.debug(f"append dirs entry is NOT list")
+
                     waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
 
-                    logger.debug(
-                        f"appending root entry {entry} to dest {dest}"
-                    )
+                    logger.debug(f"appending root entry {entry} to dest {dest}")
                     waflibs.filedir.copy(entry, dest, dry_run=dry_run)
 
                 logger.debug(waflibs.text.divider(char="*", times=66))
@@ -273,6 +283,8 @@ else:
 
             logger.debug(waflibs.text.divider(char="*", times=66))
     else:
+        logger.debug("for loop encountered break")
+
         dest = waflibs.filedir.get_dest_location(
             root_entry,
             target_dir=home_dir,
@@ -295,9 +307,7 @@ if not no_custom or only_custom:
         if custom_setup_script.is_file():
             eprint(waflibs.text.divider(char="*", times=77))
 
-            eprint(
-                f"running custom setup script {custom_setup_script}"
-            )
+            eprint(f"running custom setup script {custom_setup_script}")
 
             cmd = [
                 str(custom_setup_script),

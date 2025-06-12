@@ -39,6 +39,10 @@ local function on_attach(bufnr)
   vim.keymap.set(Mode.normal, ">", inc_width, opts)
   vim.keymap.set(Mode.normal, "<", dec_width, opts)
   vim.keymap.set(Mode.normal, "<", dec_width, opts)
+  vim.keymap.set(Mode.command_line, "<Up>", api.node.navigate.sibling.prev, opts)
+  vim.keymap.set(Mode.command_line, "<Down>", api.node.navigate.sibling.next, opts)
+  vim.keymap.set(Mode.command_line, "<Left>", api.node.navigate.parent, opts)
+  vim.keymap.set(Mode.command_line, "<Right>", api.tree.change_root_to_node, opts)
 end
 
 require("nvim-tree").setup({
