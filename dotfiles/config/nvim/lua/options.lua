@@ -17,6 +17,18 @@ opt.sts = 2
 opt.fillchars = {eob = " "}
 opt.cmdheight = 0
 opt.ignorecase = true
+opt.undodir = "/tmp/nvim-undo/"
 
 vim.o.laststatus = 0
 vim.o.signcolumn = "yes:1"
+vim.opt.backupdir = "/tmp/nvim-backup/"
+
+-- Add timestamp as extension for backup files
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('timestamp_backupext', { clear = true }),
+  desc = 'Add timestamp to backup extension',
+  pattern = '*',
+  callback = function()
+    vim.opt.backupext = '-' .. vim.fn.strftime('%Y%m%d%H%M')
+  end,
+})
