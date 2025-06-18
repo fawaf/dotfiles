@@ -1,6 +1,22 @@
 local packer_user_config = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
 local info_log = require("utils").info
 
+--[[
+When editing a file, always jump to the last known cursor position.
+Don't do it when the position is invalid or when inside an event handler
+(happens when dropping a file on gvim).
+Also don't do it when the mark is in the first line, that is the default
+position when opening a file.
+]]
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line('$') then
+      vim.cmd.exe('"normal! g`\\""')
+    end
+  end,
+})
+
 -- Make NvimTree bufferline align tabs
 vim.api.nvim_create_autocmd('BufWinLeave', {
   pattern = '*',
@@ -75,4 +91,14 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
   callback = function()
     vim.opt.cmdheight = 0
   end
+})
+
+-- Add timestamp as extension for backup files
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('timestamp_backupext', { clear = true }),
+  desc = 'Add timestamp to backup extension',
+  pattern = '*',
+  callback = function()
+    vim.opt.backupext = '-' .. vim.fn.strftime('%Y%m%d%H%M')
+  end,
 })

@@ -1,4 +1,5 @@
 local opt = vim.opt
+
 opt.encoding = "utf-8"
 opt.expandtab = true
 opt.nu = true
@@ -18,17 +19,13 @@ opt.fillchars = {eob = " "}
 opt.cmdheight = 0
 opt.ignorecase = true
 opt.undodir = "/tmp/nvim-undo/"
-
-vim.o.laststatus = 0
-vim.o.signcolumn = "yes:1"
-vim.opt.backupdir = "/tmp/nvim-backup/"
-
--- Add timestamp as extension for backup files
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('timestamp_backupext', { clear = true }),
-  desc = 'Add timestamp to backup extension',
-  pattern = '*',
-  callback = function()
-    vim.opt.backupext = '-' .. vim.fn.strftime('%Y%m%d%H%M')
-  end,
-})
+opt.ruler = true
+opt.laststatus = 0
+opt.signcolumn = "yes:1"
+opt.backupdir = "/tmp/nvim-backup/"
+opt.cmdheight = 2
+opt.laststatus = 2
+opt.winwidth = 90
+opt.textwidth = 99
+opt.smartindent = true
+opt.cursorline = true
