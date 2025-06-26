@@ -82,12 +82,6 @@ export OPENSSL_CONF
 # }}}
 
 # {{{ paths
-to_path() {
-  local the_path=${1-}
-
-  printf %s $the_path "${@/#/:}"
-}
-
 cdpath=(
   $HOME
   .
@@ -175,6 +169,20 @@ export INFOPATH
 #export LIBRARY_PATH
 export MANPATH
 export PATH
+# }}}
+
+# kubernetes {{{
+kubeconfig=(
+  $HOME/.kube/config
+)
+
+for c in $HOME/.kube/*.yaml
+do
+  kubeconfig+=($c)
+done
+  
+KUBECONFIG="$(to_path $kubeconfig)"
+export KUBECONFIG
 # }}}
 
 # Replace instances of \W with \w in prompt functions below to get display of full path name.

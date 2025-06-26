@@ -1,0 +1,7 @@
+# {{{ array to path
+to_path() {
+  local the_path=${1-}
+
+  printf %s $the_path "${@/#/:}"
+}
+# }}}
