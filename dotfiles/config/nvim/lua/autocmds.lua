@@ -102,3 +102,12 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     vim.opt.backupext = '-' .. vim.fn.strftime('%Y%m%d%H%M')
   end,
 })
+
+-- set text width
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'set textwidth for all files',
+  pattern = 'text',
+  callback = function()
+    vim.opt_local.textwidth = require('consts').text_width
+  end,
+})

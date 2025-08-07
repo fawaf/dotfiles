@@ -17,7 +17,8 @@ local consts = {
     terminal = "t"
   },
   runtime_path = runtime_path,
-  plugin_versions_filename = "plugin_versions"
+  plugin_versions_filename = "plugin_versions",
+  text_width = 88
 }
 
 return consts

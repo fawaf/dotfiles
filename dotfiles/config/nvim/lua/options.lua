@@ -29,3 +29,5 @@ opt.winwidth = 90
 opt.textwidth = 99
 opt.smartindent = true
 opt.cursorline = true
+
+opt.colorcolumn = tostring(require('consts').text_width + 1)

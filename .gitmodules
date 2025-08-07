@@ -67,75 +67,9 @@
 [submodule "dotfiles/zsh/k"]
 	path = dotfiles/zsh/k
 	url = https://github.com/supercrabtree/k.git
-[submodule "dotfiles/vim/pack/colors/start/papercolor-theme"]
-	path = dotfiles/vim/pack/colors/start/papercolor-theme
-	url = https://github.com/NLKNguyen/papercolor-theme.git
 [submodule "dotfiles/tmux/plugins"]
 	path = dotfiles/tmux/plugins/tmux-thumbs
 	url = https://github.com/fcsonline/tmux-thumbs.git
-[submodule "dotfiles/vim/pack/tools/start/nerdtree"]
-	path = dotfiles/vim/pack/tools/start/nerdtree
-	url = https://github.com/preservim/nerdtree.git
-[submodule "dotfiles/vim/pack/search/start/command-t"]
-	path = dotfiles/vim/pack/search/start/command-t
-	url = https://github.com/wincent/command-t.git
-[submodule "dotfiles/vim/pack/indenting/start/detectindent"]
-	path = dotfiles/vim/pack/indenting/start/detectindent
-	url = https://github.com/ciaranm/detectindent.git
-[submodule "dotfiles/vim/pack/indenting/start/buftabs"]
-	path = dotfiles/vim/pack/indenting/start/buftabs
-	url = https://github.com/vim-scripts/buftabs.git
-[submodule "dotfiles/vim/pack/git/start/vim-fugitive"]
-	path = dotfiles/vim/pack/git/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
-[submodule "dotfiles/vim/pack/tools/start/vim-endwise"]
-	path = dotfiles/vim/pack/tools/start/vim-endwise
-	url = https://github.com/tpope/vim-endwise.git
-[submodule "dotfiles/vim/pack/tools/start/syntastic"]
-	path = dotfiles/vim/pack/tools/start/syntastic
-	url = https://github.com/vim-syntastic/syntastic.git
-[submodule "dotfiles/vim/pack/terraform/start/vim-terraform"]
-	path = dotfiles/vim/pack/terraform/start/vim-terraform
-	url = https://github.com/hashivim/vim-terraform.git
-[submodule "dotfiles/vim/pack/i3/start/i3-vim-syntax"]
-	path = dotfiles/vim/pack/i3/start/i3-vim-syntax
-	url = https://github.com/PotatoesMaster/i3-vim-syntax.git
-[submodule "dotfiles/vim/pack/ruby/start/vim-chef"]
-	path = dotfiles/vim/pack/ruby/start/vim-chef
-	url = https://github.com/vadv/vim-chef.git
-[submodule "dotfiles/vim/pack/indenting/start/indentLine"]
-	path = dotfiles/vim/pack/indenting/start/indentLine
-	url = https://github.com/Yggdroot/indentLine.git
-[submodule "dotfiles/vim/pack/git/start/vim-git"]
-	path = dotfiles/vim/pack/git/start/vim-git
-	url = https://github.com/tpope/vim-git.git
-[submodule "dotfiles/vim/pack/tools/start/vim-sensible"]
-	path = dotfiles/vim/pack/tools/start/vim-sensible
-	url = https://github.com/tpope/vim-sensible.git
-[submodule "dotfiles/vim/pack/ruby/start/vim-ruby"]
-	path = dotfiles/vim/pack/ruby/start/vim-ruby
-	url = https://github.com/vim-ruby/vim-ruby.git
-[submodule "dotfiles/vim/pack/tools/start/vim-surround"]
-	path = dotfiles/vim/pack/tools/start/vim-surround
-	url = https://github.com/tpope/vim-surround.git
-[submodule "dotfiles/vim/pack/search/start/ctrlp.vim"]
-	path = dotfiles/vim/pack/search/start/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim.git
-[submodule "dotfiles/vim/pack/go/start/vim-go"]
-	path = dotfiles/vim/pack/go/start/vim-go
-	url = https://github.com/fatih/vim-go.git
-[submodule "dotfiles/vim/pack/tools/start/vim-swap"]
-	path = dotfiles/vim/pack/tools/start/vim-swap
-	url = https://github.com/machakann/vim-swap.git
-[submodule "dotfiles/vim/pack/git/start/vim-github-colorscheme"]
-	path = dotfiles/vim/pack/git/start/vim-github-colorscheme
-	url = https://github.com/endel/vim-github-colorscheme.git
-[submodule "dotfiles/vim/pack/ansible/start/ansible-vim"]
-	path = dotfiles/vim/pack/ansible/start/ansible-vim
-	url = https://github.com/pearofducks/ansible-vim.git
-[submodule "dotfiles/vim/pack/markdown/start/vim-markdown"]
-	path = dotfiles/vim/pack/markdown/start/vim-markdown
-	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "dotfiles/tmux/plugins/tmux-thumbs"]
 	path = dotfiles/tmux/plugins/tmux-thumbs
 	url = https://github.com/fcsonline/tmux-thumbs.git
