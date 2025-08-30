@@ -1,7 +1,9 @@
 unsetopt HIST_BEEP
 
-setopt AUTO_CD              # Skip `cd' when changing to a directory
 setopt AUTO_LIST            # Show possible matches if completion can't figure out what to do
+setopt LIST_AMBIGUOUS       # but only after inserting the common prefix
+
+setopt AUTO_CD              # Skip `cd' when changing to a directory
 setopt AUTO_PUSHD           # cd uses directory stack
 setopt AUTO_RESUME          # Commands without arguments will first try to resume suspended programs of the same name
 setopt EXTENDED_GLOB

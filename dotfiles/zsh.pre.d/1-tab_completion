@@ -1,12 +1,9 @@
 # now uses zsh-autocomplete
-#autoload -Uz compinit
-#compinit -d $HOME/.zsh/zcompdump.$SHORTHOST
-
-#autoload -Uz bashcompinit
 
 zmodload zsh/complist
 
 zstyle :compinstall filename "/home/waf/.zshrc"
+
 zstyle ':completion:::::' completer _complete _approximate
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX + $#SUFFIX) / 3 )) )'
 zstyle ':completion:*:descriptions' format "- %d -"
@@ -20,5 +17,8 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o user,pid,command'
 zstyle ':completion:*' use-cache on
-# case insensitivity, partial matching, substitution
-zstyle ':completion:*' matcher-list 'm:{A-Z}={a-z}' 'm:{a-z}={A-Z}' 'r:|[-._]=* r:|=*' 'l:|=* r:|=*' '+l:|=*'
+zstyle ':completion:*' matcher-list 'm:{A-Z}={a-z}' 'm:{a-z}={A-Z}' 'r:|[-._]=* r:|=*' 'l:|=* r:|=*' '+l:|=*' # case insensitivity, partial matching, substitution
+
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes # all Tab widgets
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes # all history widgets
+zstyle ':autocomplete:menu-search:*' insert-unambiguous yes # ^S
