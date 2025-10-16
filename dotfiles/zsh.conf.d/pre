@@ -33,5 +33,8 @@ precmd() {
       PS1="$(date) %n@$(hostname -s):%3~%# "
       RPS1=""
     fi
+
+    THEME_MODE="$(defaults read -g AppleInterfaceStyle 2> /dev/null)"
+    export THEME_MODE
 }
 # }}}

@@ -123,6 +123,7 @@ local plugins = {
       "wnkz/monoglow.nvim",
       "nvim-lualine/lualine.nvim",
       "jesseleite/nvim-noirbuddy",
+      "eliseshaffer/darklight.nvim",
     },
     config = get_setup("colorscheme"),
   },
