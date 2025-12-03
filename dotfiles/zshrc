@@ -6,6 +6,11 @@ then
   source $HOME/.zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
 
+for file in $HOME/.zsh.pre.d/*
+do
+  test -r "$file" && source "$file"
+done
+
 CUST_PRE="$HOME/.zsh.custom.pre.d"
 if [[ -d $CUST_PRE ]]
 then
@@ -15,12 +20,12 @@ then
 done
 fi
 
-for file in $HOME/.zsh.pre.d/*
+for file in $HOME/.zsh.conf.d/*
 do
   test -r "$file" && source "$file"
 done
 
-for file in $HOME/.zsh.conf.d/*
+for file in $HOME/.zsh.custom.d/*
 do
   test -r "$file" && source "$file"
 done
@@ -46,11 +51,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 test $commands[kubectl] && source <(kubectl completion zsh)
 
 for file in $HOME/.zsh.post.d/*
-do
-  test -r "$file" && source "$file"
-done
-
-for file in $HOME/.zsh.custom.d/*
 do
   test -r "$file" && source "$file"
 done
