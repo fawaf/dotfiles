@@ -132,11 +132,11 @@ MANPATH="$(to_path $manpath)"
 
 path=(
   $ARCHDIR
-  $GOPATH/bin
   $HOME/bin
   $HOMEBREW_PREFIX/bin
   $HOMEBREW_PREFIX/sbin
   $HOME/.cargo/bin
+  $GOPATH/bin
   $HOME/.krew/bin
   $HOME/.local/android/platform-tools
   $HOME/.local/android/tools
