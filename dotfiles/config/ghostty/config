@@ -1,6 +1,9 @@
 theme = light:Seoulbones Light,dark:arcoiris
 confirm-close-surface = true
 
+window-height = 52
+window-width = 188
+
 # keybinds
 keybind = ctrl+k=reset
 keybind = cmd+k=reset
