@@ -1,10 +1,11 @@
 # setup brew {{{
 if [[ $(uname) == "Linux" ]]
 then
-  HOMEBREW_BIN="/home/linuxbrew/.linuxbrew/bin/brew"
+  HOMEBREW="/home/linuxbrew/.linuxbrew"
 else
-  HOMEBREW_BIN="/opt/homebrew/bin/brew"
+  HOMEBREW="/opt/homebrew/
 fi
+HOMEBREW_BIN="$HOMEBREW/bin/brew"
 
 if [[ -f "$HOMEBREW_BIN" ]]
 then
@@ -15,8 +16,9 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 fi
 
-chmod go-w '/opt/homebrew/share'
-chmod -R go-w '/opt/homebrew/share/zsh'
+HOMEBREW_SHARE="$HOMEBREW/share"
+chmod go-w "$HOMEBREW_SHARE"
+chmod -R go-w "$HOMEBREW_SHARE/zsh"
 # }}}
 
 # functions {{{
