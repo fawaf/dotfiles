@@ -3,7 +3,7 @@ if [[ $(uname) == "Linux" ]]
 then
   HOMEBREW="/home/linuxbrew/.linuxbrew"
 else
-  HOMEBREW="/opt/homebrew/
+  HOMEBREW="/opt/homebrew/"
 fi
 HOMEBREW_BIN="$HOMEBREW/bin/brew"
 
