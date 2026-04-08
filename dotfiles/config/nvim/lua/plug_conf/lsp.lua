@@ -1,21 +1,25 @@
 require("mason").setup()
 
-local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-lspconfig["bashls"].setup({})
-lspconfig["clangd"].setup({})
-lspconfig["docker_compose_language_service"].setup({})
-lspconfig["dockerls"].setup({})
-lspconfig["lemminx"].setup({})
-lspconfig["lua_ls"].setup({})
-lspconfig["marksman"].setup({})
-lspconfig["pyright"].setup({})
-lspconfig["solargraph"].setup({})
-lspconfig["yamlls"].setup({})
-lspconfig["clangd"].setup({})
+local function lspsetup(server, opts)
+  vim.lsp.config(server, opts or {})
+  vim.lsp.enable(server)
+end
 
-lspconfig["gopls"].setup({
+lspsetup("bashls")
+lspsetup("clangd")
+lspsetup("docker_compose_language_service")
+lspsetup("dockerls")
+lspsetup("lemminx")
+lspsetup("lua_ls")
+lspsetup("marksman")
+lspsetup("pyright")
+lspsetup("solargraph")
+lspsetup("yamlls")
+lspsetup("clangd")
+
+lspsetup("gopls", {
   settings = {
     gopls = {
       env = {
@@ -25,13 +29,13 @@ lspconfig["gopls"].setup({
   }
 })
 
-lspconfig["sqlls"].setup({
+lspsetup("sqlls", {
   root_dir = function(fname)
-    return lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
+    return lspsetup.util.find_git_ancestor(fname) or vim.fn.getcwd()
   end,
 })
 
-lspconfig["rust_analyzer"].setup({
+lspsetup("rust_analyzer", {
   settings = {
     ["rust-analyzer"] = {
       diagnostics = {
@@ -45,20 +49,20 @@ lspconfig["rust_analyzer"].setup({
 })
 
 -- web-frontend
-lspconfig["tailwindcss"].setup({})
-lspconfig["vtsls"].setup({})
-lspconfig["cssls"].setup({
+lspsetup("tailwindcss")
+lspsetup("vtsls")
+lspsetup("cssls", {
   capabilities = cmp_nvim_lsp.default_capabilities(),
 })
 -- Need the following: npm i -g vscode-langservers-extracted
-lspconfig["html"].setup({
+lspsetup("html", {
   capabilities = cmp_nvim_lsp.default_capabilities(),
   filetypes = { "html", "htmldjango" },
 })
 
 -- This is actually very annoying
 -- lsp_signature UI tweaks
---require("lsp_signature").setup({
+--require("lsp_signature", {
   --bind = true,
   --timer_interval = 350,
   --handler_opts = {
@@ -74,15 +78,19 @@ vim.diagnostic.config {
     virtual_lines = false
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
+vim.lsp.handlers.hover = function()
+  vim.lsp.handlers.hover({
     border = "single"
-  }
-)
+  })
+end
+vim.lsp.config('*', {
+  handlers = {
+    ["textDocument/hover"] = vim.lsp.handlers.hover,
+}})
 
 -- Key bindings to be set after LSP attaches to buffer
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  group = vim.api.nvim_create_augroup("Userlspsetup", {}),
   callback = function(ev)
     vim.api.nvim_buf_set_option(ev.buf, "omnifunc", "v:lua.vim.lsp.omnifunc")
     vim.api.nvim_buf_set_option(ev.buf, "formatexpr", "v:lua.vim.lsp.formatexpr()")
