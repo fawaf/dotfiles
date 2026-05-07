@@ -1,3 +1,7 @@
+# OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+Include ~/.orbstack/ssh/config
+
 # git
 Host *gitea*
     HostName gitea.com
@@ -65,5 +69,3 @@ Host *
 # Fig ssh integration. Keep at the bottom of this file.
 Match all
     Include ~/.fig/ssh
-
-Include ~/.orbstack/ssh/config
