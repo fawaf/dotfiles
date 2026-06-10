@@ -3,8 +3,17 @@
 export LANG="en_US.UTF-8"
 
 # {{{ remove part files
-rm -f "$HOME"/Downloads/*.part
-rm -f "$HOME"/Desktop/*.part
+for dir in Downloads Desktop
+do
+  files="$HOME/$dir/*.part"
+  for file in $files
+  do
+    if [[ -f "$file" ]]
+    then
+      rm -f $file
+    fi
+  done
+done
 # }}}
 
 # {{{ garbage checks
