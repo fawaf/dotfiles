@@ -1,7 +1,7 @@
 alias a="alias"
 alias brewup="brewupdate && brewupgrade"
 alias brewupdate="brew update"
-alias brewupgrade="brew upgrade"
+alias brewupgrade="brew upgrade --yes"
 alias c="clear"
 alias cat="bat"
 alias catn="cat --number"
