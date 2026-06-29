@@ -3,3 +3,4 @@
 --ignore-directory=is:.terragrunt-cache
 --ignore-directory=is:cdk.out
 --ignore-directory=is:.helm-charts
+--ignore-directory=is:.claude/worktrees
