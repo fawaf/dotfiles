@@ -47,6 +47,7 @@ PAGER="most"
 SUDO="/usr/bin/sudo"
 SVN_EDITOR="nvim"
 TERMINAL="alacritty"
+TF_LOG="debug"
 TF_LOG_PATH="/tmp/terraform.log"
 VISUAL="nvim"
 WWW_HOME="https://www.google.com"
@@ -74,6 +75,7 @@ export PAGER
 export SUDO
 export SVN_EDITOR
 export TERMINAL
+export TF_LOG
 export TF_LOG_PATH
 export VISUAL
 export WWW_HOME
