@@ -1,6 +1,8 @@
 local DISABLE_HIGHLIGHT_THRESHOLD = 30000
 
-require("nvim-treesitter.configs").setup({
+local configs = require("nvim-treesitter.configs")
+
+configs.setup({
   ensure_installed = {
     "bash",
     "c",

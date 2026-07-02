@@ -83,14 +83,9 @@ local plugins = {
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
     config = get_setup("treesitter"),
-  },
-
-  -- Treesitter playground
-  {
-    "nvim-treesitter/playground",
-    build = ":TSInstall query",
   },
 
   -- Extended glyphs
