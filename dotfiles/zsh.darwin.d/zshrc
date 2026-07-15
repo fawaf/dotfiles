@@ -1,1 +1,1 @@
-zoxide import autojump "$HOME/Library/autojump/autojump.txt" --merge
+zoxide import autojump --merge
