@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find *)",
+      "Bash(grep *)",
+      "WebFetch(domain:github.com)",
+      "Bash(go build *)",
+      "Bash(wc *)",
+      "Bash(fd *)",
+      "Bash(kluctl render *)",
+      "Bash(terraform validate *)",
+      "Bash(which *)",
+      "Bash(git diff *)",
+      "Bash(go vet *)",
+      "Bash(go get *)",
+      "Bash(/Users/waf/go/bin/kluctl render *)",
+      "Bash(/Users/waf/go/bin/terraform validate *)",
+      "Read(//private/tmp/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "WebFetch(domain:releases.hashicorp.com)",
+      "mcp__claude_ai_Linear__get_issue",
+      "mcp__5b1263e4-2b1d-4cee-a64e-64bea7879d44__get_file_metadata",
+      "mcp__5b1263e4-2b1d-4cee-a64e-64bea7879d44__search_files",
+      "mcp__5b1263e4-2b1d-4cee-a64e-64bea7879d44__read_file_content",
+      "mcp__5b1263e4-2b1d-4cee-a64e-64bea7879d44__download_file_content"
+    ]
+  },
+  "spinnerVerbs": {
+    "mode": "append",
+    "verbs": [
+      "Sifting",
+      "Ingesting",
+      "Downsampling",
+      "Analyzing",
+      "Aggregating"
+    ]
+  },
+  "theme": "light",
+  "model": "claude-fable-5[1m]"
+}
