@@ -6,8 +6,12 @@
       "Bash(wc *)",
       "Bash(fd *)",
       "Bash(which *)",
+      "Bash(cat *)",
+      "Bash(ls *)",
 
       "Bash(git * diff *)",
+      "Bash(git * log *)",
+      "Bash(git * ls*)",
 
       "Bash(go vet *)",
       "Bash(go get *)",
