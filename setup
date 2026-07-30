@@ -253,7 +253,7 @@ else:
                         logger.debug(f"found {entry_name} in append dirs")
                         for e in entry.glob("*"):
                             waflibs.filedir.copy(
-                                e, dest, dir_exist=True, dry_run=dry_run
+                                e, dest / e.name, dir_exist=True, dry_run=dry_run
                             )
                     else:
                         logger.debug("not a append dir subdir")
