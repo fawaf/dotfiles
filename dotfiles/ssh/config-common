@@ -7,42 +7,36 @@ Host *gitea*
     HostName gitea.com
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 Host *bitbucket*
     HostName bitbucket.org
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 Host *github*
     HostName github.com
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 Host *gitlab*
     HostName gitlab.com
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 Host *git.sr.ht*
     HostName git.sr.ht
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 Host *codeberg*
     HostName codeberg.org
     IdentityFile ~/.ssh/git_id_ed25519
     IdentityFile ~/.ssh/git_id_rsa
-    Port 22
     User git
 
 # defaults for all
@@ -55,7 +49,7 @@ Host *
     IdentityFile ~/.ssh/id_ed25519
     IdentityFile ~/.ssh/id_rsa
     PasswordAuthentication no
-    Port 2225
+    Port 22
     PreferredAuthentications publickey
     PubkeyAuthentication yes
     ServerAliveCountMax 7
