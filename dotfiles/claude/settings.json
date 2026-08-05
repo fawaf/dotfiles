@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(find *)",
+      "Bash(rg *)",
       "Bash(grep *)",
       "Bash(wc *)",
       "Bash(fd *)",
@@ -27,6 +28,7 @@
       "Read(//opt/homebrew/bin/**)",
 
       "WebFetch(domain:releases.hashicorp.com)",
+      "WebFetch(domain:registry.terraform.io)",
       "WebFetch(domain:github.com)",
 
       "mcp__claude_ai_Linear__get_issue",

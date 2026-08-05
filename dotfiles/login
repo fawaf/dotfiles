@@ -25,13 +25,13 @@ fi
 type uptime > /dev/null
 if [ $? -eq 0 ]
 then
-    uptime
+    uptime &> /dev/stderr
 fi
 
 type klist > /dev/null
 if [ $? -eq 0 ]
 then
-    klist
+    klist &> /dev/stderr
 fi
 # }}}
 
