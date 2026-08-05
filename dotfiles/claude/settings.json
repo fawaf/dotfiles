@@ -1,28 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find *)",
-      "Bash(rg *)",
-      "Bash(grep *)",
-      "Bash(wc *)",
-      "Bash(fd *)",
-      "Bash(which *)",
-      "Bash(cat *)",
-      "Bash(ls *)",
+      "Bash(* find *)",
+      "Bash(* rg *)",
+      "Bash(* grep *)",
+      "Bash(* wc *)",
+      "Bash(* fd *)",
+      "Bash(* which *)",
+      "Bash(* cat *)",
+      "Bash(* ls *)",
 
-      "Bash(git * diff *)",
-      "Bash(git * log *)",
-      "Bash(git * ls*)",
+      "Bash(* git * diff *)",
+      "Bash(* git * log *)",
+      "Bash(* git * ls*)",
 
-      "Bash(go vet *)",
-      "Bash(go get *)",
-      "Bash(go build *)",
+      "Bash(* go vet *)",
+      "Bash(* go get *)",
+      "Bash(* go build *)",
 
-      "Bash(/Users/waf/go/bin/kluctl render *)",
-      "Bash(kluctl render *)",
+      "Bash(* kluctl render *)",
 
-      "Bash(/Users/waf/go/bin/terraform validate *)",
-      "Bash(terraform validate *)",
+      "Bash(* terraform validate *)",
 
       "Read(//private/tmp/**)",
       "Read(//opt/homebrew/bin/**)",
