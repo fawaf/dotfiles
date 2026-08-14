@@ -18,6 +18,10 @@
       "Bash(* go get *)",
       "Bash(* go build *)",
 
+      "Bash(* aws * describe* )",
+      "Bash(* aws * list* )",
+      "Bash(* aws * get* )",
+
       "Bash(* kluctl render *)",
 
       "Bash(* terraform validate *)",

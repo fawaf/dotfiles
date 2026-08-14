@@ -1,0 +1,157 @@
+#!/usr/bin/env python3
+
+"""tests for the setup script dotfile copy logic"""
+
+import pathlib
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+
+script_dir = pathlib.Path(__file__).parent.absolute()
+setup_script = script_dir / "setup"
+fixtures_dir = script_dir / "test"
+fixtures_config = fixtures_dir / "config.yaml"
+
+
+def run_setup(home_dir, config_file=fixtures_config, extra_args=None):
+    cmd = [
+        sys.executable,
+        str(setup_script),
+        "--config",
+        str(config_file),
+        "--dotfiles-dir",
+        str(fixtures_dir),
+        "--home-dir",
+        str(home_dir),
+        "--no-custom",
+        "--no-git",
+    ]
+    if extra_args:
+        cmd.extend(extra_args)
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise AssertionError(
+            f"setup failed ({result.returncode}):\n{result.stdout}\n{result.stderr}"
+        )
+    return result
+
+
+class SetupTest(unittest.TestCase):
+    def setUp(self):
+        self.home_dir = pathlib.Path(tempfile.mkdtemp())
+
+    def tearDown(self):
+        shutil.rmtree(self.home_dir)
+
+    def read(self, *parts):
+        return pathlib.Path(self.home_dir, *parts).read_text()
+
+    def fixture(self, *parts):
+        return pathlib.Path(fixtures_dir, *parts).read_text()
+
+    def test_dotfile_file_gets_dot_prefix(self):
+        run_setup(self.home_dir)
+
+        self.assertEqual(self.read(".testfile"), self.fixture("testfile"))
+        self.assertFalse((self.home_dir / "testfile").exists())
+
+    def test_dotfile_dir_gets_dot_prefix(self):
+        run_setup(self.home_dir)
+
+        self.assertEqual(
+            self.read(".rootdir/rootfile"), self.fixture("rootdir/rootfile")
+        )
+        self.assertFalse((self.home_dir / "rootdir").exists())
+
+    def test_regular_file_gets_no_dot_prefix(self):
+        run_setup(self.home_dir)
+
+        self.assertEqual(self.read("regularfile"), self.fixture("regularfile"))
+        self.assertFalse((self.home_dir / ".regularfile").exists())
+
+    def test_regular_dir_gets_no_dot_prefix(self):
+        run_setup(self.home_dir)
+
+        self.assertEqual(
+            self.read("zzregulardir/regulardirfile"),
+            self.fixture("zzregulardir/regulardirfile"),
+        )
+        self.assertFalse((self.home_dir / ".zzregulardir").exists())
+
+    def test_regular_dir_merges_into_existing_dir(self):
+        existing_dir = self.home_dir / "zzregulardir"
+        existing_dir.mkdir()
+        existing_file = existing_dir / "existingfile"
+        existing_file.write_text("do not remove me")
+
+        run_setup(self.home_dir)
+
+        self.assertEqual(existing_file.read_text(), "do not remove me")
+        self.assertEqual(
+            self.read("zzregulardir/regulardirfile"),
+            self.fixture("zzregulardir/regulardirfile"),
+        )
+        self.assertFalse((self.home_dir / "zzregulardir.bak").exists())
+
+    def test_regular_file_gets_backed_up(self):
+        dest = self.home_dir / "regularfile"
+        dest.write_text("old contents")
+
+        run_setup(self.home_dir)
+
+        self.assertEqual(dest.read_text(), self.fixture("regularfile"))
+        self.assertEqual(self.read("regularfile.bak"), "old contents")
+
+    def test_dotfile_gets_backed_up(self):
+        dest = self.home_dir / ".testfile"
+        dest.write_text("old contents")
+
+        run_setup(self.home_dir)
+
+        self.assertEqual(dest.read_text(), self.fixture("testfile"))
+        self.assertEqual(self.read(".testfile.bak"), "old contents")
+
+    def test_append_dir_keeps_existing_entries(self):
+        existing_dir = self.home_dir / ".appendrootdir"
+        existing_dir.mkdir()
+        existing_file = existing_dir / "existingfile"
+        existing_file.write_text("do not remove me")
+
+        run_setup(self.home_dir)
+
+        self.assertEqual(existing_file.read_text(), "do not remove me")
+        self.assertEqual(
+            self.read(".appendrootdir/appendrootsubfile"),
+            self.fixture("appendrootdir/appendrootsubfile"),
+        )
+
+    def test_config_without_regular_files_treats_all_as_dotfiles(self):
+        config_file = self.home_dir / "config-without-regular-files.yaml"
+        config_file.write_text("append:\n  appendrootdir:\n")
+
+        run_setup(self.home_dir, config_file=config_file)
+
+        self.assertEqual(self.read(".regularfile"), self.fixture("regularfile"))
+        self.assertFalse((self.home_dir / "regularfile").exists())
+
+    def test_dry_run_copies_nothing(self):
+        run_setup(self.home_dir, extra_args=["--dry-run"])
+
+        self.assertEqual(list(self.home_dir.iterdir()), [])
+
+    def test_second_run_is_idempotent(self):
+        run_setup(self.home_dir)
+        run_setup(self.home_dir)
+
+        self.assertEqual(self.read(".testfile"), self.fixture("testfile"))
+        self.assertEqual(self.read("regularfile"), self.fixture("regularfile"))
+        self.assertEqual(
+            self.read("zzregulardir/regulardirfile"),
+            self.fixture("zzregulardir/regulardirfile"),
+        )
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

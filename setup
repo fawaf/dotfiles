@@ -69,16 +69,23 @@ parser.add_argument(
     action="store_true",
     help="print stderr to stdout for easier paging",
 )
+parser.add_argument(
+    "-g",
+    "--no-git",
+    action="store_true",
+    help="do not update repo (git pull/submodules)",
+)
 args = parser.parse_args()
 
 force = args.force
-home_dir = args.home_dir
+home_dir = pathlib.Path(args.home_dir)
 test = args.test
 dry_run = args.dry_run
-dotfiles_dir = args.dotfiles_dir
+dotfiles_dir = pathlib.Path(args.dotfiles_dir)
 no_custom = args.no_custom
 only_custom = args.only_custom
 config_file = args.config
+no_git = args.no_git
 
 if test:
     dotfiles_dir = pathlib.Path(script_dir, "test")
@@ -132,61 +139,64 @@ if only_custom:
 else:
     os.chdir(dotfiles_dir)
 
-    eprint(
-        "updating repo... ",
-        newline=False,
-    )
-    cmd = "git pull"
-    logger.debug("command to run: {}".format(cmd))
-    pull_stdout, pull_stderr, _ = waflibs.shell.command(
-        cmd.split(" "),
-        cwd=dotfiles_dir,
-    )
-    eprint("done.")
-    logger.debug("pull stdout: {}".format(pull_stdout))
-    logger.debug("pull stderr: {}".format(pull_stderr))
+    if no_git:
+        logger.debug(f"no git is {no_git}... not updating repo")
+    else:
+        eprint(
+            "updating repo... ",
+            newline=False,
+        )
+        cmd = "git pull"
+        logger.debug("command to run: {}".format(cmd))
+        pull_stdout, pull_stderr, _ = waflibs.shell.command(
+            cmd.split(" "),
+            cwd=dotfiles_dir,
+        )
+        eprint("done.")
+        logger.debug("pull stdout: {}".format(pull_stdout))
+        logger.debug("pull stderr: {}".format(pull_stderr))
 
-    eprint(
-        "running submodule init... ",
-        newline=False,
-    )
-    cmd = "git submodule init"
-    logger.debug("command to run: {}".format(cmd))
-    init_stdout, init_stderr, _ = waflibs.shell.command(
-        cmd.split(" "),
-        cwd=dotfiles_dir,
-    )
-    logger.debug("init stdout: {}".format(init_stdout))
-    logger.debug("init stderr: {}".format(init_stderr))
-    eprint("done.")
+        eprint(
+            "running submodule init... ",
+            newline=False,
+        )
+        cmd = "git submodule init"
+        logger.debug("command to run: {}".format(cmd))
+        init_stdout, init_stderr, _ = waflibs.shell.command(
+            cmd.split(" "),
+            cwd=dotfiles_dir,
+        )
+        logger.debug("init stdout: {}".format(init_stdout))
+        logger.debug("init stderr: {}".format(init_stderr))
+        eprint("done.")
 
-    eprint(
-        "running submodule sync... ",
-        newline=False,
-    )
-    cmd = "git submodule sync"
-    logger.debug("command to run: {}".format(cmd))
-    sync_stdout, sync_stderr, _ = waflibs.shell.command(
-        cmd.split(" "),
-        cwd=dotfiles_dir,
-    )
-    logger.debug("sync stdout: {}".format(sync_stdout))
-    logger.debug("sync stderr: {}".format(sync_stderr))
-    eprint("done.")
+        eprint(
+            "running submodule sync... ",
+            newline=False,
+        )
+        cmd = "git submodule sync"
+        logger.debug("command to run: {}".format(cmd))
+        sync_stdout, sync_stderr, _ = waflibs.shell.command(
+            cmd.split(" "),
+            cwd=dotfiles_dir,
+        )
+        logger.debug("sync stdout: {}".format(sync_stdout))
+        logger.debug("sync stderr: {}".format(sync_stderr))
+        eprint("done.")
 
-    eprint(
-        "running submodule update... ",
-        newline=False,
-    )
-    cmd = "git submodule update"
-    logger.debug("command to run: {}".format(cmd))
-    update_stdout, update_stderr, _ = waflibs.shell.command(
-        cmd.split(" "),
-        cwd=dotfiles_dir,
-    )
-    eprint("done.")
-    logger.debug("update stdout: {}".format(update_stdout))
-    logger.debug("update stderr: {}".format(update_stderr))
+        eprint(
+            "running submodule update... ",
+            newline=False,
+        )
+        cmd = "git submodule update"
+        logger.debug("command to run: {}".format(cmd))
+        update_stdout, update_stderr, _ = waflibs.shell.command(
+            cmd.split(" "),
+            cwd=dotfiles_dir,
+        )
+        eprint("done.")
+        logger.debug("update stdout: {}".format(update_stdout))
+        logger.debug("update stderr: {}".format(update_stderr))
 
     eprint(
         "setting up dotfiles... ",
@@ -195,6 +205,9 @@ else:
 
     append_dirs = config["append"]
     logger.debug(f"append dirs: {append_dirs}")
+
+    regular_files = config.get("regular_files") or []
+    logger.debug(f"regular files: {regular_files}")
 
     root_entries = [re for re in dotfiles_dir.glob("*")]
     root_entries.sort()
@@ -208,10 +221,14 @@ else:
 
             continue
 
+        dotfile = root_entry_name not in regular_files
+        logger.debug(f"{root_entry_name} is dotfile: {dotfile}")
+
         root_dest_dir = waflibs.filedir.get_parent_directory(
             waflibs.filedir.get_dest_location(
                 root_entry,
                 target_dir=home_dir,
+                dotfile=dotfile,
             )
         )
         if not root_dest_dir.is_dir():
@@ -237,6 +254,7 @@ else:
                 dest = waflibs.filedir.get_dest_location(
                     entry,
                     target_dir=home_dir,
+                    dotfile=dotfile,
                 )
                 logger.debug(f"append dest is {dest}")
 
@@ -277,36 +295,35 @@ else:
             dest = waflibs.filedir.get_dest_location(
                 root_entry,
                 target_dir=home_dir,
+                dotfile=dotfile,
             )
             logger.debug("dest is {}".format(dest))
 
-            waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
-
-            d_p_dir = dest.parent
-            logger.debug(f"dest parent dir: {d_p_dir}")
-            if not pathlib.Path(d_p_dir).exists():
+            if not dotfile and root_entry.is_dir():
+                # non-dotfile dirs (e.g. Library) may be real system dirs
+                # in the home dir... merge into them instead of
+                # backing up and removing the whole dir
                 logger.debug(
-                    f"dest parent dir {d_p_dir} does not exist... creating dir"
+                    f"merging non-dotfile dir {root_entry} into dest {dest}"
                 )
+                waflibs.filedir.copy(
+                    root_entry, dest, dir_exist=True, dry_run=dry_run
+                )
+            else:
+                waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
 
-                pathlib.Path(d_p_dir).mkdir()
-            logger.debug(f"copying root entry {root_entry} to dest {dest}")
-            waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
+                d_p_dir = dest.parent
+                logger.debug(f"dest parent dir: {d_p_dir}")
+                if not pathlib.Path(d_p_dir).exists():
+                    logger.debug(
+                        f"dest parent dir {d_p_dir} does not exist... creating dir"
+                    )
+
+                    pathlib.Path(d_p_dir).mkdir()
+                logger.debug(f"copying root entry {root_entry} to dest {dest}")
+                waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
 
             logger.debug(waflibs.text.divider(char="*", times=66))
-    else:
-        logger.debug("for loop encountered break")
-
-        dest = waflibs.filedir.get_dest_location(
-            root_entry,
-            target_dir=home_dir,
-        )
-        logger.debug("dest is {}".format(dest))
-
-        waflibs.filedir.backup_and_remove(dest, dry_run=dry_run)
-
-        logger.debug(f"copying root entry {root_entry} to dest {dest}")
-        waflibs.filedir.copy(root_entry, dest, dry_run=dry_run)
     logger.debug(waflibs.text.divider(char="-", times=66))
     eprint("done.")
 

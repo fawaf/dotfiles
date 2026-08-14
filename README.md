@@ -18,7 +18,7 @@ Install
 ### Config ###
 ```yaml
 ---
-not_dotfiles:
+regular_files:
   - somedir
 append:
   config:
@@ -30,6 +30,7 @@ append:
     - subdirs
 ```
 - "append" - directories to not overwrite, but only append to
+- "regular_files" - entries copied to the home dir without a leading dot; directories are merged into the destination instead of replacing it
 
 Contributors
 ------------

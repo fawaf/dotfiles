@@ -1,6 +1,9 @@
-.PHONY: verbose dev setup custom setup-custom
+.PHONY: verbose dev setup custom setup-custom test
 
 all: setup
+
+test:
+	./run-tests
 
 verb: verbose
 
