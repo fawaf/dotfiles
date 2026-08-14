@@ -6,6 +6,11 @@ function source_os_dotfiles
     set -l KERNEL_NAME (uname | tr '[A-Z]' '[a-z]')
     set -l BASE "$HOME/.config/fish/conf.d/os"
 
+    # cygwin reports e.g. cygwin_nt-10.0
+    if string match -q 'cygwin*' $KERNEL_NAME
+        set KERNEL_NAME cygwin
+    end
+
     # source kernel-specific file
     set -l kernel_file "$BASE/$KERNEL_NAME/$TYPE.fish"
     if test -f $kernel_file

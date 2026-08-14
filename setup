@@ -140,7 +140,7 @@ else:
     os.chdir(dotfiles_dir)
 
     if no_git:
-        logger.debug(f"no git is {no_git}... not updating repo")
+        logger.debug(f"no_git is set... not updating repo")
     else:
         eprint(
             "updating repo... ",

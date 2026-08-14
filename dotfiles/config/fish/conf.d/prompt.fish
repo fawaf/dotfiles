@@ -8,6 +8,13 @@ set_host_variables
 function fish_prompt
     set -l last_status $status
 
+    # Clean prompt mode (mirrors the RP check in zsh.conf.d/pre precmd;
+    # toggled by the rp function)
+    if set -q RP
+        echo -n (date)" $USER@"(hostname -s):(prompt_pwd)"% "
+        return
+    end
+
     # Colors
     set -l reset (set_color normal)
     set -l red (set_color red)

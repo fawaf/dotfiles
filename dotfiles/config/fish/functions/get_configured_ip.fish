@@ -1,5 +1,7 @@
 # functions/get_configured_ip.fish + networking helpers
 # mirrors: dotfiles/zsh.functions.d/networking
+# named after get_configured_ip so fish can autoload it (set_host_variables
+# calls it before config.fish has sourced the functions dir)
 
 function get_configured_ip
     if not command -q ifconfig

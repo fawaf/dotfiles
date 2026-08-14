@@ -1,5 +1,7 @@
-# conf.d/exports.fish
+# conf.d/00_exports.fish
 # mirrors: dotfiles/zsh.conf.d/exports
+# named 00_ so it loads before the other conf.d snippets (zshenv sourced
+# exports before aliases; fish sources conf.d alphabetically)
 
 # ============================================================
 # less
