@@ -56,4 +56,4 @@ target/
 .idea/
 
 # core dump
-core
+/core
