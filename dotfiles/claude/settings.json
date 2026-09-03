@@ -60,6 +60,16 @@
       "mcp__claude_ai_Google_Drive__download_file_content"
     ]
   },
+  "model": "sonnet",
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_REGION": "us-gov-west-1",
+    "AWS_PROFILE": "gov",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "us-gov.anthropic.claude-opus-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "us-gov.anthropic.claude-sonnet-5"
+  },
+  "awsAuthRefresh": "aws sso login --profile gov",
+  "awsCredentialExport": "aws configure export-credentials --profile gov --format process",
   "spinnerVerbs": {
     "mode": "append",
     "verbs": [
@@ -70,6 +80,6 @@
       "Aggregating"
     ]
   },
-  "theme": "light",
-  "model": "claude-fable-5[1m]"
+  "tui": "fullscreen",
+  "theme": "light"
 }
