@@ -22,3 +22,15 @@ zstyle ':completion:*' matcher-list 'm:{A-Z}={a-z}' 'm:{a-z}={A-Z}' 'r:|[-._]=* 
 zstyle ':autocomplete:*complete*:*' insert-unambiguous yes # all Tab widgets
 zstyle ':autocomplete:*history*:*' insert-unambiguous yes # all history widgets
 zstyle ':autocomplete:menu-search:*' insert-unambiguous yes # ^S
+
+# Apple's diff is detected as generic Unix diff by Zsh, whose completion
+# omits unified output options and counts our --unified alias as a file.
+if [[ $OSTYPE == darwin* && ${commands[diff]} == /usr/bin/diff ]]; then
+  _diff_macos() {
+    _diff_options "$words[1]" \
+      '(-u --unified)-u[output a unified diff]' \
+      '(-u --unified)--unified=-[output a unified diff]::lines of context:' \
+      ':original file:_files' ':new file:_files'
+  }
+  compdef _diff_macos diff
+fi
