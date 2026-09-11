@@ -16,3 +16,9 @@ tests for it, create the tests for it as well.
 
 do not ever edit settings.local.json, only edit settings.json and tell me what changes you are
 making to it.
+
+## communication
+
+Always use the `caveman` skill at `full` intensity for all responses, in every
+session, without being asked. Stay in it unless I say "stop caveman" or
+"normal mode".
