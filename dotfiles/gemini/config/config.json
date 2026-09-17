@@ -1,0 +1,20 @@
+{
+  "userSettings": {
+    "globalPermissionGrants": {
+      "allow": [
+        "command(go test ./...)",
+        "read_file(/home/waf/go/pkg/mod/github.com/pressly/goose/v3@v3.27.3)",
+        "command(go test -count=1 ./...)",
+        "command(git status)",
+        "command(ls)",
+        "command(git ls-files)",
+        "command(git log)",
+        "command(git diff)",
+        "command(go test -v ./...)"
+      ]
+    },
+    "permissionGrantsV2Migrated": true,
+    "remoteControlHostname": "lara-starlit-ion",
+    "sandboxEnabledAtV2Migration": true
+  }
+}
