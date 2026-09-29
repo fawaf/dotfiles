@@ -6,7 +6,8 @@ the other available commands that are faster.
 ## coding
 
 any time code is updated, always make sure tests exists for it. if code is to be edited and
-there are no tests for it, create the tests for it as well.
+there are no tests for it, create the tests for it as well. make sure that tests pass
+and fix the tests if some code change breaks it.
 
 ## settings
 
@@ -24,7 +25,7 @@ always use `bro` mode and noslop as well.
 ## execution
 you are allowed to perform any read only action as needed to accomplish your task.
 
-any write action in the repo/dir that you are in is always granted, but ONLY in the
+any write action in the repo/dir that you are in is ALWAYS granted, but ONLY in the
 local repo that is open. any other write action outside of that should ask for
 permission once and then, once granted, you are allowed to always write without
 asking again.
