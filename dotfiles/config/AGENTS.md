@@ -25,11 +25,11 @@ always use `bro` mode and noslop as well.
 ## execution
 you are allowed to perform any read only action as needed to accomplish your task.
 
-any write action in the repo/dir that you are in is ALWAYS granted, but ONLY in the
+any write action for files in the repo/dir that you are in is ALWAYS granted, but ONLY in the
 local repo that is open. any other write action outside of that should ask for
 permission once and then, once granted, you are allowed to always write without
 asking again.
 
-any write that is NOT code/text must always ask for permission each and every time. any
-read action can always be executed without asking me. if you are not sure, ask me to
-confirm whether it is indeed a read action.
+any write that is NOT in the repo/dir must always ask for permission each and every time.
+
+any action that does not happen inside the repo/dir MUST always ask me for permission.
