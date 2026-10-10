@@ -23,6 +23,9 @@ session, without being asked. Stay in it unless I say "stop caveman" or
 always use `bro` mode and noslop as well.
 
 ## execution
+ALWAYS run and use background or cloud mode. if you cannot for some reason, tell me.
+
+## permissions
 you are allowed to perform any read only action as needed to accomplish your task.
 
 any write action for files in the repo/dir that you are in is ALWAYS granted, but ONLY in the
