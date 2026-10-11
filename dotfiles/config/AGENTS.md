@@ -25,11 +25,14 @@ always use `bro` mode and noslop as well.
 ## execution
 ALWAYS run and use background or cloud mode. if you cannot for some reason, tell me.
 
-## permissions
-you are allowed to perform any read only action as needed to accomplish your task.
+you are ALWAYS allowed to write out test files as needed and to RUN tests at any time.
 
-any write action for files in the repo/dir that you are in is ALWAYS granted, but ONLY in the
-local repo that is open. any other write action outside of that should ask for
+## permissions
+you are allowed to perform ANY read only action as needed to accomplish your task. this
+is allowed for ANY file anywhere, regardless if it is in the repo itself or not.
+
+any write action for files IN the repo/dir that you are in is ALWAYS granted, but ONLY
+in the local repo that is open. any other write action outside of that should ask for
 permission once and then, once granted, you are allowed to always write without
 asking again.
 
