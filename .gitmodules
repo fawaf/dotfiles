@@ -16,3 +16,6 @@
 [submodule "dotfiles/zsh/zsh-autocomplete"]
 	path = dotfiles/zsh/zsh-autocomplete
 	url = https://github.com/marlonrichert/zsh-autocomplete.git
+[submodule "dotfiles/tmux/plugins/tpm"]
+	path = dotfiles/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
