@@ -7,7 +7,7 @@
       "command(tail)",
 
       "command(git * log *)",
-      "command(git * show *)",
+      "command(git * show *)"
     ]
   },
   "trustedWorkspaces": [
