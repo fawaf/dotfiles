@@ -1,0 +1,16 @@
+{
+  "colorScheme": "light",
+  "permissions": {
+    "allow": [
+      "command(rg)",
+      "command(fd)",
+      "command(tail)",
+
+      "command(git * log *)",
+      "command(git * show *)",
+    ]
+  },
+  "trustedWorkspaces": [
+    "/home/waf"
+  ]
+}
