@@ -1,16 +1,36 @@
 {
-  "colorScheme": "light",
+  "colorScheme": "terminal",
   "permissions": {
     "allow": [
       "command(rg)",
       "command(fd)",
       "command(tail)",
+      "command(head)",
+      "command(ack)",
+      "command(which)",
+      "command(ls)",
+      "command(grep)",
+      "command(echo)",
+      "command(cat)",
+      "command(wc)",
+
+      "command(go doc)",
 
       "command(git * log *)",
-      "command(git * show *)"
+      "command(git * show *)",
+      "command(git log)",
+      "command(git show)",
+      "command(git rev-parse)"
     ]
   },
   "trustedWorkspaces": [
-    "/home/waf"
+    "/home/waf",
+    "/home/waf/php-common",
+    "/home/waf/xilef.org",
+    "/home/waf/fawong.com",
+
+    "/home/waf/aatf/website",
+    "/home/waf/aatf/dance-scorer",
+    "/home/waf/aatf/kubernetes"
   ]
 }
