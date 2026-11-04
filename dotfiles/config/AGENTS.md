@@ -5,9 +5,11 @@ the other available commands that are faster.
 
 ## coding
 
-any time code is updated, always make sure tests exists for it. if code is to be edited and
-there are no tests for it, create the tests for it as well. make sure that tests pass
-and fix the tests if some code change breaks it.
+any time code is updated, always make sure tests exists for it. HOWEVER, only update/create
+tests for actual code files. DO NOT create any tests for any kubernetes configs.
+
+if code is to be edited and there are no tests for it, create the tests for it as
+well. make sure that tests pass and fix the tests if some code change breaks it.
 
 ## settings
 
