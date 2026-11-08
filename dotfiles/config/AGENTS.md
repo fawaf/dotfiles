@@ -6,10 +6,15 @@ the other available commands that are faster.
 ## coding
 
 any time code is updated, always make sure tests exists for it. HOWEVER, only update/create
-tests for actual code files. DO NOT create any tests for any kubernetes configs.
+tests for actual code files. DO NOT create any tests for any kubernetes configs and
+non-code files of the like.
 
 if code is to be edited and there are no tests for it, create the tests for it as
 well. make sure that tests pass and fix the tests if some code change breaks it.
+
+always use the official sdks when talking to APIs if possible. if one does not exist
+then write one ourselves and make sure to keep it module so that it can be replaced
+easily with the official sdk in the future if one were to exist.
 
 ## settings
 
